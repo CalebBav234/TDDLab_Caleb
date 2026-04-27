@@ -33,7 +33,7 @@ function UserPage() {
   if (error) return <div>Error</div>;
 
   return (
-    <FeatureScreenLayout className="Usuarios">
+    <FeatureScreenLayout className="Usuarios" sectionGap={0}>
       <UsersHeader
         groups={groups}
         selectedGroup={selectedGroup}

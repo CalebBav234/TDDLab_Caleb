@@ -6,6 +6,7 @@ import { FeatureFlags } from '../components/FeatureFlags';
 import FeatureScreenLayout from '../../../shared/components/FeatureScreenLayout';
 import FeaturePageHeader from '../../../shared/components/FeaturePageHeader';
 import FeatureListSection from '../../../shared/components/FeatureListSection';
+import FeatureSectionDivider from '../../../shared/components/FeatureSectionDivider';
 import ContentState from '../../../shared/components/ContentState';
 
 const SettingsPage: React.FC = () => {
@@ -14,6 +15,7 @@ const SettingsPage: React.FC = () => {
     flags,
     loading,
     savingPrompt,
+    savingFlag,
     error,
     loadSettings,
     savePrompt,
@@ -89,12 +91,15 @@ const SettingsPage: React.FC = () => {
         )}
       </Box>
 
+      <FeatureSectionDivider />
+
       <Box sx={{ pl: { xs: 2, md: 12.75 } }}>
         <FeatureListSection title="Habilitación de Funcionalidades:">
           {flags && flags.length > 0 && (
             <FeatureFlags
               flags={flags}
               onToggleFlag={handleToggleFlag}
+              saving={savingFlag}
             />
           )}
         </FeatureListSection>

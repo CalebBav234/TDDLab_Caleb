@@ -9,7 +9,7 @@ interface FeaturePageHeaderProps {
 }
 
 const HeaderContainer = styled(Box)(({ theme }) => ({
-  width: "100%",
+  alignSelf: "stretch",
   height: 69,
   border: "1.5px solid #898989",
   borderRadius: 5,

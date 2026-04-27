@@ -44,7 +44,7 @@ function GroupsPage() {
   const [groupToEdit, setGroupToEdit] = useState<Group | null>(null);
 
   return (
-    <FeatureScreenLayout className="groups-page">
+    <FeatureScreenLayout className="groups-page" sectionGap={0}>
       <div className="groups-content-shell">
 
         {/* HEADER */}

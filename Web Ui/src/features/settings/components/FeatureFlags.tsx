@@ -1,15 +1,19 @@
 import React from 'react';
-//import { Box, Checkbox, FormControlLabel, Stack } from '@mui/material';
-import { Box, FormControlLabel, Stack } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Stack } from '@mui/material';
 import { FeatureFlag } from '../types/settings.types';
 import AnimatedCheckbox from '../../../shared/components/AnimatedCheckbox';
 
 interface FeatureFlagsProps {
   flags: FeatureFlag[];
   onToggleFlag: (id: number, value: boolean) => void;
+  saving?: boolean;
 }
 
-export const FeatureFlags: React.FC<FeatureFlagsProps> = ({ flags, onToggleFlag }) => {
+export const FeatureFlags: React.FC<FeatureFlagsProps> = ({
+  flags,
+  onToggleFlag,
+  saving = false,
+}) => {
   return (
     <Box sx={{ width: '100%', pl: 0 }}>
       <Stack spacing={1}>
@@ -20,6 +24,7 @@ export const FeatureFlags: React.FC<FeatureFlagsProps> = ({ flags, onToggleFlag 
               <AnimatedCheckbox
                 checked={flag.is_enabled}
                 onChange={(e) => onToggleFlag(flag.id, e.target.checked)}
+                disabled={saving}
               />
             }
             label={flag.feature_name}

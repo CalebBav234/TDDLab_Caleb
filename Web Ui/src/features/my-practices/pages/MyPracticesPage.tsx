@@ -37,7 +37,11 @@ export default function MyPracticesPage({
   }, [loadPractices]);
 
   return (
-    <FeatureScreenLayout className="Practicas" testId="assignments-container">
+    <FeatureScreenLayout
+      className="Practicas"
+      testId="assignments-container"
+      sectionGap={0}
+    >
       <MyPracticesList
         onShowForm={openCreateForm}
         practices={practiceItems}

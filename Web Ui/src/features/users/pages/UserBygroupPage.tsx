@@ -15,7 +15,7 @@ function UsersByGroupPage() {
   if (error) return <div>Error al cargar datos</div>;
 
   return (
-    <FeatureScreenLayout className="UsersByGroup">
+    <FeatureScreenLayout className="UsersByGroup" sectionGap={0}>
       <FeaturePageHeader title={group ? group.groupName : "Grupo"} />
       <FeatureSectionDivider />
       <UsersByGroupTable users={users} />
