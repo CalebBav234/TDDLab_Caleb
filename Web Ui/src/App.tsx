@@ -30,7 +30,7 @@ const SettingsPage = lazy(() => import("./features/settings/pages/SettingsPage")
 const GestionTareas = lazy(() => import("./sections/Assignments/AssignmentsPage"));
 const AssignmentDetail = lazy(() => import("./sections/Assignments/AssignmentDetail"));
 const TDDChartPage = lazy(() => import("./sections/TDDCycles-Visualization/TDDChartPage"));
-const Login = lazy(() => import("./sections/Login/LoginPage"));
+const Login = lazy(() => import("./features/auth/pages/AuthPage"));
 const InvitationPage = lazy(() => import("./sections/GroupInvitation/InvitationPage"));
 const MyPracticesPage = lazy(() => import("./sections/MyPractices/MyPracticesPage"));
 const PracticeDetail = lazy(() => import("./sections/MyPractices/PracticeDetail"));
