@@ -56,7 +56,7 @@ function GroupsPage() {
                 selectedSorting={selectedSorting}
                 onChangeHandler={handleGroupsOrder}
                 prototypeStyle
-                placeholderText="Ordenar"
+                placeholderText="Filtrar"
               />
 
               <ActionButton
