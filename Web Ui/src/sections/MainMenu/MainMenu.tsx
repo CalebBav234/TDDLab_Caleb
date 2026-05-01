@@ -42,7 +42,7 @@ const HeaderToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   gap: theme.spacing(2),
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     paddingInline: theme.spacing(2),
   },
 }));
@@ -64,7 +64,7 @@ const DesktopNav = styled(Box)(({ theme }) => ({
   flex: "1 1 0%",
   minWidth: 0, // allow to shrink on small screens so right actions don't get pushed
   overflow: "hidden",
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     display: "none",
   },
 }));
@@ -74,7 +74,7 @@ const DesktopActionArea = styled(Box)(({ theme }) => ({
   alignItems: "center",
   gap: theme.spacing(1.5),
   flexShrink: 0, // keep actions from being squeezed
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     display: "none",
   },
 }));
@@ -141,7 +141,7 @@ export default function MainMenu({
               color="inherit"
               size="large"
               onClick={() => setOpen(true)}
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1, flexShrink: 0 }}
+              sx={{ display: { xs: "flex", lg: "none" }, mr: 1, flexShrink: 0 }}
             >
               <MenuIcon />
             </IconButton>
@@ -250,7 +250,7 @@ export default function MainMenu({
             <LoginComponent />
           </DesktopActionArea>
 
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", flexShrink: 0 }}>
+          <Box sx={{ display: { xs: "flex", lg: "none" }, alignItems: "center", flexShrink: 0 }}>
             <LoginComponent compact />
           </Box>
         </HeaderToolbar>
@@ -262,7 +262,7 @@ export default function MainMenu({
         open={open}
         anchor="left"
         onClose={() => setOpen(false)}
-        sx={{ display: { xs: "flex", md: "none" } }}
+        sx={{ display: { xs: "flex", lg: "none" } }}
       >
         <NavLateralMenu
           navArrayLinks={navArrayLinks.filter((item) =>
