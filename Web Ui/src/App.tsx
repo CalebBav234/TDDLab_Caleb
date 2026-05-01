@@ -29,6 +29,7 @@ import SettingsPage from "./sections/Settings/SettingsPage";
 import {
   CircularProgress,
 } from "@mui/material";
+import LandingPage from "./sections/Landing/LandingPage";
 
 const navArrayLinks = [
   {
@@ -119,6 +120,7 @@ useEffect(() => {
             </ProtectedRouteComponent>
           }
         />
+        <Route path="/landing" element={<LandingPage />} />
         <Route
           path="/assignment/:id"
           element={
