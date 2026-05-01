@@ -71,42 +71,19 @@ export default function LoginComponent({
         >
           Iniciar sesi{"\u00f3"}n
         </Button>
-      ) : compact ? (
-        <React.Fragment>
-          <IconButton
-            onClick={(event) => setAnchorEl(event.currentTarget)}
-            sx={{ ml: 1 }}
-          >
-            <Avatar
-              src={authData[0].userProfilePic}
-              alt="Profile Picture"
-              sx={{
-                width: 38,
-                height: 38,
-                border: "2px solid rgba(255,255,255,0.24)",
-              }}
-            />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem onClick={handleLogout}>Salir</MenuItem>
-          </Menu>
-        </React.Fragment>
       ) : (
         <React.Fragment>
-          <IconButton
-            onClick={(event) => setAnchorEl(event.currentTarget)}
-            sx={{ ml: 1 }}
-          >
+            <IconButton
+              onClick={(event) => setAnchorEl(event.currentTarget)}
+              sx={{ ml: { xs: 0, sm: 1 }, p: { xs: 0, sm: undefined }, flexShrink: 0 }}
+            >
             <Avatar
               src={authData[0].userProfilePic}
               alt="Profile Picture"
               sx={{
-                width: 50,
-                height: 50,
+                // fixed desktop size to avoid shrinking between close widths
+                width: { xs: 38, sm: 42, md: 50 },
+                height: { xs: 38, sm: 42, md: 50 },
                 border: "2px solid rgba(255,255,255,0.24)",
               }}
             />
