@@ -37,6 +37,7 @@ const HeaderToolbar = styled(Toolbar)(({ theme }) => ({
   maxWidth: 1440,
   margin: "0 auto",
   paddingInline: theme.spacing(4),
+  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -52,31 +53,7 @@ const LogoLink = styled(NavLink)({
   gap: 14,
   color: "#FFFFFF",
   textDecoration: "none",
-});
-
-const LogoMark = styled(Box)({
-  position: "relative",
-  width: 30,
-  height: 30,
-  transform: "rotate(45deg)",
-  display: "grid",
-  gridTemplateColumns: "repeat(3, 8px)",
-  gridTemplateRows: "repeat(3, 8px)",
-  gap: 3,
-  "& span": {
-    display: "block",
-    width: 8,
-    height: 8,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 1,
-  },
-});
-
-const LogoText = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  lineHeight: 1,
+  minWidth: 0,
 });
 
 const DesktopNav = styled(Box)(({ theme }) => ({
@@ -84,7 +61,9 @@ const DesktopNav = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   gap: theme.spacing(2.5),
-  flex: 1,
+  flex: "1 1 0%",
+  minWidth: 0, // allow to shrink on small screens so right actions don't get pushed
+  overflow: "hidden",
   [theme.breakpoints.down("md")]: {
     display: "none",
   },
@@ -94,6 +73,7 @@ const DesktopActionArea = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: theme.spacing(1.5),
+  flexShrink: 0, // keep actions from being squeezed
   [theme.breakpoints.down("md")]: {
     display: "none",
   },
@@ -136,6 +116,7 @@ export default function MainMenu({
   const settingsLink = navArrayLinks.find(
     (navLink) => navLink.path === "/configuraciones",
   );
+  const isSettingsActive = settingsLink ? activePath === settingsLink.path : false;
   const primaryLinks = navArrayLinks.filter(
     (navLink) => navLink.path !== "/configuraciones",
   );
@@ -155,52 +136,18 @@ export default function MainMenu({
         }}
       >
         <HeaderToolbar>
-          <Box sx={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+          <Box sx={{ display: "flex", alignItems: "center", minWidth: 0, flex: '0 0 auto' }}>
             <IconButton
               color="inherit"
               size="large"
               onClick={() => setOpen(true)}
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1, flexShrink: 0 }}
             >
               <MenuIcon />
             </IconButton>
 
             <LogoLink to="/">
-              <LogoMark aria-hidden="true">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </LogoMark>
-              <LogoText>
-                <Typography
-                  sx={{
-                    color: "#FFFFFF",
-                    fontWeight: 800,
-                    fontSize: 20,
-                    letterSpacing: 0.4,
-                    lineHeight: "18px",
-                  }}
-                >
-                  TDD
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "rgba(255,255,255,0.65)",
-                    fontSize: 10,
-                    letterSpacing: 6,
-                    lineHeight: "12px",
-                    pl: "1px",
-                  }}
-                >
-                  LAB
-                </Typography>
-              </LogoText>
+              <img src="/Logo.png" alt="TDDLab Logo" style={{ maxHeight: "40px", maxWidth: "100%", objectFit: "contain", objectPosition: "left center" }} />
             </LogoLink>
           </Box>
 
@@ -214,12 +161,15 @@ export default function MainMenu({
                     to={item.path}
                     sx={{
                       position: "relative",
-                      minWidth: "auto",
-                      padding: "10px 24px",
+                      minWidth: 0,
+                      padding: { xs: "4px 6px", sm: "6px 10px", md: "10px 24px" },
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                       borderRadius: 3,
                       color: "#FFFFFF",
                       fontFamily: '"Palanquin Dark", "Inter", sans-serif',
-                      fontSize: 20,
+                      fontSize: { xs: 12, sm: 14, md: 20 },
                       fontWeight: 600,
                       lineHeight: "36px",
                       letterSpacing: 0.2,
@@ -271,6 +221,27 @@ export default function MainMenu({
                   width: 40,
                   height: 40,
                   mr: 1,
+                  borderRadius: 2,
+                  position: 'relative',
+                  transition: "background 0.2s ease, transform 0.1s",
+                  "&:hover, &.active": {
+                    background: "linear-gradient(180deg, #002346 0%, #004589 100%)",
+                    transform: "scale(1.02)",
+                  },
+                  "&::after":
+                    isSettingsActive
+                      ? {
+                          content: '""',
+                          position: "absolute",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          bottom: 6,
+                          width: 20,
+                          height: 3,
+                          borderRadius: 8,
+                          backgroundColor: "#D9D9D9",
+                        }
+                      : {},
                 }}
               >
                 <SettingsOutlinedIcon />
@@ -279,7 +250,7 @@ export default function MainMenu({
             <LoginComponent />
           </DesktopActionArea>
 
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", flexShrink: 0 }}>
             <LoginComponent compact />
           </Box>
         </HeaderToolbar>
