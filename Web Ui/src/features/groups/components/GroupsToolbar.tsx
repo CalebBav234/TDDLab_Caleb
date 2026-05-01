@@ -33,6 +33,8 @@ export function GroupsToolbar({
         <SortingComponent
           selectedSorting={selectedSorting}
           onChangeHandler={onSort}
+          prototypeStyle
+          placeholderText="Filtrar"
         />
 
         <Button
