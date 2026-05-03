@@ -83,7 +83,7 @@ function PracticesList({ userRole, userid }: Readonly<PracticesListProps>) {
     >
       <Box
         component="section"
-        className="Practicas"
+        className="practices-page"
         sx={{
           width: "100%",
           maxWidth: "1440px",

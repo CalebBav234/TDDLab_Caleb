@@ -38,7 +38,7 @@ export default function MyPracticesPage({
 
   return (
     <FeatureScreenLayout
-      className="Practicas"
+      className="practices-page"
       testId="assignments-container"
       sectionGap={0}
     >

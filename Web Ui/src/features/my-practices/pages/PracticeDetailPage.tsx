@@ -1,10 +1,12 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Alert, Button, Snackbar, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Link as LinkIcon } from "@mui/icons-material";
-import { GitLinkDialog } from "../components/GitLinkDialog";
-import { CommentDialog } from "../components/CommentDialog";
-import { ContentState } from "../components/ContentState";
+import { GitLinkDialog } from "../../../shared/components/GitHubLinkDialog";
+import { CommentDialog } from "../../../shared/components/CommentDialog";
+import ContentState from "../../../shared/components/ContentState";
+import ActionButton from "../../../shared/components/ActionButton";
+import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
 import { PracticeOverviewCard } from "../components/PracticeOverviewCard";
 import { usePracticeDetail } from "../hooks/usePracticeDetail";
 import "./PracticeDetailPage.css";
@@ -43,9 +45,8 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
     return (
       <div className="practice-detail-page">
         <ContentState
-          state="loading"
-          loadingTestId="loading-indicator"
-          className="practice-center-state"
+          variant="loading"
+          title="Cargando detalle de la práctica..."
         />
       </div>
     );
@@ -55,9 +56,9 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
     return (
       <div className="practice-detail-page">
         <ContentState
-          state="error"
-          errorMessage="No se pudo cargar el detalle de la practica. Intenta nuevamente."
-          className="practice-center-state"
+          variant="error"
+          title="Error"
+          description="No se pudo cargar el detalle de la practica. Intenta nuevamente."
         />
       </div>
     );
@@ -67,9 +68,9 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
     return (
       <div className="practice-detail-page">
         <ContentState
-          state="empty"
-          emptyMessage="No se encontro la practica solicitada."
-          className="practice-center-state"
+          variant="empty"
+          title="Sin datos"
+          description="No se encontro la practica solicitada."
         />
       </div>
     );
@@ -121,32 +122,29 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
             </div>
 
             <div className="practice-student-actions">
-              <Button
-                variant="contained"
-                className="practice-action-btn"
+              <ActionButton
+                variantStyle="primary"
                 disabled={Boolean(submission)}
                 onClick={openLinkDialog}
               >
                 Iniciar practica
-              </Button>
+              </ActionButton>
 
-              <Button
-                variant="contained"
-                className="practice-action-btn"
+              <ActionButton
+                variantStyle="primary"
                 disabled={isTaskInProgress}
                 onClick={openCommentDialog}
               >
                 Finalizar practica
-              </Button>
+              </ActionButton>
 
-              <Button
-                variant="contained"
-                className="practice-action-btn"
+              <ActionButton
+                variantStyle="primary"
                 disabled={!submission?.repository_link}
                 onClick={redirectToGraph}
               >
                 Ver gráfica
-              </Button>
+              </ActionButton>
             </div>
           </div>
         </section>
@@ -165,16 +163,12 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         onClose={closeCommentDialog}
       />
 
-      <Snackbar
+      <FeedbackSnackbar
         open={Boolean(uiMessage)}
-        autoHideDuration={4000}
+        message={uiMessage}
+        severity="warning"
         onClose={closeUiMessage}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={closeUiMessage} severity="warning" variant="filled">
-          {uiMessage}
-        </Alert>
-      </Snackbar>
+      />
     </div>
   );
 };

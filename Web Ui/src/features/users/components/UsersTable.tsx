@@ -56,7 +56,7 @@ const sharedBodyCellStyles = {
 
 function UsersTable({ users, groupMap, onRemove }: UsersTableProps) {
   return (
-    <TableWrapper component="section" className="Usuarios">
+    <TableWrapper component="section" className="users-page">
       <StyledTable>
         <TableHead>
           <TableRow sx={{ backgroundColor: HEADER_BACKGROUND }}>
