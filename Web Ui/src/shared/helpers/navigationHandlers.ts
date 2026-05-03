@@ -47,6 +47,10 @@ export const handleRedirectStudent = (
   }
 };
 
+export const handleRedirectToTasks = (groupId: number, navigate: NavigateFunction) => {
+  navigate(`/tareas?groupId=${groupId}`);
+};
+
 export const setSelectedMetric = (metric: string) => {
   localStorage.setItem("selectedMetric", metric);
   window.dispatchEvent(new Event("storage"));

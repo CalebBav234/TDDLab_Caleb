@@ -12,6 +12,7 @@ import ActionButton from "../../../shared/components/ActionButton";
 
 import { GroupsList } from "../components/GroupsList";
 import { useGroupsData } from "../hooks/useGroupsData";
+import { handleRedirectToTasks } from "../../../shared/helpers/navigationHandlers";
 
 import CreateGroupPopup from "../components/GroupsForm";
 import EditGroupPopup from "../components/EditGroupForm";
@@ -108,7 +109,7 @@ function GroupsPage() {
                   selectAndSync(id);
                   goToParticipants(id, navigate);
                 }}
-                onTasks={(id) => navigate(`/tareas?groupId=${id}`)}
+                onTasks={(id) => handleRedirectToTasks(id, navigate)}
                 onDelete={deleteGroupItem}
                 onEdit={(group) => {
                   selectAndSync(group.id);
