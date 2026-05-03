@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Box, CircularProgress } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ActionButton from "../../../shared/components/ActionButton";
@@ -16,13 +14,6 @@ import { useAssignmentsScreen } from "../hooks/useAssignmentsScreen";
 import { AssignmentListProps } from "../types/assignmentScreen";
 import AssignmentRow from "./AssignmentRow";
 import AssignmentsFilterPopover from "./AssignmentsFilterPopover";
-
-const LoadingContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  minHeight: "60vh",
-});
 
 function AssignmentsList({
   ShowForm: showForm,
@@ -62,14 +53,6 @@ function AssignmentsList({
   );
   const canManageAssignments = userRole === "teacher" || userRole === "admin";
 
-  if (isLoading) {
-    return (
-      <LoadingContainer>
-        <CircularProgress />
-      </LoadingContainer>
-    );
-  }
-
   return (
     <>
       <FeaturePageHeader
@@ -98,7 +81,9 @@ function AssignmentsList({
       <FeatureSectionDivider />
 
       <FeatureListSection>
-        {error ? (
+        {isLoading ? (
+          <ContentState variant="loading" title="Cargando tareas..." />
+        ) : error ? (
           <ContentState
             variant="error"
             title="No se pudieron cargar las tareas"
