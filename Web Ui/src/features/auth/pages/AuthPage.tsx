@@ -1,73 +1,10 @@
-import { Box, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Stack, Typography } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
 import { AuthBackground } from "../components/AuthBackground";
 import { AuthHeader } from "../components/AuthHeader";
 import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
-
-const ContentContainer = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  width: "100%",
-  paddingTop: "101px", // roughly matches 214px - 113px
-});
-
-const Title = styled(Typography)({
-  fontFamily: "'Palanquin Dark', sans-serif",
-  fontWeight: 600,
-  fontStyle: "SemiBold", // No es estándar, pero se deja como referencia
-  fontSize: "32px",
-  lineHeight: "100%",
-  letterSpacing: "0%",
-  color: "#000000",
-  marginBottom: "16px",
-  textAlign: "center",
-  // leading-trim: NONE no es estándar CSS, se omite
-});
-
-const Subtitle = styled(Typography)({
-  fontFamily: "'Palanquin Dark', sans-serif",
-  fontWeight: 400,
-  fontStyle: "Regular", // No es estándar, pero se deja como referencia
-  fontSize: "20px",
-  lineHeight: "100%",
-  letterSpacing: "0%",
-  color: "#000000",
-  marginBottom: "73px", // roughly 375px - 302px
-  textAlign: "center",
-  // leading-trim: NONE no es estándar CSS, se omite
-});
-
-const AuthButton = styled("button")<{ bgcolor: string }>(({ bgcolor }) => ({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "10px",
-  gap: "10px",
-  width: "395px",
-  height: "44px",
-  background: bgcolor,
-  borderRadius: "5px",
-  border: "none",
-  fontFamily: "Inter, sans-serif",
-  fontStyle: "normal",
-  fontWeight: 700,
-  fontSize: "14px",
-  lineHeight: "17px",
-  color: "#FFFFFF",
-  cursor: "pointer",
-  marginBottom: "11px",
-  transition: "opacity 0.2s ease",
-  "&:hover": {
-    opacity: 0.9,
-  },
-  "&:disabled": {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  }
-}));
+import StatefulButton from "../../../shared/components/StatefulButton";
+import ContentState from "../../../shared/components/ContentState";
 
 export default function AuthPage() {
   const { loginWithGitHub, loginWithGoogle, loading, error, setError } = useAuth();
@@ -76,26 +13,58 @@ export default function AuthPage() {
     <>
       <AuthBackground />
       <AuthHeader />
-      <ContentContainer>
-        <Title>!Bienvenido al TDD Lab!</Title>
-        <Subtitle>Ingresa tu cuenta para acceder:</Subtitle>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          pt: { xs: 8, md: 12 },
+          px: 2,
+        }}
+      >
+        <Stack spacing={2} sx={{ width: "100%", maxWidth: 420, alignItems: "stretch" }}>
+          <Typography
+            variant="h4"
+            sx={{ textAlign: "center", fontWeight: 600, color: "text.primary" }}
+          >
+            ¡Bienvenido al TDD Lab!
+          </Typography>
 
-        <AuthButton
-          bgcolor="#6ABB46"
-          onClick={loginWithGitHub}
-          disabled={loading}
-        >
-          {loading ? "Accediendo..." : "Accede con GitHub"}
-        </AuthButton>
+          <Typography variant="h6" sx={{ textAlign: "center", color: "text.primary", mb: 2 }}>
+            Ingresá tu cuenta para acceder
+          </Typography>
 
-        <AuthButton
-          bgcolor="#1370D2"
-          onClick={loginWithGoogle}
-          disabled={loading}
-        >
-          {loading ? "Accediendo..." : "Accede con Google"}
-        </AuthButton>
-      </ContentContainer>
+          {loading ? <ContentState variant="loading" title="Accediendo..." /> : null}
+
+          <StatefulButton
+            variantStyle="secondary"
+            onClick={loginWithGitHub}
+            disabled={loading}
+            sx={{
+              width: "100%",
+              height: 44,
+              backgroundColor: "#6ABB46",
+              "&:hover": {
+                backgroundColor: "#5ca13d",
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#8fbf7a",
+              },
+            }}
+          >
+            Accedé con GitHub
+          </StatefulButton>
+
+          <StatefulButton
+            variantStyle="primary"
+            onClick={loginWithGoogle}
+            disabled={loading}
+            sx={{ width: "100%", height: 44 }}
+          >
+            Accedé con Google
+          </StatefulButton>
+        </Stack>
+      </Box>
 
       <FeedbackSnackbar
         message={error || ""}

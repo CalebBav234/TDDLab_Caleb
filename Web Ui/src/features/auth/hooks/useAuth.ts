@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleSignInWithGitHub } from "../../../modules/User-Authentication/application/signInWithGithub";
-import { handleSignInWithGoogle } from "../../../modules/User-Authentication/application/signInWithGoogle";
-import { setCookieAndGlobalStateForValidUser } from "../../../modules/User-Authentication/application/setCookieAndGlobalStateForValidUser";
-import { CheckIfUserHasAccount } from "../../../modules/User-Authentication/application/checkIfUserHasAccount";
 import { useGlobalState } from "../../../modules/User-Authentication/domain/authStates";
+import {
+  handleAuthResult,
+  handleSignInWithGitHub,
+  handleSignInWithGoogle,
+} from "../services/authService";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -18,32 +19,16 @@ export const useAuth = () => {
     }
   }, [authData, navigate]);
 
-  const handleAuthResult = async (userData: any, isGoogle: boolean) => {
-    if (!userData?.email) {
-      throw new Error("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
-    }
-    const idToken = await userData.getIdToken();
-    const loginPort = new CheckIfUserHasAccount();
-    const userCourse = isGoogle 
-      ? await loginPort.userHasAnAccountWithGoogleToken(idToken)
-      : await loginPort.userHasAnAccountWithToken(idToken);
-    
-    if (userCourse) {
-      setCookieAndGlobalStateForValidUser(userData, userCourse, () =>
-        navigate({ pathname: "/" })
-      );
-      localStorage.setItem("userProfilePic", userData.photoURL || "");
-    } else {
-      throw new Error("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
-    }
-  };
-
   const loginWithGitHub = async () => {
     try {
       setLoading(true);
       setError(null);
       const userData = await handleSignInWithGitHub();
-      await handleAuthResult(userData, false);
+      await handleAuthResult({
+        userData,
+        isGoogle: false,
+        onSuccess: () => navigate({ pathname: "/" }),
+      });
     } catch (err: any) {
       const errorMessage = err?.message || "Error al iniciar sesión";
       if (errorMessage.includes("Google")) {
@@ -63,7 +48,11 @@ export const useAuth = () => {
       setLoading(true);
       setError(null);
       const userData = await handleSignInWithGoogle();
-      await handleAuthResult(userData, true);
+      await handleAuthResult({
+        userData,
+        isGoogle: true,
+        onSuccess: () => navigate({ pathname: "/" }),
+      });
     } catch (err: any) {
       const errorMessage = err?.message || "Error al iniciar sesión";
       if (errorMessage.includes("GitHub")) {
