@@ -82,26 +82,6 @@ export default function MyPracticesList({
     setConfirmationOpen(false);
   };
 
-  if (viewState === "loading") {
-    return (
-      <ContentState
-        variant="loading"
-        title="Cargando practicas"
-        description="Se estan cargando las practicas disponibles."
-      />
-    );
-  }
-
-  if (viewState === "error") {
-    return (
-      <ContentState
-        variant="error"
-        title="No se pudieron cargar las practicas"
-        description={error ?? "Intenta nuevamente en unos segundos."}
-      />
-    );
-  }
-
   return (
     <>
       <FeaturePageHeader
@@ -128,7 +108,19 @@ export default function MyPracticesList({
       />
       <FeatureSectionDivider />
       <FeatureListSection>
-        {viewState === "empty" ? (
+        {viewState === "loading" ? (
+          <ContentState
+            variant="loading"
+            title="Cargando practicas"
+            description="Se estan cargando las practicas disponibles."
+          />
+        ) : viewState === "error" ? (
+          <ContentState
+            variant="error"
+            title="No se pudieron cargar las practicas"
+            description={error ?? "Intenta nuevamente en unos segundos."}
+          />
+        ) : viewState === "empty" ? (
           <ContentState
             variant="empty"
             title="No hay practicas disponibles"
