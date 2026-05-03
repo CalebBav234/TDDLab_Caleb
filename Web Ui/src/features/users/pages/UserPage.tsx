@@ -49,6 +49,12 @@ function UserPage() {
           title="Error"
           description="Hubo un problema al cargar los usuarios."
         />
+      ) : filteredUsers.length === 0 ? (
+        <ContentState
+          variant="empty"
+          title="No se encontraron resultados"
+          description="No hay usuarios que coincidan con los filtros actuales."
+        />
       ) : (
         <UsersTable
           users={filteredUsers}

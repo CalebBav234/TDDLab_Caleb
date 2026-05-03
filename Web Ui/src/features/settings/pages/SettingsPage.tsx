@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useSettings } from '../hooks/useSettings';
 import { PromptConfiguration, PromptItem } from '../components/PromptConfiguration';
@@ -9,11 +8,6 @@ import FeaturePageHeader from '../../../shared/components/FeaturePageHeader';
 import FeatureListSection from '../../../shared/components/FeatureListSection';
 import FeatureSectionDivider from '../../../shared/components/FeatureSectionDivider';
 import ContentState from '../../../shared/components/ContentState';
-
-const ErrorAlert = styled(Alert)(({ theme }) => ({
-  marginTop: theme.spacing(3),
-  marginBottom: theme.spacing(3),
-}));
 
 const PromptSection = styled("div")(({ theme }) => ({
   marginTop: theme.spacing(3),
@@ -84,9 +78,11 @@ const SettingsPage: React.FC = () => {
       <FeaturePageHeader title="Configuración de Prompt" />
 
       {error && (
-        <ErrorAlert severity="error">
-          {error}
-        </ErrorAlert>
+        <ContentState
+          variant="error"
+          title="Error"
+          description={error}
+        />
       )}
 
       <PromptSection>

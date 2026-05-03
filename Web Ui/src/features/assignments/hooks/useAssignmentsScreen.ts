@@ -16,7 +16,6 @@ import {
   sortAssignments,
 } from "../services/assignmentsScreenService";
 import {
-  AssignmentListProps,
   AssignmentSorting,
 } from "../types/assignmentScreen";
 
@@ -24,7 +23,11 @@ export function useAssignmentsScreen({
   userRole,
   userGroupid,
   onGroupChange,
-}: Readonly<AssignmentListProps>) {
+}: Readonly<{
+  userRole: string;
+  userGroupid: number | number[];
+  onGroupChange: (groupId: number) => void;
+}>) {
   const navigate = useNavigate();
   const location = useLocation();
   const [authData] = useGlobalState("authData");

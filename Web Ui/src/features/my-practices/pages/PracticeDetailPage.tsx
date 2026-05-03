@@ -5,6 +5,9 @@ import { Link as LinkIcon } from "@mui/icons-material";
 import { GitLinkDialog } from "../../../shared/components/GitHubLinkDialog";
 import { CommentDialog } from "../../../shared/components/CommentDialog";
 import ContentState from "../../../shared/components/ContentState";
+import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
+import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
+import FeatureSectionDivider from "../../../shared/components/FeatureSectionDivider";
 import ActionButton from "../../../shared/components/ActionButton";
 import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
 import { PracticeOverviewCard } from "../components/PracticeOverviewCard";
@@ -43,43 +46,51 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
 
   if (practiceState === "loading") {
     return (
-      <div className="practice-detail-page">
+      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
+        <FeaturePageHeader title="Detalle de práctica" />
+        <FeatureSectionDivider />
         <ContentState
           variant="loading"
           title="Cargando detalle de la práctica..."
         />
-      </div>
+      </FeatureScreenLayout>
     );
   }
 
   if (practiceState === "error") {
     return (
-      <div className="practice-detail-page">
+      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
+        <FeaturePageHeader title="Detalle de práctica" />
+        <FeatureSectionDivider />
         <ContentState
           variant="error"
           title="Error"
           description="No se pudo cargar el detalle de la practica. Intenta nuevamente."
         />
-      </div>
+      </FeatureScreenLayout>
     );
   }
 
   if (practiceState === "empty") {
     return (
-      <div className="practice-detail-page">
+      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
+        <FeaturePageHeader title="Detalle de práctica" />
+        <FeatureSectionDivider />
         <ContentState
           variant="empty"
           title="Sin datos"
           description="No se encontro la practica solicitada."
         />
-      </div>
+      </FeatureScreenLayout>
     );
   }
 
   if (!practice) return null;
 
   return (
-    <div className="practice-detail-page">
+    <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
+      <FeaturePageHeader title={practice.title} />
+      <FeatureSectionDivider />
       <div className="practice-content-shell">
         <PracticeOverviewCard title={practice.title} createdAt={createdAt} />
 
@@ -169,7 +180,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         severity="warning"
         onClose={closeUiMessage}
       />
-    </div>
+    </FeatureScreenLayout>
   );
 };
 

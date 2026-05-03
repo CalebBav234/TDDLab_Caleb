@@ -20,6 +20,12 @@ function UsersByGroupPage() {
           title="Error"
           description="Hubo un problema al cargar los datos del grupo."
         />
+      ) : users.length === 0 ? (
+        <ContentState
+          variant="empty"
+          title="Sin usuarios"
+          description="Este grupo todavía no tiene usuarios asignados."
+        />
       ) : (
         <UsersByGroupTable users={users} />
       )}

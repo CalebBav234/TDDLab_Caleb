@@ -15,42 +15,22 @@ import { AssignmentListProps } from "../types/assignmentScreen";
 import AssignmentRow from "./AssignmentRow";
 import AssignmentsFilterPopover from "./AssignmentsFilterPopover";
 
-function AssignmentsList({
-  ShowForm: showForm,
-  userRole,
-  userGroupid,
+function LegacyAssignmentsList({
+  ShowForm,
   onGroupChange,
+  userGroupid,
+  userRole,
 }: Readonly<AssignmentListProps>) {
-  const {
-    assignments,
-    confirmationOpen,
-    error,
-    feedbackMessage,
-    feedbackSeverity,
-    groupList,
-    handleClickDelete,
-    handleClickDetail,
-    handleConfirmDelete,
-    handleGroupChange,
-    handleOrderAssignments,
-    isLoading,
-    selectedGroup,
-    selectedSorting,
-    setConfirmationOpen,
-    setFeedbackMessage,
-    setValidationDialogOpen,
-    showCreateButton,
-    validationDialogOpen,
-  } = useAssignmentsScreen({
-    ShowForm: showForm,
-    userRole,
-    userGroupid,
-    onGroupChange,
-  });
-
   const [filtersAnchorEl, setFiltersAnchorEl] = useState<HTMLElement | null>(
     null,
   );
+
+  const screen = useAssignmentsScreen({
+    userRole,
+    userGroupid: userGroupid ?? 0,
+    onGroupChange: onGroupChange ?? (() => undefined),
+  });
+
   const canManageAssignments = userRole === "teacher" || userRole === "admin";
 
   return (
@@ -66,11 +46,11 @@ function AssignmentsList({
             >
               Filtrar
             </ActionButton>
-            {showCreateButton ? (
+            {screen.showCreateButton ? (
               <ActionButton
                 startIcon={<AddIcon />}
                 variantStyle="primary"
-                onClick={showForm}
+                onClick={ShowForm}
               >
                 Crear
               </ActionButton>
@@ -81,15 +61,15 @@ function AssignmentsList({
       <FeatureSectionDivider />
 
       <FeatureListSection>
-        {isLoading ? (
+        {screen.isLoading ? (
           <ContentState variant="loading" title="Cargando tareas..." />
-        ) : error ? (
+        ) : screen.error ? (
           <ContentState
             variant="error"
             title="No se pudieron cargar las tareas"
-            description={error.message}
+            description={screen.error.message}
           />
-        ) : assignments.length === 0 ? (
+        ) : screen.assignments.length === 0 ? (
           <ContentState
             variant="empty"
             title="No hay tareas disponibles"
@@ -97,13 +77,13 @@ function AssignmentsList({
           />
         ) : (
           <FeatureItemsLayout>
-            {assignments.map((assignment) => (
+            {screen.assignments.map((assignment) => (
               <AssignmentRow
                 key={assignment.id}
                 item={assignment}
                 canManage={canManageAssignments}
-                onDelete={handleClickDelete}
-                onView={handleClickDetail}
+                onDelete={screen.handleClickDelete}
+                onView={screen.handleClickDetail}
               />
             ))}
           </FeatureItemsLayout>
@@ -112,14 +92,82 @@ function AssignmentsList({
 
       <AssignmentsFilterPopover
         anchorEl={filtersAnchorEl}
-        groupList={groupList}
+        groupList={screen.groupList}
         onClose={() => setFiltersAnchorEl(null)}
-        onGroupChange={handleGroupChange}
-        onSortingChange={handleOrderAssignments}
+        onGroupChange={screen.handleGroupChange}
+        onSortingChange={screen.handleOrderAssignments}
         open={Boolean(filtersAnchorEl)}
-        selectedGroup={selectedGroup}
-        selectedSorting={selectedSorting}
+        selectedGroup={screen.selectedGroup}
+        selectedSorting={screen.selectedSorting}
       />
+
+      {screen.confirmationOpen ? (
+        <ConfirmationDialog
+          open={screen.confirmationOpen}
+          title="Eliminar la tarea?"
+          content={
+            <>
+              Ten en cuenta que esta accion tambien eliminara <br /> todas las
+              entregas asociadas.
+            </>
+          }
+          cancelText="Cancelar"
+          deleteText="Eliminar"
+          onCancel={() => screen.setConfirmationOpen(false)}
+          onDelete={screen.handleConfirmDelete}
+        />
+      ) : null}
+
+      {screen.validationDialogOpen ? (
+        <ValidationDialog
+          open={screen.validationDialogOpen}
+          title="Tarea eliminada exitosamente"
+          closeText="Cerrar"
+          onClose={() => {
+            screen.setValidationDialogOpen(false);
+          }}
+        />
+      ) : null}
+
+      <FeedbackSnackbar
+        open={Boolean(screen.feedbackMessage) && !screen.validationDialogOpen}
+        message={screen.feedbackMessage}
+        severity={screen.feedbackSeverity}
+        onClose={() => screen.setFeedbackMessage("")}
+      />
+    </>
+  );
+}
+
+function ModernAssignmentsList({
+  assignments,
+  confirmationOpen,
+  feedbackMessage,
+  feedbackSeverity,
+  handleClickDelete,
+  handleClickDetail,
+  handleConfirmDelete,
+  setConfirmationOpen,
+  setFeedbackMessage,
+  setValidationDialogOpen,
+  userRole,
+  validationDialogOpen,
+}: Readonly<AssignmentListProps>) {
+  const canManageAssignments = userRole === "teacher" || userRole === "admin";
+
+  return (
+    <>
+      <FeatureItemsLayout>
+        {(assignments ?? []).map((assignment) => (
+          <AssignmentRow
+            key={assignment.id}
+            item={assignment}
+            canManage={canManageAssignments}
+            onDelete={handleClickDelete ?? (() => undefined)}
+            onView={handleClickDetail ?? (() => undefined)}
+          />
+        ))}
+      </FeatureItemsLayout>
 
       {confirmationOpen ? (
         <ConfirmationDialog
@@ -133,8 +181,8 @@ function AssignmentsList({
           }
           cancelText="Cancelar"
           deleteText="Eliminar"
-          onCancel={() => setConfirmationOpen(false)}
-          onDelete={handleConfirmDelete}
+          onCancel={() => setConfirmationOpen?.(false)}
+          onDelete={handleConfirmDelete ?? (async () => undefined)}
         />
       ) : null}
 
@@ -144,19 +192,29 @@ function AssignmentsList({
           title="Tarea eliminada exitosamente"
           closeText="Cerrar"
           onClose={() => {
-            setValidationDialogOpen(false);
+            setValidationDialogOpen?.(false);
           }}
         />
       ) : null}
 
       <FeedbackSnackbar
         open={Boolean(feedbackMessage) && !validationDialogOpen}
-        message={feedbackMessage}
-        severity={feedbackSeverity}
-        onClose={() => setFeedbackMessage("")}
+        message={feedbackMessage ?? ""}
+        severity={feedbackSeverity ?? "success"}
+        onClose={() => setFeedbackMessage?.("")}
       />
     </>
   );
+}
+
+function AssignmentsList(props: Readonly<AssignmentListProps>) {
+  const isLegacyMode = Boolean(props.ShowForm || props.onGroupChange);
+
+  if (isLegacyMode) {
+    return <LegacyAssignmentsList {...props} />;
+  }
+
+  return <ModernAssignmentsList {...props} />;
 }
 
 export default AssignmentsList;
