@@ -47,8 +47,6 @@ function GroupsPage() {
   return (
     <FeatureScreenLayout className="groups-page" sectionGap={0}>
       <div className="groups-content-shell">
-
-        {/* HEADER */}
         <FeaturePageHeader
           title="Grupos"
           actions={
@@ -73,83 +71,70 @@ function GroupsPage() {
 
         <FeatureSectionDivider />
 
-        {/* STATES */}
-        {loading && (
-          <ContentState
-            variant="loading"
-            title="Cargando grupos..."
-          />
-        )}
-
-        {error && (
-          <ContentState
-            variant="error"
-            title="Error al cargar los grupos"
-            description="Intenta nuevamente más tarde"
-          />
-        )}
-
-        {/* LISTA */}
-        {!loading && !error && (
-          <FeatureListSection>
-            {groups.length === 0 ? (
-              <div className="groups-center-state">
-                <ContentState
-                  variant="empty"
-                  title="No hay grupos disponibles"
-                  description="Crea tu primer grupo para comenzar"
-                />
-              </div>
-            ) : (
-              <GroupsList
-                groups={groups}
-                onCopy={copyTeacherLink}
-                onLink={copyStudentLink}
-                onParticipants={(id) => {
-                  selectAndSync(id);
-                  goToParticipants(id, navigate);
-                }}
-                onTasks={(id) => handleRedirectToTasks(id, navigate)}
-                onDelete={deleteGroupItem}
-                onEdit={(group) => {
-                  selectAndSync(group.id);
-                  setGroupToEdit(group);
-                  setEditOpen(true);
-                }}
-              />
-            )}
-          </FeatureListSection>
-        )}
+        <FeatureListSection>
+          {loading ? (
+            <ContentState variant="loading" title="Cargando..." />
+          ) : error ? (
+            <ContentState
+              variant="error"
+              title="Error al cargar..."
+              description="Intenta nuevamente más tarde"
+            />
+          ) : groups.length === 0 ? (
+            <ContentState
+              variant="empty"
+              title="Sin resultados"
+              description="Crea tu primer grupo para comenzar"
+            />
+          ) : (
+            <GroupsList
+              groups={groups}
+              onCopy={copyTeacherLink}
+              onLink={copyStudentLink}
+              onParticipants={(id) => {
+                selectAndSync(id);
+                goToParticipants(id, navigate);
+              }}
+              onTasks={(id) => handleRedirectToTasks(id, navigate)}
+              onDelete={deleteGroupItem}
+              onEdit={(group) => {
+                selectAndSync(group.id);
+                setGroupToEdit(group);
+                setEditOpen(true);
+              }}
+            />
+          )}
+        </FeatureListSection>
       </div>
 
       {/* CREATE */}
       <CreateGroupPopup
-  open={createOpen}
-  handleClose={() => setCreateOpen(false)}
-  onCreate={async (data) => {
-    await createGroup(data);
-    setCreateOpen(false);
-  }}
-/>
+        open={createOpen}
+        handleClose={() => setCreateOpen(false)}
+        onCreate={async (data) => {
+          await createGroup(data);
+          setCreateOpen(false);
+        }}
+      />
 
-<EditGroupPopup
-  open={editOpen}
-  handleClose={() => setEditOpen(false)}
-  groupToEdit={
-    groupToEdit
-      ? {
-          id: groupToEdit.id,
-          groupName: groupToEdit.name,
-          groupDetail: groupToEdit.description ?? "", 
-          creationDate: groupToEdit.creationDate ?? new Date(),
+      <EditGroupPopup
+        open={editOpen}
+        handleClose={() => setEditOpen(false)}
+        groupToEdit={
+          groupToEdit
+            ? {
+                id: groupToEdit.id,
+                groupName: groupToEdit.name,
+                groupDetail: groupToEdit.description ?? "",
+                creationDate: groupToEdit.creationDate ?? new Date(),
+              }
+            : null
         }
-      : null
-  }
-  onUpdate={async (data) => {
-    await updateGroup(data);
-    setEditOpen(false);
-  }}
-/>
+        onUpdate={async (data) => {
+          await updateGroup(data);
+          setEditOpen(false);
+        }}
+      />
     </FeatureScreenLayout>
   );
 }
