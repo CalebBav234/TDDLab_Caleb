@@ -41,6 +41,22 @@
   max-width: 45%;
 }
 
+.landing-z-line {
+  position: absolute;
+  top: 250px;
+  z-index: 1;
+  width: min(160px, 18vw);
+}
+
+.landing-z-line-left {
+  left: min(120px, 8vw);
+}
+
+.landing-z-line-right {
+  right: min(120px, 8vw);
+  transform: scaleX(-1);
+}
+
 .landing-hero-overlay {
   position: relative;
   z-index: 2;
@@ -81,22 +97,6 @@
   width: min(165px, 26%);
   z-index: 3;
   pointer-events: none;
-}
-
-.landing-primary-button,
-.landing-secondary-button {
-  border: none;
-  color: #ffffff;
-  font-weight: 700;
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 14px 34px;
-  background: linear-gradient(90deg, #2c71b8 0%, #4a95f0 100%);
-}
-
-.landing-primary-button:hover,
-.landing-secondary-button:hover {
-  filter: brightness(1.05);
 }
 
 .landing-intro-copy {
@@ -290,13 +290,6 @@
   max-width: 470px;
 }
 
-.landing-secondary-button {
-  background: linear-gradient(90deg, #58b446 0%, #85ca4f 100%);
-  color: #ffffff;
-  padding-left: 44px;
-  padding-right: 44px;
-}
-
 .landing-footer {
   background: #021739;
   color: #f5f8ff;
@@ -362,6 +355,9 @@
     max-width: 58%;
   }
 
+  .landing-z-line {
+    display: none;
+  }
 
   .landing-intro-copy {
     margin-top: 64px;

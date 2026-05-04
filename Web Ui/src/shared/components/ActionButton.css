@@ -1,0 +1,21 @@
+.action-button {
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 14px 34px;
+}
+
+.action-button:hover {
+  filter: brightness(1.05);
+}
+
+.action-button--primary {
+  background: linear-gradient(90deg, #2c71b8 0%, #4a95f0 100%);
+}
+
+.action-button--secondary {
+  background: linear-gradient(90deg, #58b446 0%, #85ca4f 100%);
+}
+

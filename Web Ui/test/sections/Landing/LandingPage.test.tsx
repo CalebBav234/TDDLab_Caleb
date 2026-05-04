@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
-import LandingPage from "../../../src/sections/Landing/LandingPage";
+import LandingPage from "../../../src/features/landing/pages/LandingPage";
 
 describe("LandingPage", () => {
   it("renders the public landing message and authentication CTA", () => {

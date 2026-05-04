@@ -4,20 +4,39 @@ import { useNavigate } from "react-router-dom";
 import { handleSignInWithGitHub } from "../../modules/User-Authentication/application/signInWithGithub";
 import { handleSignInWithGoogle } from "../../modules/User-Authentication/application/signInWithGoogle";
 import { setCookieAndGlobalStateForValidUser } from "../../modules/User-Authentication/application/setCookieAndGlobalStateForValidUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalState } from "../../modules/User-Authentication/domain/authStates";
+import type { AlertColor } from "@mui/material";
+import FeedbackSnackbar from "../../shared/components/FeedbackSnackbar";
 
 const Login = () => {
   const navigate = useNavigate();
   const authData = useGlobalState("authData");
+  const [feedback, setFeedback] = useState<{
+    open: boolean;
+    message: string;
+    severity: AlertColor;
+  }>({
+    open: false,
+    message: "",
+    severity: "error",
+  });
+
+  const showFeedback = (message: string, severity: AlertColor = "error") => {
+    setFeedback({ open: true, message, severity });
+  };
+
+  const handleCloseFeedback = () => {
+    setFeedback((prev) => ({ ...prev, open: false }));
+  };
 
   useEffect(() => {
     if (authData[0].userEmail) {
       navigate({
-        pathname: "/",
+        pathname: "/tareas",
       });
     }
-  }, [authData]);
+  }, [authData, navigate]);
   const handleGitHubLogin = async () => {
     try {
       const userData = await handleSignInWithGitHub();
@@ -28,24 +47,24 @@ const Login = () => {
         if (userCourse) {
           setCookieAndGlobalStateForValidUser(userData, userCourse, () =>
             navigate({
-              pathname: "/",
+              pathname: "/tareas",
             }),
           );
           localStorage.setItem("userProfilePic", userData.photoURL||"");
         } else {
-          alert("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
+          showFeedback("Disculpa, tu usuario no esta registrado. Por favor, registrate primero.");
         }
       } else {
-        alert("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
+        showFeedback("Disculpa, tu usuario no esta registrado. Por favor, registrate primero.");
       }
     } catch (error: any) {
       const errorMessage = error?.message || "Error al iniciar sesión";
       if (errorMessage.includes("Google")) {
-        alert("Este usuario está registrado con Google. Por favor, inicia sesión con Google.");
+        showFeedback("Este usuario esta registrado con Google. Por favor, inicia sesion con Google.");
       } else if (errorMessage.includes("no encontrado") || errorMessage.includes("404")) {
-        alert("Usuario no encontrado. Por favor, regístrate primero.");
+        showFeedback("Usuario no encontrado. Por favor, registrate primero.");
       } else {
-        alert(errorMessage);
+        showFeedback(errorMessage);
       }
     }
   };
@@ -60,24 +79,24 @@ const Login = () => {
         if (userCourse) {
           setCookieAndGlobalStateForValidUser(userData, userCourse, () =>
             navigate({
-              pathname: "/",
+              pathname: "/tareas",
             }),
           );
           localStorage.setItem("userProfilePic", userData.photoURL||"");
         } else {
-          alert("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
+          showFeedback("Disculpa, tu usuario no esta registrado. Por favor, registrate primero.");
         }
       } else {
-        alert("Disculpa, tu usuario no está registrado. Por favor, regístrate primero.");
+        showFeedback("Disculpa, tu usuario no esta registrado. Por favor, registrate primero.");
       }
     } catch (error: any) {
       const errorMessage = error?.message || "Error al iniciar sesión";
       if (errorMessage.includes("GitHub")) {
-        alert("Este usuario está registrado con GitHub. Por favor, inicia sesión con GitHub.");
+        showFeedback("Este usuario esta registrado con GitHub. Por favor, inicia sesion con GitHub.");
       } else if (errorMessage.includes("no encontrado") || errorMessage.includes("404")) {
-        alert("Usuario no encontrado. Por favor, regístrate primero.");
+        showFeedback("Usuario no encontrado. Por favor, registrate primero.");
       } else {
-        alert(errorMessage);
+        showFeedback(errorMessage);
       }
     }
   };
@@ -100,6 +119,13 @@ const Login = () => {
           </button>
         </div>
       </div>
+
+      <FeedbackSnackbar
+        open={feedback.open}
+        message={feedback.message}
+        severity={feedback.severity}
+        onClose={handleCloseFeedback}
+      />
     </div>
   );
 };

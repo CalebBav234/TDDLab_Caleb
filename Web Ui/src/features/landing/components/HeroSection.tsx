@@ -1,3 +1,5 @@
+import ActionButton from "../../../shared/components/ActionButton";
+
 type HeroSectionProps = {
   title: string;
   subtitle: string;
@@ -18,26 +20,27 @@ const HeroSection = ({
         <img src="/landing/linea.svg" alt="Linea decorativa" className="landing-navbar-line" />
       </header>
 
+      <img
+        src="/landing/intro-lineasZ.svg"
+        alt="Decoracion izquierda"
+        className="landing-z-line landing-z-line-left"
+      />
+      <img
+        src="/landing/intro-lineasZ.svg"
+        alt="Decoracion derecha"
+        className="landing-z-line landing-z-line-right"
+      />
+
       <div className="landing-hero-overlay">
         <div className="landing-intro-stack">
           <img src="/landing/intro.svg" alt="Ilustracion de tecnologia" className="landing-intro" />
-          <img
-            src="/landing/intro-lineasZ.svg"
-            alt="Decoracion del bloque introductorio"
-            className="landing-intro-lines"
-          />
-          <img
-            src="/landing/intro-tddlab.svg"
-            alt="Marca introductoria de TDDLab"
-            className="landing-intro-brand"
-            onError={(event) => {
-              event.currentTarget.style.display = "none";
-            }}
-          />
+          <img src="/landing/intro-lineasZ.svg" alt="Lineas decorativas del intro" className="landing-intro-lines" />
+          <img src="/landing/intro-tddlab.svg" alt="Marca TDDLab en intro" className="landing-intro-brand" />
         </div>
-        <button type="button" className="landing-primary-button" onClick={onAuthClick}>
+
+        <ActionButton onClick={onAuthClick} variantStyle="primary">
           {buttonText}
-        </button>
+        </ActionButton>
       </div>
 
       <div className="landing-intro-copy">

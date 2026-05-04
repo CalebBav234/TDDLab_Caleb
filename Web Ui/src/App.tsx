@@ -29,7 +29,7 @@ import SettingsPage from "./sections/Settings/SettingsPage";
 import {
   CircularProgress,
 } from "@mui/material";
-import LandingPage from "./sections/Landing/LandingPage";
+import LandingPage from "./features/landing/pages/LandingPage";
 
 const navArrayLinks = [
   {
@@ -40,7 +40,7 @@ const navArrayLinks = [
   },
   {
     title: "Tareas",
-    path: "/",
+    path: "/tareas",
     icon: <DescriptionIcon />,
     access: ["admin", "student", "teacher"],
   },
@@ -109,8 +109,10 @@ useEffect(() => {
         <MainMenu navArrayLinks={navArrayLinks} userRole={authData.userRole} />
       )}
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route
-          path="/"
+          path="/tareas"
           element={
             <ProtectedRouteComponent>
               <GestionTareas
@@ -120,7 +122,6 @@ useEffect(() => {
             </ProtectedRouteComponent>
           }
         />
-        <Route path="/landing" element={<LandingPage />} />
         <Route
           path="/assignment/:id"
           element={

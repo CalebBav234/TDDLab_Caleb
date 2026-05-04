@@ -1,23 +1,19 @@
-import { useNavigate } from "react-router-dom";
-import HeroSection from "./components/HeroSection";
-import BenefitsSection from "./components/BenefitsSection";
-import ResourcesSection from "./components/ResourcesSection";
-import CTASection from "./components/CTASection";
-import FooterSection from "./components/FooterSection";
+import HeroSection from "../components/HeroSection";
+import BenefitsSection from "../components/BenefitsSection";
+import ResourcesSection from "../components/ResourcesSection";
+import CTASection from "../components/CTASection";
+import FooterSection from "../components/FooterSection";
 import {
   LANDING_BENEFITS,
   LANDING_COPY,
   LANDING_INFO_CARDS,
   LANDING_RESOURCES,
-} from "./constants/landingContent";
-import "./styles/Landing.css";
+} from "../types/landingContent";
+import { useLanding } from "../hooks/useLanding";
+import "../styles/Landing.css";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
-  const goToAuth = () => {
-    navigate("/login");
-  };
+  const { goToAuth } = useLanding();
 
   return (
     <main className="landing-page">

@@ -1,3 +1,5 @@
+import ActionButton from "../../../shared/components/ActionButton";
+
 type CTASectionProps = {
   title: string;
   subtitle: string;
@@ -12,9 +14,9 @@ const CTASection = ({ title, subtitle, buttonText, onAuthClick }: CTASectionProp
       <div className="landing-cta-content">
         <h2>{title}</h2>
         <p>{subtitle}</p>
-        <button type="button" className="landing-secondary-button" onClick={onAuthClick}>
+        <ActionButton onClick={onAuthClick} variantStyle="primary">
           {buttonText}
-        </button>
+        </ActionButton>
       </div>
     </section>
   );
