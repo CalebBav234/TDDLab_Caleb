@@ -16,9 +16,6 @@ export interface AssignmentListProps {
   setValidationDialogOpen?: (open: boolean) => void;
   userRole: string;
   validationDialogOpen?: boolean;
-  ShowForm?: () => void;
-  userGroupid?: number | number[];
-  onGroupChange?: (groupId: number) => void;
 }
 
 export interface AssignmentListItemViewModel {
