@@ -1,14 +1,10 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Typography } from "@mui/material";
 import { Link as LinkIcon } from "@mui/icons-material";
 import { GitLinkDialog } from "../../../shared/components/GitHubLinkDialog";
 import { CommentDialog } from "../../../shared/components/CommentDialog";
 import ContentState from "../../../shared/components/ContentState";
-import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
-import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
-import FeatureSectionDivider from "../../../shared/components/FeatureSectionDivider";
-import ActionButton from "../../../shared/components/ActionButton";
+import StatefulButton from "../../../shared/components/StatefulButton";
 import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
 import { PracticeOverviewCard } from "../components/PracticeOverviewCard";
 import { usePracticeDetail } from "../hooks/usePracticeDetail";
@@ -44,121 +40,102 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
     closeUiMessage,
   } = usePracticeDetail({ userid, practiceid, navigate });
 
-  if (practiceState === "loading") {
-    return (
-      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
-        <FeaturePageHeader title="Detalle de práctica" />
-        <FeatureSectionDivider />
-        <ContentState
-          variant="loading"
-          title="Cargando..."
-        />
-      </FeatureScreenLayout>
-    );
-  }
-
-  if (practiceState === "error") {
-    return (
-      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
-        <FeaturePageHeader title="Detalle de práctica" />
-        <FeatureSectionDivider />
-        <ContentState
-          variant="error"
-          title="Error al cargar..."
-          description="No se pudo cargar el detalle de la practica. Intenta nuevamente."
-        />
-      </FeatureScreenLayout>
-    );
-  }
-
-  if (practiceState === "empty") {
-    return (
-      <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
-        <FeaturePageHeader title="Detalle de práctica" />
-        <FeatureSectionDivider />
-        <ContentState
-          variant="empty"
-          title="Sin resultados"
-          description="No se encontro la practica solicitada."
-        />
-      </FeatureScreenLayout>
-    );
-  }
-
-  if (!practice) return null;
-
   return (
-    <FeatureScreenLayout className="practice-detail-page" sectionGap={0}>
-      <FeaturePageHeader title={practice.title} />
-      <FeatureSectionDivider />
+    <div className="practice-detail-page">
       <div className="practice-content-shell">
-        <PracticeOverviewCard title={practice.title} createdAt={createdAt} />
-
-        <section className="practice-student-card">
-          <Typography
-            component="h2"
-            className="practice-section-title"
-          >
-            Mi practica
-          </Typography>
-
-          <div className="practice-student-content">
-            <div className="practice-student-details">
-              <p className="practice-student-row">
-                <strong>Enlace:</strong>{" "}
-                {submissionState === "loading" ? (
-                  "Cargando enlace..."
-                ) : submission?.repository_link ? (
-                  <a
-                    href={submission.repository_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="practice-link-anchor"
-                  >
-                    <span className="practice-link-cell">
-                      <LinkIcon fontSize="small" />
-                      {submission.repository_link}
-                    </span>
-                  </a>
-                ) : submissionState === "error" ? (
-                  "No disponible por error de carga"
-                ) : (
-                  "No se inicio la practica"
-                )}
-              </p>
-
-              <p className="practice-student-row">
-                <strong>Estado:</strong> {statusLabel}
-              </p>
-            </div>
-
-            <div className="practice-student-actions">
-              <ActionButton
-                variantStyle="primary"
-                disabled={Boolean(submission)}
-                onClick={openLinkDialog}
-              >
-                Iniciar practica
-              </ActionButton>
-
-              <ActionButton
-                variantStyle="primary"
-                disabled={isTaskInProgress}
-                onClick={openCommentDialog}
-              >
-                Finalizar practica
-              </ActionButton>
-
-              <ActionButton
-                variantStyle="primary"
-                disabled={!submission?.repository_link}
-                onClick={redirectToGraph}
-              >
-                Ver gráfica
-              </ActionButton>
-            </div>
+        {practiceState === "loading" ? (
+          <div className="practice-center-state">
+            <ContentState variant="loading" title="Cargando..." />
           </div>
-        </section>
+        ) : practiceState === "error" ? (
+          <div className="practice-center-state">
+            <ContentState
+              variant="error"
+              title="Error al cargar..."
+              description="No se pudo cargar el detalle de la practica. Intenta nuevamente."
+            />
+          </div>
+        ) : practiceState === "empty" ? (
+          <div className="practice-center-state">
+            <ContentState
+              variant="empty"
+              title="Sin resultados"
+              description="No se encontro la practica solicitada."
+            />
+          </div>
+        ) : practice ? (
+          <>
+            <PracticeOverviewCard title={practice.title} createdAt={createdAt} />
+
+            <section className="practice-student-card">
+              <h2 className="practice-section-title">
+                Mi practica
+              </h2>
+
+              <div className="practice-student-content">
+                <div className="practice-student-details">
+                  <div className="practice-student-row practice-enlace-row">
+                    <strong>Enlace:</strong>{" "}
+                    {submissionState === "loading" ? (
+                      <span style={{ marginLeft: "8px" }}>Cargando...</span>
+                    ) : submission?.repository_link ? (
+                      <a
+                        href={submission.repository_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="practice-link-anchor"
+                      >
+                        <span className="practice-link-cell">
+                          {submission.repository_link}
+                        </span>
+                      </a>
+                    ) : submissionState === "error" ? (
+                      <span style={{ marginLeft: "8px" }}>No disponible por error de carga</span>
+                    ) : (
+                      <span style={{ marginLeft: "8px" }}>No se inicio la practica</span>
+                    )}
+                  </div>
+
+                  <div className="practice-student-row practice-estado-row">
+                    <strong>Estado:</strong>{" "}
+                    <span style={{ marginLeft: "8px" }}>
+                      {submissionState === "loading" ? "Cargando..." : statusLabel}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="practice-student-actions">
+                  <StatefulButton
+                    variantStyle={(!Boolean(submission) && submissionState !== "loading") ? "primary" : "secondary"}
+                    onClick={() => {
+                      if (!Boolean(submission) && submissionState !== "loading") openLinkDialog();
+                    }}
+                  >
+                    Iniciar práctica
+                  </StatefulButton>
+
+                  <StatefulButton
+                    variantStyle={(!isTaskInProgress && submissionState !== "loading" && Boolean(submission?.repository_link)) ? "primary" : "secondary"}
+                    onClick={() => {
+                      if (!isTaskInProgress && submissionState !== "loading" && Boolean(submission?.repository_link)) openCommentDialog();
+                    }}
+                  >
+                    Finalizar práctica
+                  </StatefulButton>
+
+                  <StatefulButton
+                    variantStyle={(Boolean(submission?.repository_link) && submissionState !== "loading") ? "primary" : "secondary"}
+                    onClick={() => {
+                      if (Boolean(submission?.repository_link) && submissionState !== "loading") redirectToGraph();
+                    }}
+                  >
+                    Ver gráfica
+                  </StatefulButton>
+                </div>
+              </div>
+            </section>
+          </>
+        ) : null}
       </div>
 
       <GitLinkDialog
@@ -180,7 +157,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         severity="warning"
         onClose={closeUiMessage}
       />
-    </FeatureScreenLayout>
+    </div>
   );
 };
 
