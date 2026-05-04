@@ -110,6 +110,7 @@ useEffect(() => {
       )}
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route
           path="/tareas"
           element={
