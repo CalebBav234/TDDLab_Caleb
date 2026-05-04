@@ -10,13 +10,14 @@ import {
   LANDING_RESOURCES,
 } from "../types/landingContent";
 import { useLanding } from "../hooks/useLanding";
+import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
 import "../styles/Landing.css";
 
 const LandingPage = () => {
   const { goToAuth } = useLanding();
 
   return (
-    <main className="landing-page">
+    <FeatureScreenLayout className="landing-page">
       <HeroSection
         title={LANDING_COPY.heroTitle}
         subtitle={LANDING_COPY.heroSubtitle}
@@ -40,7 +41,7 @@ const LandingPage = () => {
       />
 
       <FooterSection />
-    </main>
+    </FeatureScreenLayout>
   );
 };
 

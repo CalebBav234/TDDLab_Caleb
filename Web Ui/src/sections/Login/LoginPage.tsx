@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useGlobalState } from "../../modules/User-Authentication/domain/authStates";
 import type { AlertColor } from "@mui/material";
 import FeedbackSnackbar from "../../shared/components/FeedbackSnackbar";
+import ActionButton from "../../shared/components/ActionButton";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -111,12 +112,12 @@ const Login = () => {
           ¡Bienvenido a TDDLab!, usa tu cuenta para acceder:
         </p>
         <div className="login-buttons">
-          <button className="github-button" onClick={handleGitHubLogin}>
+          <ActionButton variantStyle="primary" onClick={handleGitHubLogin}>
             Accede con GitHub
-          </button>
-          <button className="google-button" onClick={handleGoogleLogin}>
+          </ActionButton>
+          <ActionButton variantStyle="primary" onClick={handleGoogleLogin}>
             Accede con Google
-          </button>
+          </ActionButton>
         </div>
       </div>
 
