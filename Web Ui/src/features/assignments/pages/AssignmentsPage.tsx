@@ -36,69 +36,71 @@ function AssignmentsPage({
     onGroupChange: setSelectedGroupId,
   });
 
+  const headerActions = (
+    <>
+      <ActionButton
+        endIcon={<KeyboardArrowDownIcon />}
+        variantStyle="secondary"
+        onClick={(event) => setFiltersAnchorEl(event.currentTarget)}
+      >
+        Filtrar
+      </ActionButton>
+      {assignmentsScreen.showCreateButton ? (
+        <ActionButton
+          startIcon={<AddIcon />}
+          variantStyle="primary"
+          onClick={handleCreateAssignmentClick}
+        >
+          Crear
+        </ActionButton>
+      ) : null}
+    </>
+  );
+
+  const listSection = (
+    <FeatureListSection>
+      {assignmentsScreen.isLoading ? (
+        <ContentState variant="loading" title="Cargando..." />
+      ) : assignmentsScreen.error ? (
+        <ContentState
+          variant="error"
+          title="Error al cargar..."
+          description={assignmentsScreen.error.message}
+        />
+      ) : assignmentsScreen.assignments.length === 0 ? (
+        <ContentState
+          variant="empty"
+          title="Sin resultados"
+          description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
+        />
+      ) : (
+        <AssignmentsList
+          assignments={assignmentsScreen.assignments}
+          confirmationOpen={assignmentsScreen.confirmationOpen}
+          feedbackMessage={assignmentsScreen.feedbackMessage}
+          feedbackSeverity={assignmentsScreen.feedbackSeverity}
+          handleClickDelete={assignmentsScreen.handleClickDelete}
+          handleClickDetail={assignmentsScreen.handleClickDetail}
+          handleConfirmDelete={assignmentsScreen.handleConfirmDelete}
+          setConfirmationOpen={assignmentsScreen.setConfirmationOpen}
+          setFeedbackMessage={assignmentsScreen.setFeedbackMessage}
+          setValidationDialogOpen={assignmentsScreen.setValidationDialogOpen}
+          userRole={userRole}
+          validationDialogOpen={assignmentsScreen.validationDialogOpen}
+        />
+      )}
+    </FeatureListSection>
+  );
+
   return (
     <FeatureScreenLayout
       className="assignments-page"
       testId="assignments-container"
       sectionGap={0}
     >
-      <FeaturePageHeader
-        title="Tareas"
-        actions={
-          <>
-            <ActionButton
-              endIcon={<KeyboardArrowDownIcon />}
-              variantStyle="secondary"
-              onClick={(event) => setFiltersAnchorEl(event.currentTarget)}
-            >
-              Filtrar
-            </ActionButton>
-            {assignmentsScreen.showCreateButton ? (
-              <ActionButton
-                startIcon={<AddIcon />}
-                variantStyle="primary"
-                onClick={handleCreateAssignmentClick}
-              >
-                Crear
-              </ActionButton>
-            ) : null}
-          </>
-        }
-      />
+      <FeaturePageHeader title="Tareas" actions={headerActions} />
       <FeatureSectionDivider />
-
-      <FeatureListSection>
-        {assignmentsScreen.isLoading ? (
-          <ContentState variant="loading" title="Cargando..." />
-        ) : assignmentsScreen.error ? (
-          <ContentState
-            variant="error"
-            title="Error al cargar..."
-            description={assignmentsScreen.error.message}
-          />
-        ) : assignmentsScreen.assignments.length === 0 ? (
-          <ContentState
-            variant="empty"
-            title="Sin resultados"
-            description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
-          />
-        ) : (
-          <AssignmentsList
-            assignments={assignmentsScreen.assignments}
-            confirmationOpen={assignmentsScreen.confirmationOpen}
-            feedbackMessage={assignmentsScreen.feedbackMessage}
-            feedbackSeverity={assignmentsScreen.feedbackSeverity}
-            handleClickDelete={assignmentsScreen.handleClickDelete}
-            handleClickDetail={assignmentsScreen.handleClickDetail}
-            handleConfirmDelete={assignmentsScreen.handleConfirmDelete}
-            setConfirmationOpen={assignmentsScreen.setConfirmationOpen}
-            setFeedbackMessage={assignmentsScreen.setFeedbackMessage}
-            setValidationDialogOpen={assignmentsScreen.setValidationDialogOpen}
-            userRole={userRole}
-            validationDialogOpen={assignmentsScreen.validationDialogOpen}
-          />
-        )}
-      </FeatureListSection>
+      {listSection}
 
       <AssignmentsFilterPopover
         anchorEl={filtersAnchorEl}
