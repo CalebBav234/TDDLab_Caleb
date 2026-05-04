@@ -2,6 +2,7 @@ import useUsersPage from "../hooks/useUsersPage";
 import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
 import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
 import FeatureSectionDivider from "../../../shared/components/FeatureSectionDivider";
+import FeatureListSection from "../../../shared/components/FeatureListSection";
 import ContentState from "../../../shared/components/ContentState";
 
 import UsersHeader from "../components/UsersHeader";
@@ -46,27 +47,29 @@ function UserPage() {
       />
       <FeatureSectionDivider />
 
-      {loading ? (
-        <ContentState variant="loading" title="Cargando..." />
-      ) : error ? (
-        <ContentState
-          variant="error"
-          title="Error al cargar..."
-          description="Hubo un problema al cargar los usuarios."
-        />
-      ) : filteredUsers.length === 0 ? (
-        <ContentState
-          variant="empty"
-          title="No se encontraron resultados"
-          description="No hay usuarios que coincidan con los filtros actuales."
-        />
-      ) : (
-        <UsersTable
-          users={filteredUsers}
-          groupMap={groupMap}
-          onRemove={openRemoveDialog}
-        />
-      )}
+      <FeatureListSection>
+        {loading ? (
+          <ContentState variant="loading" title="Cargando..." />
+        ) : error ? (
+          <ContentState
+            variant="error"
+            title="Error al cargar..."
+            description="Hubo un problema al cargar los usuarios."
+          />
+        ) : filteredUsers.length === 0 ? (
+          <ContentState
+            variant="empty"
+            title="No se encontraron resultados"
+            description="No hay usuarios que coincidan con los filtros actuales."
+          />
+        ) : (
+          <UsersTable
+            users={filteredUsers}
+            groupMap={groupMap}
+            onRemove={openRemoveDialog}
+          />
+        )}
+      </FeatureListSection>
 
       <ConfirmationDialog
         open={isRemoveDialogOpen}
