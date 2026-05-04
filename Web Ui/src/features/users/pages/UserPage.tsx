@@ -57,7 +57,7 @@ function UserPage() {
       ) : filteredUsers.length === 0 ? (
         <ContentState
           variant="empty"
-          title="Sin resultados"
+          title="No se encontraron resultados"
           description="No hay usuarios que coincidan con los filtros actuales."
         />
       ) : (
