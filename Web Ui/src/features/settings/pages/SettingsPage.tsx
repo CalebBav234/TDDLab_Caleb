@@ -6,7 +6,6 @@ import { FeatureFlags } from '../components/FeatureFlags';
 import FeatureScreenLayout from '../../../shared/components/FeatureScreenLayout';
 import FeaturePageHeader from '../../../shared/components/FeaturePageHeader';
 import FeatureListSection from '../../../shared/components/FeatureListSection';
-import FeatureSectionDivider from '../../../shared/components/FeatureSectionDivider';
 import ContentState from '../../../shared/components/ContentState';
 
 const PromptSection = styled("div")(({ theme }) => ({
@@ -66,7 +65,7 @@ const SettingsPage: React.FC = () => {
       <FeatureScreenLayout>
         <ContentState
           variant="loading"
-          title="Cargando configuración"
+          title="Cargando..."
           description="Se están cargando los ajustes del sistema."
         />
       </FeatureScreenLayout>
@@ -77,13 +76,15 @@ const SettingsPage: React.FC = () => {
     <FeatureScreenLayout className="settings-page" sectionGap={0}>
       <FeaturePageHeader title="Configuración de Prompt" />
 
-      {error && (
-        <ContentState
-          variant="error"
-          title="Error"
-          description={error}
-        />
-      )}
+      <FeatureListSection>
+        {error ? (
+          <ContentState
+            variant="error"
+            title="Error al cargar..."
+            description={error}
+          />
+        ) : null}
+      </FeatureListSection>
 
       <PromptSection>
         <FeatureListSection>
@@ -98,8 +99,6 @@ const SettingsPage: React.FC = () => {
           )}
         </FeatureListSection>
       </PromptSection>
-
-      <FeatureSectionDivider />
 
       <FeatureListSection title="Habilitación de Funcionalidades:">
         {flags && flags.length > 0 && (
