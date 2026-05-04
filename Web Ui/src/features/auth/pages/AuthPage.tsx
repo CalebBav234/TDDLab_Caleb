@@ -34,7 +34,15 @@ export default function AuthPage() {
             Ingresá tu cuenta para acceder
           </Typography>
 
-          {loading ? <ContentState variant="loading" title="Accediendo..." /> : null}
+          {loading ? (
+            <ContentState variant="loading" title="Accediendo..." />
+          ) : error ? (
+            <ContentState
+              variant="error"
+              title="No se pudo iniciar sesión"
+              description={error}
+            />
+          ) : null}
 
           <StatefulButton
             variantStyle="secondary"

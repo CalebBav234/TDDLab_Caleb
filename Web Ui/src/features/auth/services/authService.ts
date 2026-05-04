@@ -11,8 +11,6 @@ export const handleSignInWithGitHub = async () => signInWithGitHub();
 
 export const handleSignInWithGoogle = async () => signInWithGoogle();
 
-export { CheckIfUserHasAccount };
-
 export const handleAuthResult = async ({
   userData,
   isGoogle,
