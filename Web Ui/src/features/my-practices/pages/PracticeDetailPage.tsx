@@ -51,7 +51,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         <FeatureSectionDivider />
         <ContentState
           variant="loading"
-          title="Cargando detalle de la práctica..."
+          title="Cargando..."
         />
       </FeatureScreenLayout>
     );
@@ -64,7 +64,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         <FeatureSectionDivider />
         <ContentState
           variant="error"
-          title="Error"
+          title="Error al cargar..."
           description="No se pudo cargar el detalle de la practica. Intenta nuevamente."
         />
       </FeatureScreenLayout>
@@ -78,7 +78,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
         <FeatureSectionDivider />
         <ContentState
           variant="empty"
-          title="Sin datos"
+          title="Sin resultados"
           description="No se encontro la practica solicitada."
         />
       </FeatureScreenLayout>

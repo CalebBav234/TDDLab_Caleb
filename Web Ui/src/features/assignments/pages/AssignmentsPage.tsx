@@ -69,17 +69,17 @@ function AssignmentsPage({
 
       <FeatureListSection>
         {assignmentsScreen.isLoading ? (
-          <ContentState variant="loading" title="Cargando tareas..." />
+          <ContentState variant="loading" title="Cargando..." />
         ) : assignmentsScreen.error ? (
           <ContentState
             variant="error"
-            title="No se pudieron cargar las tareas"
+            title="Error al cargar..."
             description={assignmentsScreen.error.message}
           />
         ) : assignmentsScreen.assignments.length === 0 ? (
           <ContentState
             variant="empty"
-            title="No hay tareas disponibles"
+            title="Sin resultados"
             description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
           />
         ) : (

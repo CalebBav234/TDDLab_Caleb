@@ -15,7 +15,6 @@ import {
 import { styled } from "@mui/material/styles";
 import { GroupDataObject } from "../../../modules/Groups/domain/GroupInterface";
 import ActionButton from "../../../shared/components/ActionButton";
-import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
 
 interface UsersHeaderProps {
   groups: GroupDataObject[];
@@ -54,18 +53,13 @@ function UsersHeader({
 
   return (
     <>
-      <FeaturePageHeader
-        title="Usuarios"
-        actions={
-          <ActionButton
-            endIcon={<KeyboardArrowDownIcon />}
-            variantStyle="secondary"
-            onClick={(event) => setFiltersAnchorEl(event.currentTarget)}
-          >
-            Filtrar
-          </ActionButton>
-        }
-      />
+      <ActionButton
+        endIcon={<KeyboardArrowDownIcon />}
+        variantStyle="secondary"
+        onClick={(event) => setFiltersAnchorEl(event.currentTarget)}
+      >
+        Filtrar
+      </ActionButton>
 
       <Popover
         open={Boolean(filtersAnchorEl)}

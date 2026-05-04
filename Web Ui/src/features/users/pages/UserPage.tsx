@@ -1,10 +1,11 @@
 import useUsersPage from "../hooks/useUsersPage";
+import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
 import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
+import FeatureSectionDivider from "../../../shared/components/FeatureSectionDivider";
 import ContentState from "../../../shared/components/ContentState";
 
 import UsersHeader from "../components/UsersHeader";
 import UsersTable from "../components/UsersTable";
-import UsersDivider from "../components/UsersDivider";
 
 import { ValidationDialog } from "../components/dialogs/ValidationDialog";
 import { ConfirmationDialog } from "../components/dialogs/ConfirmationDialog";
@@ -31,28 +32,32 @@ function UserPage() {
 
   return (
     <FeatureScreenLayout className="users-page" sectionGap={0}>
-      <UsersHeader
-        groups={groups}
-        selectedGroup={selectedGroup}
-        searchQuery={searchQuery}
-        onGroupChange={handleGroupValueChange}
-        onSearchChange={handleSearchQueryChange}
+      <FeaturePageHeader
+        title="Usuarios"
+        actions={
+          <UsersHeader
+            groups={groups}
+            selectedGroup={selectedGroup}
+            searchQuery={searchQuery}
+            onGroupChange={handleGroupValueChange}
+            onSearchChange={handleSearchQueryChange}
+          />
+        }
       />
-
-      <UsersDivider />
+      <FeatureSectionDivider />
 
       {loading ? (
-        <ContentState variant="loading" title="Cargando usuarios..." />
+        <ContentState variant="loading" title="Cargando..." />
       ) : error ? (
         <ContentState
           variant="error"
-          title="Error"
+          title="Error al cargar..."
           description="Hubo un problema al cargar los usuarios."
         />
       ) : filteredUsers.length === 0 ? (
         <ContentState
           variant="empty"
-          title="No se encontraron resultados"
+          title="Sin resultados"
           description="No hay usuarios que coincidan con los filtros actuales."
         />
       ) : (
