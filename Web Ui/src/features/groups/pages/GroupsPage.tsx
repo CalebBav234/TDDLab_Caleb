@@ -124,7 +124,6 @@ function GroupsPage() {
         handleClose={() => setCreateOpen(false)}
         onCreate={async (data) => {
           await createGroup(data);
-          setCreateOpen(false);
         }}
       />
 
@@ -143,7 +142,6 @@ function GroupsPage() {
         }
         onUpdate={async (data) => {
           await updateGroup(data);
-          setEditOpen(false);
         }}
       />
     </FeatureScreenLayout>
