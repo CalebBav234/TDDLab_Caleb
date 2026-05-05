@@ -106,7 +106,7 @@ jobs:
       - name: Install dependencies and generate frontend coverage
         working-directory: Web Ui
         run: |
-          npm ci
+          npm install
           npm test
 
       - name: SonarCloud Scan (PR)
