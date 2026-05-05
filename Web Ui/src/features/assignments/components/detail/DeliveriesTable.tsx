@@ -1,11 +1,9 @@
 import {
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
 import StatefulButton from "../../../../shared/components/StatefulButton";
@@ -21,39 +19,13 @@ interface DeliveriesTableProps {
 }
 
 export function DeliveriesTable({
-  state,
+  state: _state,
   rows,
   showAdditionalGraphs,
   onOpenGraph,
   onOpenAssistant,
   onOpenAdditionalGraphs,
 }: Readonly<DeliveriesTableProps>) {
-  if (state === "loading") {
-    return (
-      <div className="assignment-deliveries-state">
-        <CircularProgress size={32} thickness={4} />
-      </div>
-    );
-  }
-
-  if (state === "error") {
-    return (
-      <div className="assignment-deliveries-state">
-        <Typography color="error">
-          No se pudieron cargar las entregas. Intenta de nuevo en unos minutos.
-        </Typography>
-      </div>
-    );
-  }
-
-  if (state === "empty") {
-    return (
-      <div className="assignment-deliveries-state">
-        <Typography>Aun no existen entregas para esta tarea.</Typography>
-      </div>
-    );
-  }
-
   return (
     <div className="assignment-table-wrapper">
       <Table>
