@@ -253,13 +253,15 @@
 }
 
 .landing-info-card-face--expanded {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 90px 18px 24px;
   opacity: 0;
   transform: translateY(18px);
   position: relative;
+  row-gap: 0;
 }
 
 .landing-info-card-face--expanded::after {
@@ -324,7 +326,7 @@
 .landing-info-card-face--expanded p {
   margin: 0;
   width: min(339px, 100%);
-  padding: 14px;
+  padding: 18px 16px;
   border: 0.5px solid rgba(255, 255, 255, 0.66);
   text-align: center;
   color: #ffffff;
@@ -332,6 +334,10 @@
   font-size: 20px;
   font-weight: 700;
   line-height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
 }
 
 .landing-section-title {
