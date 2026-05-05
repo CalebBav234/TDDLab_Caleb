@@ -2,7 +2,7 @@ import "../styles/InfoCardsSection.css";
 
 interface InfoCard {
   title: string;
-  description: string;
+  description: React.ReactNode;
   icon: React.ReactNode;
 }
 
@@ -23,8 +23,13 @@ const InfoCardsSection = () => {
     },
     {
       title: "¿Cómo funciona?",
-      description:
-        'Funciona mediante un ciclo rápido de tres pasos: <strong>Rojo</strong> (crear un test que falla), <strong>Verde</strong> (escribir el código mínimo para que pase) y <strong>Refactorizar</strong> (mejorar el código).',
+      description: (
+        <>
+          Funciona mediante un ciclo rápido de tres pasos: <strong>Rojo</strong> (crear un test que falla),{" "}
+          <strong>Verde</strong> (escribir el código mínimo para que pase) y{" "}
+          <strong>Refactorizar</strong> (mejorar el código).
+        </>
+      ),
       icon: (
         <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -38,8 +43,12 @@ const InfoCardsSection = () => {
     },
     {
       title: "¿Para qué sirve?",
-      description:
-        "Sirve para implementar una metodología de desarrollo de software donde se escriben las pruebas unitarias <strong>antes</strong> que el código funcional, garantizando un código más limpio, seguro, escalable y con menos errores.",
+      description: (
+        <>
+          Sirve para implementar una metodología de desarrollo de software donde se escriben las pruebas unitarias{" "}
+          <strong>antes</strong> que el código funcional, garantizando un código más limpio, seguro, escalable y con menos errores.
+        </>
+      ),
       icon: (
         <svg width="30" height="41" viewBox="0 0 30 41" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -64,7 +73,7 @@ const InfoCardsSection = () => {
 
           {/* Estado hover con información */}
           <div className="card-hover">
-            <div className="info-text" dangerouslySetInnerHTML={{ __html: card.description }} />
+            <div className="info-text">{card.description}</div>
             <div className="icon-wrapper">
               <div className="icon-svg">{card.icon}</div>
             </div>
