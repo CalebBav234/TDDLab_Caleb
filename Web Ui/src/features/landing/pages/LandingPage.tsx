@@ -1,5 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import BenefitsSection from "../components/BenefitsSection";
+import InfoCardsSection from "../components/InfoCardsSection";
 import ResourcesSection from "../components/ResourcesSection";
 import CTASection from "../components/CTASection";
 import FooterSection from "../components/FooterSection";
@@ -24,6 +25,8 @@ const LandingPage = () => {
         buttonText={LANDING_COPY.heroButtonText}
         onAuthClick={goToAuth}
       />
+
+      <InfoCardsSection />
 
       <BenefitsSection
         title={LANDING_COPY.benefitsTitle}
