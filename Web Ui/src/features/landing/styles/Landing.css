@@ -285,7 +285,21 @@
   z-index: 2;
 }
 
+.landing-info-card-chip-icon {
+  position: absolute;
+  top: 0;
+  width: 102px;
+  height: 80px;
+  object-fit: contain;
+  z-index: 2;
+}
+
 .landing-info-card--left .landing-info-card-chip {
+  left: calc(8.66% - 51px);
+  transform: translateX(-50%);
+}
+
+.landing-info-card--left .landing-info-card-chip-icon {
   left: calc(8.66% - 51px);
   transform: translateX(-50%);
 }
@@ -297,11 +311,21 @@
   font-size: 2.5rem;
 }
 
+.landing-info-card--center .landing-info-card-chip-icon {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .landing-info-card--right .landing-info-card-chip {
   right: calc(7.87% - 51px);
   transform: translateX(50%);
   color: transparent;
   position: absolute;
+}
+
+.landing-info-card--right .landing-info-card-chip-icon {
+  right: calc(7.87% - 51px);
+  transform: translateX(50%);
 }
 
 .landing-info-card--right .landing-info-card-chip::before {

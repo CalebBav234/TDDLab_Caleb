@@ -1,7 +1,8 @@
 export type LandingInfoCard = {
   title: string;
   description: string;
-  icon: string;
+  icon: string; // SVG path or icon identifier
+  iconPath?: string; // For image-based icons
   tabAlign: "left" | "center" | "right";
 };
 
@@ -22,6 +23,7 @@ export const LANDING_INFO_CARDS: LandingInfoCard[] = [
     description:
       "Es una extension para Visual Studio Code disenada para facilitar la metodologia de Desarrollo Guiado por Pruebas (TDD).",
     icon: "?",
+    iconPath: "/landing/icon-question.svg",
     tabAlign: "left",
   },
   {
@@ -29,6 +31,7 @@ export const LANDING_INFO_CARDS: LandingInfoCard[] = [
     description:
       "Funciona mediante un ciclo rapido de tres pasos: Rojo (crear un test que falla), Verde (escribir el codigo minimo para que pase) y Refactorizar (mejorar el codigo).",
     icon: "|||",
+    iconPath: "/landing/icon-sliders.svg",
     tabAlign: "center",
   },
   {
@@ -36,6 +39,7 @@ export const LANDING_INFO_CARDS: LandingInfoCard[] = [
     description:
       "Sirve para implementar una metodologia de desarrollo de software donde se escriben las pruebas unitarias antes que el codigo funcional, garantizando un codigo mas limpio, seguro, escalable y con menos errores, automatizando la verificacion desde el inicio.",
     icon: "o",
+    iconPath: "/landing/icon-bulb.svg",
     tabAlign: "right",
   },
 ];

@@ -34,9 +34,13 @@ const BenefitsSection = ({ title, infoCards, benefits }: BenefitsSectionProps) =
               </div>
 
               <div className="landing-info-card-face landing-info-card-face--expanded">
-                <span className="landing-info-card-chip" aria-hidden="true">
-                  {card.icon}
-                </span>
+                {card.iconPath ? (
+                  <img src={card.iconPath} alt="icono" className="landing-info-card-chip-icon" />
+                ) : (
+                  <span className="landing-info-card-chip" aria-hidden="true">
+                    {card.icon}
+                  </span>
+                )}
                 <p>{card.description}</p>
               </div>
             </article>
