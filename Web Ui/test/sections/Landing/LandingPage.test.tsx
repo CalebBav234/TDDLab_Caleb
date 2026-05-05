@@ -28,7 +28,7 @@ describe("LandingPage", () => {
       "/landing/linea.svg",
       "/landing/intro-lineasZ.svg",
       "/landing/intro.svg",
-      "/landing/intro-tddlab.svg",
+      "/landing/intro-tddlab-center.svg",
       "/landing/circuitos-lateral-izquierdo.svg",
       "/landing/circuitos-lateral-derecho.svg",
       "/landing/beneficios-1.png",

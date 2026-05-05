@@ -14,7 +14,7 @@ const CTASection = ({ title, subtitle, buttonText, onAuthClick }: CTASectionProp
       <div className="landing-cta-content">
         <h2>{title}</h2>
         <p>{subtitle}</p>
-        <ActionButton onClick={onAuthClick} variantStyle="primary">
+        <ActionButton onClick={onAuthClick} variantStyle="secondary">
           {buttonText}
         </ActionButton>
       </div>

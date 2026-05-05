@@ -4,18 +4,13 @@ const FooterSection = () => {
       <div className="landing-container landing-footer-content">
         <img src="/landing/logo.svg" alt="Logo TDDLab" className="landing-footer-logo" />
 
-        <div>
-          <p>Email: contacto@tddlab.com</p>
-          <p>Telefono: +1 (123) 456-7890</p>
-        </div>
-
-        <div>
+        <div className="landing-footer-links">
           <p>Politica de Privacidad</p>
           <p>Terminos y Condiciones</p>
           <p>Politica de Cookies</p>
         </div>
 
-        <p>© 2025 TDDLab. Todos los derechos reservados.</p>
+        <p className="landing-footer-copyright">© 2025 TDDLab. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

@@ -33,12 +33,12 @@ const HeroSection = ({
 
       <div className="landing-hero-overlay">
         <div className="landing-intro-stack">
-          <img src="/landing/intro.svg" alt="Ilustracion de tecnologia" className="landing-intro" />
+          <img src="/landing/intro.svg" alt="Ilustracion principal de TDDLab" className="landing-intro" />
           <img src="/landing/intro-lineasZ.svg" alt="Lineas decorativas del intro" className="landing-intro-lines" />
-          <img src="/landing/intro-tddlab.svg" alt="Marca TDDLab en intro" className="landing-intro-brand" />
+          <img src="/landing/intro-tddlab-center.svg" alt="Marca TDDLab en intro" className="landing-intro-brand" />
         </div>
 
-        <ActionButton onClick={onAuthClick} variantStyle="primary">
+        <ActionButton onClick={onAuthClick} variantStyle="secondary">
           {buttonText}
         </ActionButton>
       </div>
