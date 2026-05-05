@@ -44,6 +44,48 @@ function GroupsPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [groupToEdit, setGroupToEdit] = useState<Group | null>(null);
 
+  const renderContent = () => {
+    if (loading) {
+      return <ContentState variant="loading" title="Cargando..." />;
+    }
+    if (error) {
+      return (
+        <ContentState
+          variant="error"
+          title="Error al cargar..."
+          description="Intenta nuevamente más tarde"
+        />
+      );
+    }
+    if (groups.length === 0) {
+      return (
+        <ContentState
+          variant="empty"
+          title="Sin resultados"
+          description="Crea tu primer grupo para comenzar"
+        />
+      );
+    }
+    return (
+      <GroupsList
+        groups={groups}
+        onCopy={copyTeacherLink}
+        onLink={copyStudentLink}
+        onParticipants={(id) => {
+          selectAndSync(id);
+          goToParticipants(id, navigate);
+        }}
+        onTasks={(id) => handleRedirectToTasks(id, navigate)}
+        onDelete={deleteGroupItem}
+        onEdit={(group) => {
+          selectAndSync(group.id);
+          setGroupToEdit(group);
+          setEditOpen(true);
+        }}
+      />
+    );
+  };
+
   return (
     <FeatureScreenLayout className="groups-page" sectionGap={0}>
       <div className="groups-content-shell">
@@ -72,38 +114,7 @@ function GroupsPage() {
         <FeatureSectionDivider />
 
         <FeatureListSection>
-          {loading ? (
-            <ContentState variant="loading" title="Cargando..." />
-          ) : error ? (
-            <ContentState
-              variant="error"
-              title="Error al cargar..."
-              description="Intenta nuevamente más tarde"
-            />
-          ) : groups.length === 0 ? (
-            <ContentState
-              variant="empty"
-              title="Sin resultados"
-              description="Crea tu primer grupo para comenzar"
-            />
-          ) : (
-            <GroupsList
-              groups={groups}
-              onCopy={copyTeacherLink}
-              onLink={copyStudentLink}
-              onParticipants={(id) => {
-                selectAndSync(id);
-                goToParticipants(id, navigate);
-              }}
-              onTasks={(id) => handleRedirectToTasks(id, navigate)}
-              onDelete={deleteGroupItem}
-              onEdit={(group) => {
-                selectAndSync(group.id);
-                setGroupToEdit(group);
-                setEditOpen(true);
-              }}
-            />
-          )}
+          {renderContent()}
         </FeatureListSection>
       </div>
 

@@ -1,4 +1,4 @@
-import { Typography, SvgIcon, SvgIconProps } from "@mui/material";
+import { SvgIcon, SvgIconProps } from "@mui/material";
 
 interface PracticeOverviewCardProps {
   title: string;
