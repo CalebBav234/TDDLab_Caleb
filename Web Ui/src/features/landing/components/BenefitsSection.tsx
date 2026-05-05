@@ -1,4 +1,4 @@
-import { LandingBenefit, LandingInfoCard } from "../types/landingContent";
+import { LandingBenefit, LandingInfoCard } from "../constants/landingContent";
 
 type BenefitsSectionProps = {
   title: string;

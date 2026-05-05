@@ -8,7 +8,7 @@ import {
   LANDING_COPY,
   LANDING_INFO_CARDS,
   LANDING_RESOURCES,
-} from "../types/landingContent";
+} from "../constants/landingContent";
 import { useLanding } from "../hooks/useLanding";
 import "../styles/Landing.css";
 

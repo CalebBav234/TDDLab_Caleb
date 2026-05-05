@@ -1,4 +1,4 @@
-import { LandingResource } from "../types/landingContent";
+import { LandingResource } from "../constants/landingContent";
 
 type ResourcesSectionProps = {
   title: string;

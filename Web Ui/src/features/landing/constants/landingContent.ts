@@ -16,17 +16,17 @@ export type LandingResource = {
 
 export const LANDING_INFO_CARDS: LandingInfoCard[] = [
   {
-    title: "Que es?",
+    title: "¿Qué es?",
     description:
       "TDDLab es una plataforma de aprendizaje para practicar desarrollo guiado por pruebas con retroalimentacion constante.",
   },
   {
-    title: "Como funciona?",
+    title: "¿Cómo funciona?",
     description:
       "Trabaja en ciclos rojo-verde-refactor, ejecuta pruebas y visualiza evidencia de avance en un solo flujo.",
   },
   {
-    title: "Para que sirve?",
+    title: "¿Para qué sirve?",
     description:
       "Facilita formacion tecnica con seguimiento docente, tareas y practicas enfocadas en calidad de software.",
   },
@@ -85,4 +85,5 @@ export const LANDING_COPY = {
   authButtonText: "Comienza ahora",
   heroButtonText: "Ir a TDD Lab",
 };
+
 
