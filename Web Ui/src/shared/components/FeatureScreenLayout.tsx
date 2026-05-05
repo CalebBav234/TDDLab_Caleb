@@ -7,6 +7,7 @@ interface FeatureScreenLayoutProps {
   children: ReactNode;
   className?: string;
   testId?: string;
+  sectionGap?: number;
 }
 
 const PageContainer = styled(Container)(({ theme }) => ({
@@ -15,22 +16,29 @@ const PageContainer = styled(Container)(({ theme }) => ({
   backgroundColor: "#FFFFFF",
 }));
 
-const ScreenSection = styled(Box)(({ theme }) => ({
+const ScreenSection = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "sectionGap",
+})<{ sectionGap?: number }>(({ theme, sectionGap }) => ({
   width: "100%",
   maxWidth: 1301,
   marginInline: "auto",
   display: "grid",
-  gap: theme.spacing(4.25),
+  gap: sectionGap === undefined ? theme.spacing(4.25) : theme.spacing(sectionGap),
 }));
 
 function FeatureScreenLayout({
   children,
   className,
   testId,
+  sectionGap,
 }: Readonly<FeatureScreenLayoutProps>) {
   return (
     <PageContainer>
-      <ScreenSection className={className} data-testid={testId}>
+      <ScreenSection
+        className={className}
+        data-testid={testId}
+        sectionGap={sectionGap}
+      >
         {children}
       </ScreenSection>
     </PageContainer>

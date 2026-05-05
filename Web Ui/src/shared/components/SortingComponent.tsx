@@ -42,7 +42,7 @@ const SortingComponent: React.FC<SortingProps> = ({
         prototypeStyle
           ? {
               height: "34px",
-              minWidth: "112px",
+              minWidth: "92px",
               fontSize: "14px",
               borderRadius: "5px",
               backgroundColor: "#D9D9D9",

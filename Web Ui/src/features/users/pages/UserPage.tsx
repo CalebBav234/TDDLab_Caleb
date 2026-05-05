@@ -1,6 +1,6 @@
-import { CircularProgress } from "@mui/material";
 import useUsersPage from "../hooks/useUsersPage";
 import FeatureScreenLayout from "../../../shared/components/FeatureScreenLayout";
+import ContentState from "../../../shared/components/ContentState";
 
 import UsersHeader from "../components/UsersHeader";
 import UsersTable from "../components/UsersTable";
@@ -29,11 +29,8 @@ function UserPage() {
     closeFeedbackDialog,
   } = useUsersPage();
 
-  if (loading) return <CircularProgress />;
-  if (error) return <div>Error</div>;
-
   return (
-    <FeatureScreenLayout className="Usuarios">
+    <FeatureScreenLayout className="users-page" sectionGap={0}>
       <UsersHeader
         groups={groups}
         selectedGroup={selectedGroup}
@@ -44,11 +41,21 @@ function UserPage() {
 
       <UsersDivider />
 
-      <UsersTable
-        users={filteredUsers}
-        groupMap={groupMap}
-        onRemove={openRemoveDialog}
-      />
+      {loading ? (
+        <ContentState variant="loading" title="Cargando usuarios..." />
+      ) : error ? (
+        <ContentState
+          variant="error"
+          title="Error"
+          description="Hubo un problema al cargar los usuarios."
+        />
+      ) : (
+        <UsersTable
+          users={filteredUsers}
+          groupMap={groupMap}
+          onRemove={openRemoveDialog}
+        />
+      )}
 
       <ConfirmationDialog
         open={isRemoveDialogOpen}

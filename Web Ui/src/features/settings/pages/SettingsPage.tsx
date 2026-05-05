@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Alert } from '@mui/material';
+import { Alert } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useSettings } from '../hooks/useSettings';
 import { PromptConfiguration, PromptItem } from '../components/PromptConfiguration';
 import { FeatureFlags } from '../components/FeatureFlags';
 import FeatureScreenLayout from '../../../shared/components/FeatureScreenLayout';
 import FeaturePageHeader from '../../../shared/components/FeaturePageHeader';
 import FeatureListSection from '../../../shared/components/FeatureListSection';
+import FeatureSectionDivider from '../../../shared/components/FeatureSectionDivider';
 import ContentState from '../../../shared/components/ContentState';
+
+const ErrorAlert = styled(Alert)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+}));
+
+const PromptSection = styled("div")(({ theme }) => ({
+  marginTop: theme.spacing(3),
+}));
 
 const SettingsPage: React.FC = () => {
   const {
@@ -14,6 +25,7 @@ const SettingsPage: React.FC = () => {
     flags,
     loading,
     savingPrompt,
+    savingFlag,
     error,
     loadSettings,
     savePrompt,
@@ -68,37 +80,40 @@ const SettingsPage: React.FC = () => {
   }
 
   return (
-    <FeatureScreenLayout className="Ajustes">
+    <FeatureScreenLayout className="settings-page" sectionGap={0}>
       <FeaturePageHeader title="Configuración de Prompt" />
 
       {error && (
-        <Alert severity="error" sx={{ mb: 3, mt: 3 }}>
+        <ErrorAlert severity="error">
           {error}
-        </Alert>
+        </ErrorAlert>
       )}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
-        {prompts && (
-          <PromptConfiguration
-            prompts={promptItems}
-            selectedPrompt={selectedPrompt}
-            onChangePrompt={setSelectedPrompt}
-            onSavePrompt={handleSavePrompt}
-            saving={savingPrompt}
-          />
-        )}
-      </Box>
-
-      <Box sx={{ pl: { xs: 2, md: 12.75 } }}>
-        <FeatureListSection title="Habilitación de Funcionalidades:">
-          {flags && flags.length > 0 && (
-            <FeatureFlags
-              flags={flags}
-              onToggleFlag={handleToggleFlag}
+      <PromptSection>
+        <FeatureListSection>
+          {prompts && (
+            <PromptConfiguration
+              prompts={promptItems}
+              selectedPrompt={selectedPrompt}
+              onChangePrompt={setSelectedPrompt}
+              onSavePrompt={handleSavePrompt}
+              saving={savingPrompt}
             />
           )}
         </FeatureListSection>
-      </Box>
+      </PromptSection>
+
+      <FeatureSectionDivider />
+
+      <FeatureListSection title="Habilitación de Funcionalidades:">
+        {flags && flags.length > 0 && (
+          <FeatureFlags
+            flags={flags}
+            onToggleFlag={handleToggleFlag}
+            saving={savingFlag}
+          />
+        )}
+      </FeatureListSection>
     </FeatureScreenLayout>
   );
 };
