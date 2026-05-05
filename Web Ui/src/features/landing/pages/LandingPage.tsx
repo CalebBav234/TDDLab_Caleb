@@ -11,6 +11,7 @@ import {
 } from "../constants/landingContent";
 import { useLanding } from "../hooks/useLanding";
 import "../styles/Landing.css";
+import "../styles/CardAnimations.css";
 
 const LandingPage = () => {
   const { goToAuth } = useLanding();

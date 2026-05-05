@@ -1,6 +1,8 @@
 export type LandingInfoCard = {
   title: string;
   description: string;
+  icon: string;
+  tabAlign: "left" | "center" | "right";
 };
 
 export type LandingBenefit = {
@@ -18,17 +20,23 @@ export const LANDING_INFO_CARDS: LandingInfoCard[] = [
   {
     title: "¿Qué es?",
     description:
-      "TDDLab es una plataforma de aprendizaje para practicar desarrollo guiado por pruebas con retroalimentacion constante.",
+      "Es una extension para Visual Studio Code disenada para facilitar la metodologia de Desarrollo Guiado por Pruebas (TDD).",
+    icon: "?",
+    tabAlign: "left",
   },
   {
     title: "¿Cómo funciona?",
     description:
-      "Trabaja en ciclos rojo-verde-refactor, ejecuta pruebas y visualiza evidencia de avance en un solo flujo.",
+      "Funciona mediante un ciclo rapido de tres pasos: Rojo (crear un test que falla), Verde (escribir el codigo minimo para que pase) y Refactorizar (mejorar el codigo).",
+    icon: "|||",
+    tabAlign: "center",
   },
   {
     title: "¿Para qué sirve?",
     description:
-      "Facilita formacion tecnica con seguimiento docente, tareas y practicas enfocadas en calidad de software.",
+      "Sirve para implementar una metodologia de desarrollo de software donde se escriben las pruebas unitarias antes que el codigo funcional, garantizando un codigo mas limpio, seguro, escalable y con menos errores, automatizando la verificacion desde el inicio.",
+    icon: "o",
+    tabAlign: "right",
   },
 ];
 

@@ -5,17 +5,28 @@
   cursor: pointer;
   border-radius: 6px;
   padding: 14px 34px;
+  transition: background-color 220ms ease, transform 140ms ease, box-shadow 220ms ease;
 }
 
-.action-button:hover {
-  filter: brightness(1.05);
+.action-button:active {
+  transform: translateY(1px);
 }
 
 .action-button--primary {
-  background: linear-gradient(90deg, #2c71b8 0%, #4a95f0 100%);
+  background: #1370d2;
+}
+
+.action-button--primary:hover,
+.action-button--primary:focus-visible {
+  background: #65b0ff;
 }
 
 .action-button--secondary {
-  background: linear-gradient(90deg, #58b446 0%, #85ca4f 100%);
+  background: #6abb46;
+}
+
+.action-button--secondary:hover,
+.action-button--secondary:focus-visible {
+  background: #1370d2;
 }
 

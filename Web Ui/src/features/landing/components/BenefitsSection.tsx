@@ -23,9 +23,22 @@ const BenefitsSection = ({ title, infoCards, benefits }: BenefitsSectionProps) =
       <div className="landing-container">
         <div className="landing-info-cards" role="list">
           {infoCards.map((card) => (
-            <article key={card.title} className="landing-info-card" role="listitem">
-              <h2>{card.title}</h2>
-              <p>{card.description}</p>
+            <article
+              key={card.title}
+              className={`landing-info-card landing-info-card--${card.tabAlign}`}
+              role="listitem"
+              tabIndex={0}
+            >
+              <div className="landing-info-card-face landing-info-card-face--default" aria-hidden="true">
+                <h2>{card.title}</h2>
+              </div>
+
+              <div className="landing-info-card-face landing-info-card-face--expanded">
+                <span className="landing-info-card-chip" aria-hidden="true">
+                  {card.icon}
+                </span>
+                <p>{card.description}</p>
+              </div>
             </article>
           ))}
         </div>
