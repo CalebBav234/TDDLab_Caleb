@@ -7,7 +7,6 @@ import FooterSection from "../components/FooterSection";
 import {
   LANDING_BENEFITS,
   LANDING_COPY,
-  LANDING_INFO_CARDS,
   LANDING_RESOURCES,
 } from "../constants/landingContent";
 import { useLanding } from "../hooks/useLanding";
@@ -30,7 +29,6 @@ const LandingPage = () => {
 
       <BenefitsSection
         title={LANDING_COPY.benefitsTitle}
-        infoCards={LANDING_INFO_CARDS}
         benefits={LANDING_BENEFITS}
       />
 

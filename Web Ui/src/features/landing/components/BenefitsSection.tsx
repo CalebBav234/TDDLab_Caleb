@@ -1,12 +1,11 @@
-import { LandingBenefit, LandingInfoCard } from "../constants/landingContent";
+import { LandingBenefit } from "../constants/landingContent";
 
 type BenefitsSectionProps = {
   title: string;
-  infoCards: LandingInfoCard[];
   benefits: LandingBenefit[];
 };
 
-const BenefitsSection = ({ title, infoCards, benefits }: BenefitsSectionProps) => {
+const BenefitsSection = ({ title, benefits }: BenefitsSectionProps) => {
   return (
     <section className="landing-benefits" aria-label="Beneficios de la plataforma">
       <img
@@ -21,31 +20,6 @@ const BenefitsSection = ({ title, infoCards, benefits }: BenefitsSectionProps) =
       />
 
       <div className="landing-container">
-        <div className="landing-info-cards" role="list">
-          {infoCards.map((card) => (
-            <article
-              key={card.title}
-              className={`landing-info-card landing-info-card--${card.tabAlign}`}
-              role="listitem"
-              tabIndex={0}
-            >
-              <div className="landing-info-card-face landing-info-card-face--default" aria-hidden="true">
-                <h2>{card.title}</h2>
-              </div>
-
-              <div className="landing-info-card-face landing-info-card-face--expanded">
-                {card.iconPath ? (
-                  <img src={card.iconPath} alt="icono" className="landing-info-card-chip-icon" />
-                ) : (
-                  <span className="landing-info-card-chip" aria-hidden="true">
-                    {card.icon}
-                  </span>
-                )}
-                <p>{card.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
 
         <h2 className="landing-section-title">{title}</h2>
 
