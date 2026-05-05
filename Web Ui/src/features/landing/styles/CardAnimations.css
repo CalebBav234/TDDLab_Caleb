@@ -1,8 +1,3 @@
-/* ============================================
- * Landing Page - Card Animations
- * Smooth transitions for info cards
- * ============================================ */
-
 /* Keyframe: Card entrance */
 @keyframes cardEnter {
   from {
@@ -59,28 +54,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Keyframe: Color transition for background */
-@keyframes bgColorShift {
-  from {
-    background-color: #002346;
-  }
-  to {
-    background-color: #115aa6;
-  }
-}
-
-/* Keyframe: Card lift on hover */
-@keyframes cardLift {
-  from {
-    transform: translateY(0);
-    box-shadow: 0 4px 5.5px rgba(0, 0, 0, 0.33);
-  }
-  to {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34);
   }
 }
 
@@ -171,4 +144,5 @@
     transform: none;
   }
 }
+
 
