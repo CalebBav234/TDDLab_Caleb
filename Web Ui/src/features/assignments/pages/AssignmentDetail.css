@@ -1,85 +1,7 @@
 :root {
   --assignment-navy: #002346;
-  --assignment-light-blue: #b7d0e8;
   --assignment-border: #898989;
   --assignment-soft-gray: #d9d9d9;
-  --assignment-btn: #1370d2;
-  --assignment-btn-disabled: #818181;
-}
-
-.assignment-detail-page {
-  min-height: calc(100vh - 85px);
-  background: #ffffff;
-  padding: 24px 0 48px;
-}
-
-.assignment-content-shell {
-  width: min(1301px, calc(100% - 32px));
-  margin: 0 auto;
-  display: grid;
-  gap: 28px;
-}
-
-.assignment-center-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 360px;
-}
-
-.assignment-task-card {
-  width: 100%;
-  min-height: 204px;
-  background: var(--assignment-light-blue);
-  border: 0.5px solid #adadad;
-  border-radius: 5px;
-  padding: 40px 48px;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 290px;
-  align-items: center;
-  column-gap: 60px;
-}
-
-.assignment-task-title-block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.assignment-task-title {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 53px;
-  color: #000000;
-  text-align: center;
-}
-
-.assignment-task-meta-block {
-  display: grid;
-  gap: 16px;
-}
-
-.assignment-task-meta-row {
-  display: grid;
-  grid-template-columns: 22px auto 1fr;
-  align-items: center;
-  column-gap: 12px;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  color: #000000;
-}
-
-.assignment-task-meta-row .MuiSvgIcon-root {
-  font-size: 18px;
-  color: var(--assignment-navy);
-}
-
-.assignment-task-meta-label {
-  font-weight: 700;
 }
 
 .assignment-section-title {
@@ -97,14 +19,30 @@
 }
 
 .assignment-student-card {
-  border: 0.5px solid var(--assignment-border);
-  border-radius: 5px;
-  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d0d6de;
+  border-radius: 6px;
+  padding: 14px 20px 18px;
+  box-shadow: 0 4px 10px rgba(31, 41, 55, 0.2);
 }
 
 .assignment-student-summary {
   display: grid;
   gap: 10px;
+}
+
+.assignment-student-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.assignment-student-details {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
 }
 
 .assignment-student-row {
@@ -116,7 +54,6 @@
 }
 
 .assignment-student-actions {
-  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -185,13 +122,11 @@
 }
 
 .assignment-link-cell,
-.assignment-no-link {
+.assignment-no-link,
+.assignment-student-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-.assignment-link-cell {
   color: #4785c4;
 }
 
@@ -215,27 +150,14 @@
 }
 
 @media (max-width: 960px) {
-  .assignment-detail-page {
-    padding-inline: 16px;
+  .assignment-student-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
   }
 
-  .assignment-content-shell {
+  .assignment-student-actions {
     width: 100%;
-  }
-
-  .assignment-task-card {
-    grid-template-columns: 1fr;
-    row-gap: 24px;
-    padding: 28px 24px;
-  }
-
-  .assignment-task-title {
-    font-size: 34px;
-    line-height: 1.2;
-  }
-
-  .assignment-task-meta-block {
-    gap: 12px;
   }
 
   .assignment-table-wrapper table {

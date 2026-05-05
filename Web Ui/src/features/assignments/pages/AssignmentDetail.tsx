@@ -1,7 +1,10 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import StatefulButton from "../../../shared/components/StatefulButton";
+import ContentState from "../../../shared/components/ContentState";
+import DetailPageShell from "../../../shared/components/DetailPageShell";
+import StudentDetailCard from "../../../shared/components/StudentDetailCard";
 import { CommentDialog } from "../../../shared/components/CommentDialog";
 import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
 import { GitLinkDialog } from "../../../shared/components/GitHubLinkDialog";
@@ -64,100 +67,120 @@ const AssignmentDetail: React.FC<AssignmentDetailProps> = ({ role, userid }) => 
   const hasStudentSubmission = !!studentSubmission;
   const hasStudentRepository = !!studentSubmission?.repository_link;
   const canFinishTask = !isTaskInProgress;
-
-  if (assignmentState === "loading") {
-    return (
-      <div className="assignment-detail-page assignment-center-state">
-        <CircularProgress size={60} thickness={5} data-testid="loading-indicator" />
-      </div>
-    );
-  }
-
-  if (assignmentState === "error" || !assignment) {
-    return (
-      <div className="assignment-detail-page assignment-center-state">
-        <Typography color="error">
-          No se pudo cargar el detalle de la tarea. Intenta nuevamente.
-        </Typography>
-      </div>
-    );
-  }
+  const isLoading = assignmentState === "loading";
+  const hasError = assignmentState === "error" || !assignment;
 
   return (
-    <div className="assignment-detail-page">
-      <div className="assignment-content-shell">
-        <TaskOverviewCard
-          title={assignment.title}
-          groupName={groupDetails?.groupName || "Cargando grupo..."}
-          startDate={toDisplayDate(assignment.start_date)}
-          endDate={toDisplayDate(assignment.end_date)}
-        />
-
-        {isStudent ? (
-          <section className="assignment-student-card">
-            <StudentSubmissionSummary
-              status={studentStatusLabel}
-              repositoryLink={studentRepositoryLink}
-              comment={studentSubmission?.comment || undefined}
-            />
-
-            <div className="assignment-student-actions">
-              <StatefulButton
-                variantStyle={!hasStudentSubmission ? 'primary' : 'secondary'}
-                onClick={() => {
-                  if (!hasStudentSubmission) openLinkDialog();
-                }}
-              >
-                Iniciar tarea
-              </StatefulButton>
-
-              <StatefulButton
-                variantStyle={hasStudentRepository ? 'primary' : 'secondary'}
-                onClick={() => {
-                  if (hasStudentRepository) redirectStudentToGraph();
-                }}
-              >
-                Ver gráfica
-              </StatefulButton>
-
-              <StatefulButton
-                variantStyle={canFinishTask ? 'primary' : 'secondary'}
-                onClick={() => {
-                  if (canFinishTask) openCommentDialog();
-                }}
-              >
-                Finalizar tarea
-              </StatefulButton>
-
-              {showIAButton && (
-                <StatefulButton
-                  variantStyle={studentSubmission?.repository_link ? 'primary' : 'secondary'}
-                  onClick={() => {
-                    if (studentSubmission?.repository_link) redirectStudentToAssistant();
-                  }}
-                >
-                  Asistente IA
-                </StatefulButton>
-              )}
-            </div>
-          </section>
+    <>
+      <DetailPageShell>
+        {isLoading || hasError ? (
+          <div className="detail-center-state" data-testid="loading-indicator">
+            {isLoading ? (
+              <ContentState variant="loading" title="Cargando..." />
+            ) : (
+              <Typography color="error">
+                No se pudo cargar el detalle de la tarea. Intenta nuevamente.
+              </Typography>
+            )}
+          </div>
         ) : (
           <>
-            <h2 className="assignment-section-title">Lista de entregas</h2>
+            <TaskOverviewCard
+              title={assignment.title}
+              groupName={groupDetails?.groupName || "Cargando grupo..."}
+              startDate={toDisplayDate(assignment.start_date)}
+              endDate={toDisplayDate(assignment.end_date)}
+            />
 
-            <section className="assignment-deliveries-card">
-              <DeliveriesTable
-                state={deliveriesState}
-                rows={deliveriesRows}
+            {isStudent ? (
+              <StudentDetailCard
+                title="Mi entrega"
+                titleClassName="assignment-section-title"
+                sectionClassName="assignment-student-card"
+                contentClassName="assignment-student-content"
+                detailsClassName="assignment-student-details"
+                actionsClassName="assignment-student-actions"
+                details={
+                  <StudentSubmissionSummary
+                    status={studentStatusLabel}
+                    repositoryLink={studentRepositoryLink}
+                    comment={studentSubmission?.comment || undefined}
+                  />
+                }
+                actions={
+                  <>
+                    <StatefulButton
+                      variantStyle={!hasStudentSubmission ? 'primary' : 'secondary'}
+                      onClick={() => {
+                        if (!hasStudentSubmission) openLinkDialog();
+                      }}
+                    >
+                      Iniciar tarea
+                    </StatefulButton>
+
+                    <StatefulButton
+                      variantStyle={hasStudentRepository ? 'primary' : 'secondary'}
+                      onClick={() => {
+                        if (hasStudentRepository) redirectStudentToGraph();
+                      }}
+                    >
+                      Ver gráfica
+                    </StatefulButton>
+
+                    <StatefulButton
+                      variantStyle={canFinishTask ? 'primary' : 'secondary'}
+                      onClick={() => {
+                        if (canFinishTask) openCommentDialog();
+                      }}
+                    >
+                      Finalizar tarea
+                    </StatefulButton>
+
+                    {showIAButton && (
+                      <StatefulButton
+                        variantStyle={studentSubmission?.repository_link ? 'primary' : 'secondary'}
+                        onClick={() => {
+                          if (studentSubmission?.repository_link) redirectStudentToAssistant();
+                        }}
+                      >
+                        Asistente IA
+                      </StatefulButton>
+                    )}
+                  </>
+                }
+              />
+            ) : (
+              <>
+                <h2 className="assignment-section-title">Lista de entregas</h2>
+                {deliveriesState === "loading" ? (
+                  <div className="assignment-deliveries-state">
+                    <ContentState variant="loading" title="Cargando..." />
+                  </div>
+                ) : deliveriesState === "error" ? (
+                  <div className="assignment-deliveries-state">
+                    <ContentState variant="error" title="Error al cargar..." />
+                  </div>
+                ) : deliveriesState === "empty" ? (
+                  <div className="assignment-deliveries-state">
+                    <ContentState variant="empty" title="Sin entregas" />
+                  </div>
+                ) : (
+                  <section className="assignment-deliveries-card">
+                    <DeliveriesTable
+                      state={deliveriesState}
+                      rows={deliveriesRows}
                 showAdditionalGraphs={!disableAdditionalGraphs}
                 onOpenGraph={openTeacherGraph}
                 onOpenAssistant={openTeacherAssistant}
                 onOpenAdditionalGraphs={openTeacherAdditionalGraphs}
               />
             </section>
+                )}
+              </>
+            )}
           </>
         )}
-      </div>
+      </DetailPageShell>
 
       <GitLinkDialog
         open={linkDialogOpen}
@@ -178,7 +201,7 @@ const AssignmentDetail: React.FC<AssignmentDetailProps> = ({ role, userid }) => 
         onClose={closeUiMessage}
         severity="warning"
       />
-    </div>
+    </>
   );
 };
 

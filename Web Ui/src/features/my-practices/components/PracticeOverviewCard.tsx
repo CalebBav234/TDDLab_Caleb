@@ -21,15 +21,15 @@ export function PracticeOverviewCard({
   createdAt,
 }: Readonly<PracticeOverviewCardProps>) {
   return (
-    <section className="practice-task-card" aria-label="Resumen de practica">
-      <div className="practice-task-title-block">
-        <h1 className="practice-task-title">{title}</h1>
+    <section className="detail-overview-card" aria-label="Resumen de practica">
+      <div className="detail-overview-title-block">
+        <h1 className="detail-overview-title">{title}</h1>
       </div>
 
-      <div className="practice-task-meta-block">
-        <div className="practice-task-meta-row">
+      <div className="detail-overview-meta-block">
+        <div className="detail-overview-meta-row">
           <CalendarFilledIcon />
-          <span className="practice-task-meta-label">Creación:</span>
+          <span className="detail-overview-meta-label">Creación:</span>
           <span>{createdAt}</span>
         </div>
       </div>
