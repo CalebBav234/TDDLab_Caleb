@@ -183,9 +183,13 @@ export default function MainMenu({
                       lineHeight: "36px",
                       letterSpacing: 0.2,
                       textTransform: "uppercase",
-                      transition: "background 0.2s ease, transform 0.1s",
-                      "&:hover, &.active": {
-                        background: "linear-gradient(180deg, #002346 0%, #004589 100%)",
+                      transition: "background-color 0.2s ease, transform 0.1s",
+                      "&:hover": {
+                        backgroundColor: "rgba(255,255,255,0.08)",
+                        transform: "scale(1.02)",
+                      },
+                      "&.active": {
+                        backgroundColor: "transparent",
                         transform: "scale(1.02)",
                       },
                       "&::after":
@@ -223,9 +227,13 @@ export default function MainMenu({
                   mr: 1,
                   borderRadius: 2,
                   position: 'relative',
-                  transition: "background 0.2s ease, transform 0.1s",
-                  "&:hover, &.active": {
-                    background: "linear-gradient(180deg, #002346 0%, #004589 100%)",
+                  transition: "background-color 0.2s ease, transform 0.1s",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.08)",
+                    transform: "scale(1.02)",
+                  },
+                  "&.active": {
+                    backgroundColor: "transparent",
                     transform: "scale(1.02)",
                   },
                   "&::after":
