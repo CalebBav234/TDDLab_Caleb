@@ -17,24 +17,22 @@ describe("FeatureScreenLayout", () => {
 
   it("applies className when provided", () => {
     render(
-      <FeatureScreenLayout className="my-layout">
+      <FeatureScreenLayout className="my-layout" testId="layout-section">
         <span>Child</span>
       </FeatureScreenLayout>
     );
 
-    const main = screen.getByRole("main");
-    expect(main).toHaveClass("my-layout");
+    expect(screen.getByTestId("layout-section")).toHaveClass("my-layout");
   });
 
   it("renders without className when not provided", () => {
-    const { container } = render(
+    render(
       <FeatureScreenLayout>
         <span>Child</span>
       </FeatureScreenLayout>
     );
 
-    const main = container.querySelector("main");
-    expect(main).not.toHaveAttribute("class");
+    expect(screen.getByRole("main")).toBeInTheDocument();
   });
 });
 

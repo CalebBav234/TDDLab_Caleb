@@ -109,7 +109,7 @@
   pointer-events: none;
 }
 
-.landing-hero-overlay .action-button {
+.landing-hero-overlay .landing-action-button {
   position: absolute;
   left: 50%;
   top: 394px;
@@ -122,8 +122,8 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.47);
 }
 
-.landing-hero-overlay .action-button:hover,
-.landing-hero-overlay .action-button:focus-visible {
+.landing-hero-overlay .landing-action-button:hover,
+.landing-hero-overlay .landing-action-button:focus-visible {
   background: #1370d2;
 }
 
@@ -489,7 +489,7 @@
   line-height: 1.35;
 }
 
-.landing-cta-content .action-button {
+.landing-cta-content .landing-action-button {
   margin-top: 42px;
   width: min(395px, 100%);
   min-height: 65px;
@@ -498,8 +498,8 @@
   font-size: clamp(1rem, 1.5vw, 1.25rem);
 }
 
-.landing-cta-content .action-button:hover,
-.landing-cta-content .action-button:focus-visible {
+.landing-cta-content .landing-action-button:hover,
+.landing-cta-content .landing-action-button:focus-visible {
   background: #1370d2;
 }
 
@@ -603,7 +603,7 @@
     top: 104px;
   }
 
-  .landing-hero-overlay .action-button {
+  .landing-hero-overlay .landing-action-button {
     top: 290px;
   }
 
@@ -629,13 +629,13 @@
     min-height: 560px;
   }
 
-  .landing-cta-content .action-button {
+  .landing-cta-content .landing-action-button {
     min-height: 56px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .action-button,
+  .landing-action-button,
   .landing-info-card,
   .landing-info-card-face {
     transition: none;

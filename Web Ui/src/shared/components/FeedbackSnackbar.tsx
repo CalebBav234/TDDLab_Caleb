@@ -1,24 +1,24 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { AlertColor } from "@mui/material";
+import type { AlertColor } from "@mui/material";
 
-type FeedbackSnackbarProps = {
-  open: boolean;
+interface FeedbackSnackbarProps {
   message: string;
-  severity?: AlertColor;
   onClose: () => void;
-};
+  open: boolean;
+  severity?: AlertColor;
+}
 
-const FeedbackSnackbar = ({
-  open,
+function FeedbackSnackbar({
   message,
-  severity = "error",
   onClose,
-}: FeedbackSnackbarProps) => {
+  open,
+  severity = "success",
+}: Readonly<FeedbackSnackbarProps>) {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={5000}
+      autoHideDuration={3500}
       onClose={onClose}
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
     >
@@ -27,7 +27,6 @@ const FeedbackSnackbar = ({
       </Alert>
     </Snackbar>
   );
-};
+}
 
 export default FeedbackSnackbar;
-

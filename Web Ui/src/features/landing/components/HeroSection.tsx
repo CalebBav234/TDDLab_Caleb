@@ -38,7 +38,11 @@ const HeroSection = ({
           <img src="/landing/intro-tddlab-center.svg" alt="Marca TDDLab en intro" className="landing-intro-brand" />
         </div>
 
-        <ActionButton onClick={onAuthClick} variantStyle="secondary">
+        <ActionButton
+          className="landing-action-button"
+          onClick={onAuthClick}
+          variantStyle="secondary"
+        >
           {buttonText}
         </ActionButton>
       </div>
