@@ -84,31 +84,27 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
             detailsClassName="practice-student-details"
             actionsClassName="practice-student-actions"
             details={
-              submissionState === "loading" ? (
-                <ContentState variant="loading" title="Cargando..." />
-              ) : (
-                <>
-                  <div className="practice-student-row practice-enlace-row">
-                    <strong>Enlace:</strong>{" "}
-                    {submission?.repository_link ? (
-                      <a
-                        href={submission.repository_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="practice-link-anchor"
-                      >
-                        {submission.repository_link}
-                      </a>
-                    ) : (
-                      <span style={{ marginLeft: "8px" }}>No se inicio la practica</span>
-                    )}
-                  </div>
-                  <div className="practice-student-row practice-estado-row">
-                    <strong>Estado:</strong>{" "}
-                    <span style={{ marginLeft: "8px" }}>{statusLabel || "Sin estado"}</span>
-                  </div>
-                </>
-              )
+              <>
+                <div className="practice-student-row practice-enlace-row">
+                  <strong>Enlace:</strong>{" "}
+                  {submission?.repository_link ? (
+                    <a
+                      href={submission.repository_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="practice-link-anchor"
+                    >
+                      {submission.repository_link}
+                    </a>
+                  ) : (
+                    <span style={{ marginLeft: "8px" }}>No se inicio la practica</span>
+                  )}
+                </div>
+                <div className="practice-student-row practice-estado-row">
+                  <strong>Estado:</strong>{" "}
+                  <span style={{ marginLeft: "8px" }}>{statusLabel || "Sin estado"}</span>
+                </div>
+              </>
             }
             actions={
               <>
