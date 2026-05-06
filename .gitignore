@@ -82,5 +82,8 @@ node_modules/
 # Documentacion local no versionada
 docs/
 
+# Archivos comprimidos generados localmente
+output.zip
+
 # Dependecias generadas por husky
 /tddlabBaseProject/.husky/_
