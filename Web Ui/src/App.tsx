@@ -89,8 +89,7 @@ function App() {
   const authData = useGlobalState("authData")[0];
   const isAuthResolved = authData.userid !== undefined;
   const isAuthenticated = Boolean(authData.userEmail);
-  const isPublicLandingPath =
-    window.location.pathname === "/" || window.location.pathname === "/landing";
+  const isPublicLandingPath = window.location.pathname === "/landing";
 
   useEffect(() => {
     getSessionCookie().then((storedSession) => {
