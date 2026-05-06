@@ -1,11 +1,9 @@
 import {
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
 import StatefulButton from "../../../../shared/components/StatefulButton";
@@ -21,52 +19,26 @@ interface DeliveriesTableProps {
 }
 
 export function DeliveriesTable({
-  state,
+  state: _state,
   rows,
   showAdditionalGraphs,
   onOpenGraph,
   onOpenAssistant,
   onOpenAdditionalGraphs,
 }: Readonly<DeliveriesTableProps>) {
-  if (state === "loading") {
-    return (
-      <div className="assignment-deliveries-state">
-        <CircularProgress size={32} thickness={4} />
-      </div>
-    );
-  }
-
-  if (state === "error") {
-    return (
-      <div className="assignment-deliveries-state">
-        <Typography color="error">
-          No se pudieron cargar las entregas. Intenta de nuevo en unos minutos.
-        </Typography>
-      </div>
-    );
-  }
-
-  if (state === "empty") {
-    return (
-      <div className="assignment-deliveries-state">
-        <Typography>Aun no existen entregas para esta tarea.</Typography>
-      </div>
-    );
-  }
-
   return (
     <div className="assignment-table-wrapper">
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Correo</TableCell>
-            <TableCell>Estado</TableCell>
-            <TableCell>Enlace</TableCell>
-            <TableCell>Fecha de inicio</TableCell>
-            <TableCell>Fecha de finalización</TableCell>
-            <TableCell>Gráfica</TableCell>
-            <TableCell>Asistente IA</TableCell>
-            <TableCell>Gráficas adicionales</TableCell>
+            <TableCell sx={{ width: "22%" }}>Correo</TableCell>
+            <TableCell sx={{ width: "12%" }}>Estado</TableCell>
+            <TableCell sx={{ width: "8%" }}>Enlace</TableCell>
+            <TableCell sx={{ width: "14%" }}>Fecha de inicio</TableCell>
+            <TableCell sx={{ width: "14%" }}>Fecha de finalización</TableCell>
+            <TableCell sx={{ width: "10%" }}>Gráfica</TableCell>
+            <TableCell sx={{ width: "10%" }}>Asistente IA</TableCell>
+            <TableCell sx={{ width: "10%" }}>Gráficas adicionales</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

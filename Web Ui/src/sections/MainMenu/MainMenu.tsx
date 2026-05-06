@@ -104,6 +104,16 @@ function getDisplayTitle(title: string): string {
   return map[title] ?? title.toUpperCase();
 }
 
+function getUnderlineWidth(title: string): number {
+  const widths: Record<string, number> = {
+    Inicio: 72,
+    "Mis Practicas": 145,
+    Usuarios: 100,
+    Grupos: 81,
+  };
+  return widths[title] ?? 66;
+}
+
 export default function MainMenu({
   navArrayLinks,
   userRole,
@@ -186,16 +196,7 @@ export default function MainMenu({
                               left: "50%",
                               transform: "translateX(-50%)",
                               bottom: 6,
-                              width:
-                                item.title === "Inicio"
-                                  ? 72
-                                  : item.title === "Mis Practicas"
-                                  ? 145
-                                  : item.title === "Usuarios"
-                                    ? 100
-                                    : item.title === "Grupos"
-                                      ? 81
-                                      : 66,
+                              width: getUnderlineWidth(item.title),
                               height: 3,
                               borderRadius: 8,
                               backgroundColor: "#D9D9D9",

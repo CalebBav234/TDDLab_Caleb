@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { useSettings } from '../hooks/useSettings';
 import { PromptConfiguration, PromptItem } from '../components/PromptConfiguration';
 import { FeatureFlags } from '../components/FeatureFlags';
 import FeatureScreenLayout from '../../../shared/components/FeatureScreenLayout';
 import FeaturePageHeader from '../../../shared/components/FeaturePageHeader';
 import FeatureListSection from '../../../shared/components/FeatureListSection';
-import FeatureSectionDivider from '../../../shared/components/FeatureSectionDivider';
 import ContentState from '../../../shared/components/ContentState';
-
-const ErrorAlert = styled(Alert)(({ theme }) => ({
-  marginTop: theme.spacing(3),
-  marginBottom: theme.spacing(3),
-}));
-
-const PromptSection = styled("div")(({ theme }) => ({
-  marginTop: theme.spacing(3),
-}));
 
 const SettingsPage: React.FC = () => {
   const {
@@ -67,53 +55,49 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  if (loading && !prompts) {
-    return (
-      <FeatureScreenLayout>
-        <ContentState
-          variant="loading"
-          title="Cargando configuración"
-          description="Se están cargando los ajustes del sistema."
-        />
-      </FeatureScreenLayout>
-    );
-  }
-
   return (
-    <FeatureScreenLayout className="settings-page" sectionGap={0}>
+    <FeatureScreenLayout className="settings-page">
       <FeaturePageHeader title="Configuración de Prompt" />
 
-      {error && (
-        <ErrorAlert severity="error">
-          {error}
-        </ErrorAlert>
+      {loading && !prompts ? (
+        <FeatureListSection>
+          <ContentState
+            variant="loading"
+            title="Cargando..."
+            description="Se están cargando los ajustes del sistema."
+          />
+        </FeatureListSection>
+      ) : error ? (
+        <FeatureListSection>
+          <ContentState
+            variant="error"
+            title="Error al cargar..."
+            description={error}
+          />
+        </FeatureListSection>
+      ) : null}
+
+      {prompts && (
+        <FeatureListSection>
+          <PromptConfiguration
+            prompts={promptItems}
+            selectedPrompt={selectedPrompt}
+            onChangePrompt={setSelectedPrompt}
+            onSavePrompt={handleSavePrompt}
+            saving={savingPrompt}
+          />
+        </FeatureListSection>
       )}
 
-      <PromptSection>
-        <FeatureListSection>
-          {prompts && (
-            <PromptConfiguration
-              prompts={promptItems}
-              selectedPrompt={selectedPrompt}
-              onChangePrompt={setSelectedPrompt}
-              onSavePrompt={handleSavePrompt}
-              saving={savingPrompt}
-            />
-          )}
-        </FeatureListSection>
-      </PromptSection>
-
-      <FeatureSectionDivider />
-
-      <FeatureListSection title="Habilitación de Funcionalidades:">
-        {flags && flags.length > 0 && (
+      {flags && flags.length > 0 && (
+        <FeatureListSection title="Habilitación de Funcionalidades:">
           <FeatureFlags
             flags={flags}
             onToggleFlag={handleToggleFlag}
             saving={savingFlag}
           />
-        )}
-      </FeatureListSection>
+        </FeatureListSection>
+      )}
     </FeatureScreenLayout>
   );
 };

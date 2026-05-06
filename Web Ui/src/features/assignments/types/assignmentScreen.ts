@@ -4,10 +4,18 @@ export interface AssignmentScreenProps {
 }
 
 export interface AssignmentListProps {
-  ShowForm: () => void;
+  assignments?: AssignmentListItemViewModel[];
+  confirmationOpen?: boolean;
+  feedbackMessage?: string;
+  feedbackSeverity?: "success" | "error";
+  handleClickDelete?: (assignmentId: number) => void;
+  handleClickDetail?: (assignmentId: number) => void;
+  handleConfirmDelete?: () => Promise<void>;
+  setConfirmationOpen?: (open: boolean) => void;
+  setFeedbackMessage?: (message: string) => void;
+  setValidationDialogOpen?: (open: boolean) => void;
   userRole: string;
-  userGroupid: number | number[];
-  onGroupChange: (groupId: number) => void;
+  validationDialogOpen?: boolean;
 }
 
 export interface AssignmentListItemViewModel {

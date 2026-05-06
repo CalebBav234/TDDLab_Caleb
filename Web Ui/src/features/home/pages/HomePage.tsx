@@ -8,7 +8,6 @@ import HomeWelcome from "../components/HomeWelcome";
 import { useHomePage } from "../hooks/useHomePage";
 
 const HomeContent = styled(Box)(({ theme }) => ({
-  minHeight: "calc(100vh - 85px - 100px)",
   paddingTop: theme.spacing(5),
   [theme.breakpoints.down("md")]: {
     paddingTop: theme.spacing(2),

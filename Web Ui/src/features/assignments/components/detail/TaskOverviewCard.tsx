@@ -26,27 +26,27 @@ export function TaskOverviewCard({
   endDate,
 }: Readonly<TaskOverviewCardProps>) {
   return (
-    <section className="assignment-task-card" aria-label="Resumen de tarea">
-      <div className="assignment-task-title-block">
-        <h1 className="assignment-task-title">{title}</h1>
+    <section className="detail-overview-card" aria-label="Resumen de tarea">
+      <div className="detail-overview-title-block">
+        <h1 className="detail-overview-title">{title}</h1>
       </div>
 
-      <div className="assignment-task-meta-block">
-        <div className="assignment-task-meta-row">
+      <div className="detail-overview-meta-block">
+        <div className="detail-overview-meta-row">
           <GroupsIcon />
-          <span className="assignment-task-meta-label">Grupo:</span>
+          <span className="detail-overview-meta-label">Grupo:</span>
           <span>{groupName}</span>
         </div>
 
-        <div className="assignment-task-meta-row">
+        <div className="detail-overview-meta-row">
           <CalendarFilledIcon />
-          <span className="assignment-task-meta-label">Inicio:</span>
+          <span className="detail-overview-meta-label">Inicio:</span>
           <span>{startDate}</span>
         </div>
 
-        <div className="assignment-task-meta-row">
+        <div className="detail-overview-meta-row">
           <CalendarFilledIcon />
-          <span className="assignment-task-meta-label">Finalización:</span>
+          <span className="detail-overview-meta-label">Finalización:</span>
           <span>{endDate}</span>
         </div>
       </div>

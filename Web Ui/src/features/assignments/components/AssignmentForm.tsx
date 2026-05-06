@@ -77,6 +77,11 @@ const ValidationDialog = ({
   );
 };
 
+function resolveGroupId(prevGroupId: number, list: GroupDataObject[]): number {
+  const keepCurrent = list.some((g) => g.id === prevGroupId);
+  return keepCurrent ? prevGroupId : (list[0]?.id ?? 0);
+}
+
 // Componente Form principal
 interface CreateAssignmentPopupProps {
   open: boolean;
@@ -225,11 +230,10 @@ function Form({ open, handleClose, groupid }: Readonly<CreateAssignmentPopupProp
 
       setGroups(list);
 
-      setAssignmentData(prev => {
-        const keepCurrent = list.some(g => g.id === prev.groupid);
-        const fallbackId = list[0]?.id ?? 0;
-        return { ...prev, groupid: keepCurrent ? prev.groupid : fallbackId };
-      });
+      setAssignmentData((prev) => ({
+        ...prev,
+        groupid: resolveGroupId(prev.groupid, list),
+      }));
     };
 
     if (open) fetchGroups();

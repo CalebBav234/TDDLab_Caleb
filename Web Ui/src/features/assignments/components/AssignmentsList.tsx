@@ -1,125 +1,38 @@
-import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ActionButton from "../../../shared/components/ActionButton";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
-import ContentState from "../../../shared/components/ContentState";
 import FeedbackSnackbar from "../../../shared/components/FeedbackSnackbar";
 import FeatureItemsLayout from "../../../shared/components/FeatureItemsLayout";
-import FeatureListSection from "../../../shared/components/FeatureListSection";
-import FeaturePageHeader from "../../../shared/components/FeaturePageHeader";
-import FeatureSectionDivider from "../../../shared/components/FeatureSectionDivider";
 import ValidationDialog from "../../../shared/components/ValidationDialog";
-import { useAssignmentsScreen } from "../hooks/useAssignmentsScreen";
 import { AssignmentListProps } from "../types/assignmentScreen";
 import AssignmentRow from "./AssignmentRow";
-import AssignmentsFilterPopover from "./AssignmentsFilterPopover";
-
 function AssignmentsList({
-  ShowForm: showForm,
+  assignments,
+  confirmationOpen,
+  feedbackMessage,
+  feedbackSeverity,
+  handleClickDelete,
+  handleClickDetail,
+  handleConfirmDelete,
+  setConfirmationOpen,
+  setFeedbackMessage,
+  setValidationDialogOpen,
   userRole,
-  userGroupid,
-  onGroupChange,
+  validationDialogOpen,
 }: Readonly<AssignmentListProps>) {
-  const {
-    assignments,
-    confirmationOpen,
-    error,
-    feedbackMessage,
-    feedbackSeverity,
-    groupList,
-    handleClickDelete,
-    handleClickDetail,
-    handleConfirmDelete,
-    handleGroupChange,
-    handleOrderAssignments,
-    isLoading,
-    selectedGroup,
-    selectedSorting,
-    setConfirmationOpen,
-    setFeedbackMessage,
-    setValidationDialogOpen,
-    showCreateButton,
-    validationDialogOpen,
-  } = useAssignmentsScreen({
-    ShowForm: showForm,
-    userRole,
-    userGroupid,
-    onGroupChange,
-  });
-
-  const [filtersAnchorEl, setFiltersAnchorEl] = useState<HTMLElement | null>(
-    null,
-  );
   const canManageAssignments = userRole === "teacher" || userRole === "admin";
 
   return (
     <>
-      <FeaturePageHeader
-        title="Tareas"
-        actions={
-          <>
-            <ActionButton
-              endIcon={<KeyboardArrowDownIcon />}
-              variantStyle="secondary"
-              onClick={(event) => setFiltersAnchorEl(event.currentTarget)}
-            >
-              Filtrar
-            </ActionButton>
-            {showCreateButton ? (
-              <ActionButton
-                startIcon={<AddIcon />}
-                variantStyle="primary"
-                onClick={showForm}
-              >
-                Crear
-              </ActionButton>
-            ) : null}
-          </>
-        }
-      />
-      <FeatureSectionDivider />
-
-      <FeatureListSection>
-        {isLoading ? (
-          <ContentState variant="loading" title="Cargando tareas..." />
-        ) : error ? (
-          <ContentState
-            variant="error"
-            title="No se pudieron cargar las tareas"
-            description={error.message}
+      <FeatureItemsLayout>
+        {(assignments ?? []).map((assignment) => (
+          <AssignmentRow
+            key={assignment.id}
+            item={assignment}
+            canManage={canManageAssignments}
+            onDelete={handleClickDelete ?? (() => undefined)}
+            onView={handleClickDetail ?? (() => undefined)}
           />
-        ) : assignments.length === 0 ? (
-          <ContentState
-            variant="empty"
-            title="No hay tareas disponibles"
-            description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
-          />
-        ) : (
-          <FeatureItemsLayout>
-            {assignments.map((assignment) => (
-              <AssignmentRow
-                key={assignment.id}
-                item={assignment}
-                canManage={canManageAssignments}
-                onDelete={handleClickDelete}
-                onView={handleClickDetail}
-              />
-            ))}
-          </FeatureItemsLayout>
-        )}
-      </FeatureListSection>
-
-      <AssignmentsFilterPopover
-        anchorEl={filtersAnchorEl}
-        groupList={groupList}
-        onClose={() => setFiltersAnchorEl(null)}
-        onGroupChange={handleGroupChange}
-        onSortingChange={handleOrderAssignments}
-        open={Boolean(filtersAnchorEl)}
-        selectedGroup={selectedGroup}
-        selectedSorting={selectedSorting}
-      />
+        ))}
+      </FeatureItemsLayout>
 
       {confirmationOpen ? (
         <ConfirmationDialog
@@ -133,8 +46,8 @@ function AssignmentsList({
           }
           cancelText="Cancelar"
           deleteText="Eliminar"
-          onCancel={() => setConfirmationOpen(false)}
-          onDelete={handleConfirmDelete}
+          onCancel={() => setConfirmationOpen?.(false)}
+          onDelete={handleConfirmDelete ?? (async () => undefined)}
         />
       ) : null}
 
@@ -144,16 +57,16 @@ function AssignmentsList({
           title="Tarea eliminada exitosamente"
           closeText="Cerrar"
           onClose={() => {
-            setValidationDialogOpen(false);
+            setValidationDialogOpen?.(false);
           }}
         />
       ) : null}
 
       <FeedbackSnackbar
         open={Boolean(feedbackMessage) && !validationDialogOpen}
-        message={feedbackMessage}
-        severity={feedbackSeverity}
-        onClose={() => setFeedbackMessage("")}
+        message={feedbackMessage ?? ""}
+        severity={feedbackSeverity ?? "success"}
+        onClose={() => setFeedbackMessage?.("")}
       />
     </>
   );
