@@ -52,13 +52,27 @@ describe("setSessionCookie", () => {
 
 describe("getSessionCookie", () => {
     it("retrieves the session cookie successfully", async () => {
-    const userData = { cookieUserData };
+    const userData = {
+      id: 1,
+      email: "usuario@example.com",
+      groupid: 10,
+      role: "student",
+    };
     (axios.get as jest.Mock).mockResolvedValueOnce({ data: userData });
 
     const result = await getSessionCookie();
 
     expect(axios.get).toHaveBeenCalledWith(API_URL + "/user/me", { withCredentials: true });
     expect(result).toEqual(userData);
+  });
+
+  it("returns null if the session response has an invalid shape", async () => {
+    (axios.get as jest.Mock).mockResolvedValueOnce({ data: { cookieUserData } });
+
+    const result = await getSessionCookie();
+
+    expect(axios.get).toHaveBeenCalledWith(API_URL + "/user/me", { withCredentials: true });
+    expect(result).toBeNull();
   });
 
   it("returns null if the session cookie is not present", async () => {
