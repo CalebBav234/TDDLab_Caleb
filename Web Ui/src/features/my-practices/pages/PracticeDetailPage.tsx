@@ -43,19 +43,9 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
 
   const hasSubmission = Boolean(submission);
   const hasRepo = Boolean(submission?.repository_link);
-  const isLoading = submissionState === "loading";
-  const canStart = !hasSubmission && !isLoading;
-  const canFinish = !isTaskInProgress && !isLoading && hasRepo;
-  const canView = hasRepo && !isLoading;
-
-  const linkContent = (() => {
-    if (isLoading) return "Cargando...";
-    if (submissionState === "error") return "No disponible por error de carga";
-    if (submission?.repository_link) return submission.repository_link;
-    return "No se inicio la practica";
-  })();
-
-  const statusContent = isLoading ? "Cargando..." : statusLabel;
+  const canStart = !hasSubmission;
+  const canFinish = !isTaskInProgress && hasRepo;
+  const canView = hasRepo;
 
   return (
     <>
@@ -94,27 +84,31 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
             detailsClassName="practice-student-details"
             actionsClassName="practice-student-actions"
             details={
-              <>
-                <div className="practice-student-row practice-enlace-row">
-                  <strong>Enlace:</strong>{" "}
-                  {submission?.repository_link ? (
-                    <a
-                      href={submission.repository_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="practice-link-anchor"
-                    >
-                      {submission.repository_link}
-                    </a>
-                  ) : (
-                    <span style={{ marginLeft: "8px" }}>{linkContent}</span>
-                  )}
-                </div>
-                <div className="practice-student-row practice-estado-row">
-                  <strong>Estado:</strong>{" "}
-                  <span style={{ marginLeft: "8px" }}>{statusContent}</span>
-                </div>
-              </>
+              submissionState === "loading" ? (
+                <ContentState variant="loading" title="Cargando..." />
+              ) : (
+                <>
+                  <div className="practice-student-row practice-enlace-row">
+                    <strong>Enlace:</strong>{" "}
+                    {submission?.repository_link ? (
+                      <a
+                        href={submission.repository_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="practice-link-anchor"
+                      >
+                        {submission.repository_link}
+                      </a>
+                    ) : (
+                      <span style={{ marginLeft: "8px" }}>No se inicio la practica</span>
+                    )}
+                  </div>
+                  <div className="practice-student-row practice-estado-row">
+                    <strong>Estado:</strong>{" "}
+                    <span style={{ marginLeft: "8px" }}>{statusLabel || "Sin estado"}</span>
+                  </div>
+                </>
+              )
             }
             actions={
               <>
