@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
 
 interface FeatureScreenLayoutProps {
@@ -10,7 +9,9 @@ interface FeatureScreenLayoutProps {
   sectionGap?: number;
 }
 
-const PageContainer = styled(Container)(({ theme }) => ({
+const PageContainer = styled("main")(({ theme }) => ({
+  width: "100%",
+  boxSizing: "border-box",
   paddingTop: theme.spacing(7.625),
   paddingBottom: theme.spacing(5),
   backgroundColor: "#FFFFFF",

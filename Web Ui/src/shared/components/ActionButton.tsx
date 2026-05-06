@@ -47,11 +47,24 @@ const StyledActionButton = styled(Button, {
 
 function ActionButton({
   children,
+  className,
   variantStyle = "secondary",
   ...props
 }: Readonly<ActionButtonProps>) {
+  const buttonClassName = [
+    "action-button",
+    `action-button--${variantStyle}`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <StyledActionButton variantStyle={variantStyle} {...props}>
+    <StyledActionButton
+      className={buttonClassName}
+      variantStyle={variantStyle}
+      {...props}
+    >
       {children}
     </StyledActionButton>
   );

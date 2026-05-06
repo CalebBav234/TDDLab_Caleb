@@ -20,19 +20,29 @@ import "./App.css";
 import ProtectedRouteComponent from "./ProtectedRoute";
 import { CircularProgress } from "@mui/material";
 
-
 const HomePage = lazy(() => import("./features/home/pages/HomePage"));
+const LandingPage = lazy(() => import("./features/landing/pages/LandingPage"));
 const Groups = lazy(() => import("./features/groups/pages/GroupsPage"));
 const User = lazy(() => import("./features/users/pages/UserPage"));
-const UsersByGroupPage = lazy(() => import("./features/users/pages/UserBygroupPage"));
+const UsersByGroupPage = lazy(
+  () => import("./features/users/pages/UserBygroupPage"),
+);
 const SettingsPage = lazy(() => import("./features/settings/pages/SettingsPage"));
 
 const GestionTareas = lazy(() => import("./sections/Assignments/AssignmentsPage"));
-const AssignmentDetail = lazy(() => import("./sections/Assignments/AssignmentDetail"));
-const TDDChartPage = lazy(() => import("./sections/TDDCycles-Visualization/TDDChartPage"));
+const AssignmentDetail = lazy(
+  () => import("./sections/Assignments/AssignmentDetail"),
+);
+const TDDChartPage = lazy(
+  () => import("./sections/TDDCycles-Visualization/TDDChartPage"),
+);
 const Login = lazy(() => import("./features/auth/pages/AuthPage"));
-const InvitationPage = lazy(() => import("./sections/GroupInvitation/InvitationPage"));
-const MyPracticesPage = lazy(() => import("./sections/MyPractices/MyPracticesPage"));
+const InvitationPage = lazy(
+  () => import("./sections/GroupInvitation/InvitationPage"),
+);
+const MyPracticesPage = lazy(
+  () => import("./sections/MyPractices/MyPracticesPage"),
+);
 const PracticeDetail = lazy(() => import("./sections/MyPractices/PracticeDetail"));
 const AIAssistantPage = lazy(() => import("./sections/AIAssistant/AIAssistantPage"));
 
@@ -77,6 +87,10 @@ const navArrayLinks = [
 
 function App() {
   const authData = useGlobalState("authData")[0];
+  const isAuthResolved = authData.userid !== undefined;
+  const isAuthenticated = Boolean(authData.userEmail);
+  const isPublicLandingPath =
+    window.location.pathname === "/" || window.location.pathname === "/landing";
 
   useEffect(() => {
     getSessionCookie().then((storedSession) => {
@@ -102,7 +116,7 @@ function App() {
     });
   }, []);
 
-  if (authData.userid === undefined) {
+  if (!isAuthResolved && !isPublicLandingPath) {
     return (
       <div
         style={{
@@ -120,7 +134,7 @@ function App() {
 
   return (
     <Router>
-      {authData.userEmail !== "" && authData.userRole !== undefined && (
+      {isAuthenticated && authData.userRole !== undefined && (
         <MainMenu navArrayLinks={navArrayLinks} userRole={authData.userRole} />
       )}
 
@@ -143,11 +157,17 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRouteComponent>
-                <HomePage />
-              </ProtectedRouteComponent>
+              isAuthenticated ? (
+                <ProtectedRouteComponent>
+                  <HomePage />
+                </ProtectedRouteComponent>
+              ) : (
+                <LandingPage />
+              )
             }
           />
+
+          <Route path="/landing" element={<LandingPage />} />
 
           <Route
             path="/groups"

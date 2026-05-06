@@ -165,7 +165,7 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
 
       <FeedbackSnackbar
         open={Boolean(uiMessage)}
-        message={uiMessage}
+        message={uiMessage ?? ""}
         severity="warning"
         onClose={closeUiMessage}
       />

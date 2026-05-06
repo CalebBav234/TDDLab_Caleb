@@ -1,11 +1,12 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import type { AlertColor } from "@mui/material";
 
 interface FeedbackSnackbarProps {
   message: string;
   onClose: () => void;
   open: boolean;
-  severity?: "success" | "error" | "info" | "warning";
+  severity?: AlertColor;
 }
 
 function FeedbackSnackbar({
