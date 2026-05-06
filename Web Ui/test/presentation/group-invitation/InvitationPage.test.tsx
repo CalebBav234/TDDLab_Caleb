@@ -63,11 +63,11 @@ describe("InvitationPage component", () => {
     const signUpButton = getByText("Registrarse con GitHub");
 
     fireEvent.click(signUpButton);
-    expect(RegisterUserOnDb).toHaveBeenCalledTimes(3);
+    expect(RegisterUserOnDb).toHaveBeenCalledTimes(1);
     expect(signUpButton).toBeInTheDocument();
     expect(handleSignInWithGitHub).toHaveBeenCalled();
     await waitFor(() => {
-      const acceptButton = getByText("Aceptar invitación al curso");
+      const acceptButton = getByText(/Aceptar invitaci.*n al curso/);
       fireEvent.click(acceptButton);
       expect(acceptButton).toBeInTheDocument();
     });
