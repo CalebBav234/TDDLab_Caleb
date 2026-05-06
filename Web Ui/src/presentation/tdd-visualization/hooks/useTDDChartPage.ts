@@ -147,7 +147,7 @@ export function useTDDChartPage({
       setFeedback("");
       loadComments();
     } catch (error) {
-      console.error("Error al enviar la retroalimentaciÃ³n:", error);
+      console.error("Error al enviar la retroalimentación:", error);
     } finally {
       setIsSubmitting(false);
     }

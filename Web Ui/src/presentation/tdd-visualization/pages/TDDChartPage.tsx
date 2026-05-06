@@ -32,7 +32,7 @@ function TDDChartPage(props: Readonly<CycleReportViewProps>) {
         chartsState.commitsInfo?.length !== 0 &&
         (!chartsState.tddLogsInfo || chartsState.tddLogsInfo.length === 0) && (
           <div className="error-message" data-testid="errorMessage">
-            Error: No se pudieron cargar los datos de las pruebas, es posible que estes utilizando una versiÃ³n anterior del repositorio base, o no hayas ejecutado ninguna prueba.
+            Error: No se pudieron cargar los datos de las pruebas, es posible que estes utilizando una versión anterior del repositorio base, o no hayas ejecutado ninguna prueba.
           </div>
         )}
 
@@ -90,7 +90,7 @@ function TDDChartPage(props: Readonly<CycleReportViewProps>) {
             id="feedback"
             value={tddPage.feedback}
             onChange={(event) => tddPage.setFeedback(event.target.value)}
-            placeholder="Ingrese su retroalimentaciÃ³n aquÃ­"
+            placeholder="Ingrese su retroalimentación aquí"
           />
           <button onClick={tddPage.handleSubmitFeedback} disabled={tddPage.isSubmitting}>
             {tddPage.isSubmitting ? (
