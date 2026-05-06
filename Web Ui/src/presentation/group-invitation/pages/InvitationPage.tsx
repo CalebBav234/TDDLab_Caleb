@@ -94,7 +94,7 @@ function InvitationPage() {
                           color="primary"
                           disabled={invitation.isLoading}
                         >
-                          Cerrar sesiÃ³n
+                          Cerrar sesión
                         </Button>
                       </Grid>
                     </Grid>
@@ -126,7 +126,7 @@ function InvitationPage() {
                 />
                 <CardContent>
                   <Typography variant="body1" sx={{ textAlign: "center" }}>
-                    Israel Antezana te estÃ¡ invitando al curso
+                    Israel Antezana te está invitando al curso
                   </Typography>
                   {invitation.userType === "student" && (
                     <Button
@@ -137,7 +137,7 @@ function InvitationPage() {
                       fullWidth
                       disabled={invitation.isLoading}
                     >
-                      Aceptar invitaciÃ³n al curso
+                      Aceptar invitación al curso
                     </Button>
                   )}
                   {invitation.userType === "teacher" && (
@@ -149,7 +149,7 @@ function InvitationPage() {
                       fullWidth
                       disabled={invitation.isLoading}
                     >
-                      Aceptar invitaciÃ³n al curso como Docente
+                      Aceptar invitación al curso como Docente
                     </Button>
                   )}
                 </CardContent>

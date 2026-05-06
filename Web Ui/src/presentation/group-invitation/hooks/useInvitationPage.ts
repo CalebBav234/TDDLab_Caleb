@@ -97,7 +97,7 @@ export function useInvitationPage() {
           user,
         });
       } catch (error) {
-        console.error("Error al registrar invitaciÃ³n:", error);
+        console.error("Error al registrar invitación:", error);
         setOpenPopup(true);
         return;
       }
@@ -118,7 +118,7 @@ export function useInvitationPage() {
         return;
       }
 
-      setFeedbackMessage("ContraseÃ±a invÃ¡lida");
+      setFeedbackMessage("Contraseña inválida");
     } finally {
       setIsLoading(false);
     }
