@@ -31,14 +31,14 @@ export function DeliveriesTable({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Correo</TableCell>
-            <TableCell>Estado</TableCell>
-            <TableCell>Enlace</TableCell>
-            <TableCell>Fecha de inicio</TableCell>
-            <TableCell>Fecha de finalización</TableCell>
-            <TableCell>Gráfica</TableCell>
-            <TableCell>Asistente IA</TableCell>
-            <TableCell>Gráficas adicionales</TableCell>
+            <TableCell sx={{ width: "22%" }}>Correo</TableCell>
+            <TableCell sx={{ width: "12%" }}>Estado</TableCell>
+            <TableCell sx={{ width: "8%" }}>Enlace</TableCell>
+            <TableCell sx={{ width: "14%" }}>Fecha de inicio</TableCell>
+            <TableCell sx={{ width: "14%" }}>Fecha de finalización</TableCell>
+            <TableCell sx={{ width: "10%" }}>Gráfica</TableCell>
+            <TableCell sx={{ width: "10%" }}>Asistente IA</TableCell>
+            <TableCell sx={{ width: "10%" }}>Gráficas adicionales</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

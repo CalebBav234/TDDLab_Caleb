@@ -7,7 +7,6 @@
 /* PAGE */
 
 .groups-page {
-  min-height: calc(100vh - 85px);
   background: #ffffff;
   padding: 0;
 }
