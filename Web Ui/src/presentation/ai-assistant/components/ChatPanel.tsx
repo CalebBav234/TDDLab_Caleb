@@ -94,7 +94,7 @@ export default function ChatPanel({
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Escribe tu mensaje aquÃ­..."
+          placeholder="Escribe tu mensaje aquí..."
           value={userMessage}
           onChange={(event) => onMessageChange(event.target.value)}
           onKeyDown={(event) => {

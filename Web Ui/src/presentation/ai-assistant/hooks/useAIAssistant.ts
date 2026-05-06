@@ -30,7 +30,7 @@ function getLoadingText(action: AssistantAction) {
 export function useAIAssistant(repositoryLink: string) {
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState<AssistantMessage[]>([
-    createBotMessage("Â¡Hola! Soy tu asistente IA. Â¿En quÃ© puedo ayudarte hoy?"),
+    createBotMessage("¡Hola! Soy tu asistente IA. ¿En qué puedo ayudarte hoy?"),
   ]);
   const [loadingChat, setLoadingChat] = useState(false);
   const [loadingAction, setLoadingAction] = useState<AssistantAction | null>(null);
@@ -57,7 +57,7 @@ export function useAIAssistant(repositoryLink: string) {
       console.error("Error al enviar mensaje al chatbot:", error);
       setMessages([
         ...nextMessages,
-        createBotMessage("Error de conexiÃ³n con el servidor."),
+        createBotMessage("Error de conexión con el servidor."),
       ]);
     } finally {
       setLoadingChat(false);
@@ -66,7 +66,7 @@ export function useAIAssistant(repositoryLink: string) {
 
   const runAssistantAction = async (action: AssistantAction) => {
     if (!repositoryLink || repositoryLink === EMPTY_REPOSITORY_MESSAGE) {
-      addBotMessage(`No hay un enlace de repositorio vÃ¡lido para ${action}`);
+      addBotMessage(`No hay un enlace de repositorio válido para ${action}`);
       return;
     }
 
@@ -81,7 +81,7 @@ export function useAIAssistant(repositoryLink: string) {
         createBotMessage(result),
       ]);
     } catch (error) {
-      console.error("Error al ejecutar acciÃ³n del asistente:", error);
+      console.error("Error al ejecutar acción del asistente:", error);
       setMessages((prev) => [
         ...prev.filter((message) => message.text !== loadingText),
         createBotMessage("Error al comunicarse con el servidor."),
