@@ -21,6 +21,28 @@ const withTimeout = <T>(promise: Promise<T>, timeoutMs: number) =>
       });
   });
 
+const isSessionResponse = (
+  value: unknown,
+): value is {
+  id: number;
+  email: string;
+  groupid: number;
+  role: string;
+} => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const session = value as Record<string, unknown>;
+
+  return (
+    typeof session.id === "number" &&
+    typeof session.email === "string" &&
+    typeof session.groupid === "number" &&
+    typeof session.role === "string"
+  );
+};
+
 export const getSessionCookie = () => {
   return withTimeout(
     axios.get(API_URL + "/user/me", {
@@ -30,7 +52,7 @@ export const getSessionCookie = () => {
   )
     .then((res) => {
       const userData = res.data;
-      return userData;
+      return isSessionResponse(userData) ? userData : null;
     })
     .catch((error) => {
       console.error("Error retrieving session cookie:", error);

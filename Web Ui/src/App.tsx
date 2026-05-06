@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CommitHistoryAdapter } from "./modules/TDDCycles-Visualization/repository/CommitHistoryAdapter";
-import MainMenu from "./sections/MainMenu/MainMenu";
+import MainMenu from "./app/navigation/MainMenu";
 
 import GroupsIcon from "@mui/icons-material/Groups";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -20,31 +20,32 @@ import "./App.css";
 import ProtectedRouteComponent from "./ProtectedRoute";
 import { CircularProgress } from "@mui/material";
 
-const HomePage = lazy(() => import("./features/home/pages/HomePage"));
-const LandingPage = lazy(() => import("./features/landing/pages/LandingPage"));
-const Groups = lazy(() => import("./features/groups/pages/GroupsPage"));
-const User = lazy(() => import("./features/users/pages/UserPage"));
+const HomePage = lazy(() => import("./presentation/home/pages/HomePage"));
+const LandingPage = lazy(() => import("./presentation/landing/pages/LandingPage"));
+const Groups = lazy(() => import("./presentation/groups/pages/GroupsPage"));
+const User = lazy(() => import("./presentation/users/pages/UserPage"));
 const UsersByGroupPage = lazy(
-  () => import("./features/users/pages/UserBygroupPage"),
+  () => import("./presentation/users/pages/UserBygroupPage"),
 );
-const SettingsPage = lazy(() => import("./features/settings/pages/SettingsPage"));
+const SettingsPage = lazy(() => import("./presentation/settings/pages/SettingsPage"));
 
-const GestionTareas = lazy(() => import("./sections/Assignments/AssignmentsPage"));
+const GestionTareas = lazy(() => import("./presentation/assignments/pages/AssignmentsPage"));
 const AssignmentDetail = lazy(
-  () => import("./sections/Assignments/AssignmentDetail"),
+  () => import("./presentation/assignments/pages/AssignmentDetail"),
 );
 const TDDChartPage = lazy(
-  () => import("./sections/TDDCycles-Visualization/TDDChartPage"),
+  () => import("./presentation/tdd-visualization/pages/TDDChartPage"),
 );
-const Login = lazy(() => import("./features/auth/pages/AuthPage"));
+const Login = lazy(() => import("./presentation/auth/pages/AuthPage"));
 const InvitationPage = lazy(
-  () => import("./sections/GroupInvitation/InvitationPage"),
+  () => import("./presentation/group-invitation/pages/InvitationPage"),
 );
 const MyPracticesPage = lazy(
-  () => import("./sections/MyPractices/MyPracticesPage"),
+  () => import("./presentation/my-practices/pages/MyPracticesPage"),
 );
-const PracticeDetail = lazy(() => import("./sections/MyPractices/PracticeDetail"));
-const AIAssistantPage = lazy(() => import("./sections/AIAssistant/AIAssistantPage"));
+const PracticeDetail = lazy(() => import("./presentation/my-practices/pages/PracticeDetail"));
+const AIAssistantPage = lazy(() => import("./presentation/ai-assistant/pages/AIAssistantPage"));
+const AUTH_SESSION_HINT_KEY = "tddlabAuthSession";
 
 const navArrayLinks = [
   {
@@ -89,14 +90,17 @@ function App() {
   const authData = useGlobalState("authData")[0];
   const isAuthResolved = authData.userid !== undefined;
   const isAuthenticated = Boolean(authData.userEmail);
-  const isPublicLandingPath =
-    window.location.pathname === "/" || window.location.pathname === "/landing";
+  const isRootPath = window.location.pathname === "/";
+  const isPublicLandingPath = window.location.pathname === "/landing";
+  const hasSessionHint =
+    localStorage.getItem(AUTH_SESSION_HINT_KEY) === "active";
 
   useEffect(() => {
     getSessionCookie().then((storedSession) => {
       const savedImage = localStorage.getItem("userProfilePic") || "";
 
       if (storedSession) {
+        localStorage.setItem(AUTH_SESSION_HINT_KEY, "active");
         setGlobalState("authData", {
           userid: storedSession.id,
           userProfilePic: savedImage,
@@ -105,6 +109,7 @@ function App() {
           userRole: storedSession.role,
         });
       } else {
+        localStorage.removeItem(AUTH_SESSION_HINT_KEY);
         setGlobalState("authData", {
           userid: -1,
           userProfilePic: savedImage,
@@ -116,7 +121,7 @@ function App() {
     });
   }, []);
 
-  if (!isAuthResolved && !isPublicLandingPath) {
+  if (!isAuthResolved && !isPublicLandingPath && (!isRootPath || hasSessionHint)) {
     return (
       <div
         style={{

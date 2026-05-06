@@ -1,14 +1,15 @@
+import React from "react";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {
   dialogContentStyle,
+  titleStyle,
   primaryButtonStyle,
   secondaryButtonStyle,
-  titleStyle,
-} from "../styles/DialogBoxStyles";
+} from "../../../../shared/styles/DialogBoxStyles";
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -20,7 +21,7 @@ interface ConfirmationDialogProps {
   onDelete: () => void;
 }
 
-function ConfirmationDialog({
+export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   open,
   title,
   content,
@@ -28,7 +29,7 @@ function ConfirmationDialog({
   deleteText,
   onCancel,
   onDelete,
-}: Readonly<ConfirmationDialogProps>) {
+}) => {
   return (
     <Dialog open={open}>
       <DialogTitle style={titleStyle}>{title}</DialogTitle>
@@ -37,14 +38,12 @@ function ConfirmationDialog({
         <Button
           onClick={onCancel}
           color="primary"
-          style={{
-            ...dialogContentStyle,
-            ...secondaryButtonStyle,
-            color: "#d32f2f",
-            borderColor: "#d32f2f",
-            borderWidth: "2px",
-            borderStyle: "solid",
-            padding: "5px 20px",
+          style={{ ...dialogContentStyle, ...secondaryButtonStyle, 
+            color: '#d32f2f',
+            borderColor: '#d32f2f', // Color del borde
+            borderWidth: '2px', // Ancho del borde
+            borderStyle: 'solid', // Estilo del borde
+            padding: '5px 20px' // Añade padding para un mayor relieve 
           }}
         >
           {cancelText}
@@ -59,6 +58,4 @@ function ConfirmationDialog({
       </DialogActions>
     </Dialog>
   );
-}
-
-export default ConfirmationDialog;
+};

@@ -79,5 +79,11 @@ node_modules/
 # archivo de reporte generado a la hora de correr los tests en tddlabBaseProject
 /tddlabBaseProject/script/report.json
 
+# Documentacion local no versionada
+docs/
+
+# Archivos comprimidos generados localmente
+output.zip
+
 # Dependecias generadas por husky
 /tddlabBaseProject/.husky/_

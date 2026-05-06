@@ -11,7 +11,7 @@ import { useState } from "react";
 interface GithubLinkDialogProps {
   open: boolean;
   onClose: () => void;
-  onSend: (link: string) => void;
+  onSend: (link: string) => void | Promise<void>;
 }
 
 export const GitLinkDialog: React.FC<GithubLinkDialogProps> = ({
@@ -34,7 +34,7 @@ export const GitLinkDialog: React.FC<GithubLinkDialogProps> = ({
 
     setSending(true);
     try {
-      await onSend(link);
+      await Promise.resolve(onSend(link));
     } finally {
       setSending(false);
     }

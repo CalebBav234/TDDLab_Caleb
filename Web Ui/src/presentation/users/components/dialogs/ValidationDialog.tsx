@@ -1,12 +1,13 @@
+import React from "react";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {
   dialogContentStyle,
-  primaryButtonStyle,
   titleStyle2,
-} from "../styles/DialogBoxStyles";
+  primaryButtonStyle,
+} from "../../../../shared/styles/DialogBoxStyles";
 
 interface ValidationDialogProps {
   open: boolean;
@@ -15,12 +16,12 @@ interface ValidationDialogProps {
   onClose: () => void;
 }
 
-function ValidationDialog({
+export const ValidationDialog: React.FC<ValidationDialogProps> = ({
   open,
   title,
   closeText,
   onClose,
-}: Readonly<ValidationDialogProps>) {
+}) => {
   return (
     <Dialog open={open}>
       <DialogTitle style={titleStyle2}>{title}</DialogTitle>
@@ -35,6 +36,4 @@ function ValidationDialog({
       </DialogActions>
     </Dialog>
   );
-}
-
-export default ValidationDialog;
+};
