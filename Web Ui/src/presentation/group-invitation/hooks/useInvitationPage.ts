@@ -20,7 +20,7 @@ function getQueryParam(search: string, param: string): string | number | undefin
   const value = searchParams.get(param);
 
   if (param === "groupid") {
-    return value ? parseInt(value, 10) : undefined;
+    return value ? Number.parseInt(value, 10) : undefined;
   }
 
   return value ?? undefined;

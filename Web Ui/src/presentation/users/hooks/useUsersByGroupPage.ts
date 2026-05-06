@@ -29,7 +29,7 @@ function useUsersByGroupPage() {
         setLoading(true);
         setError(null);
 
-        const parsedId = parseInt(groupid, 10);
+        const parsedId = Number.parseInt(groupid, 10);
 
         const [groupDetail, userData] = await Promise.all([
           getGroupDetailService(parsedId),

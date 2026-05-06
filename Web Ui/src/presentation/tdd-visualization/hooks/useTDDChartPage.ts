@@ -38,7 +38,7 @@ export function useTDDChartPage({
   const navigate = useNavigate();
   const repoOwner = String(searchParams.get("repoOwner")) || "defaultOwner";
   const repoName = String(searchParams.get("repoName")) || "defaultRepo";
-  const submissionIdcomments = parseInt(searchParams.get("submissionId") || "0");
+  const submissionIdcomments = Number.parseInt(searchParams.get("submissionId") || "0");
   const fetchedSubmissions: Submission[] = !isStudent(role)
     ? JSON.parse(searchParams.get("fetchedSubmissions") || "[]")
     : [];
