@@ -2,16 +2,16 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import UserPage from "../../../src/features/users/pages/UserPage";
+import UserPage from "../../../src/presentation/users/pages/UserPage";
 
 import {
   getGroupsService,
   getUsersService,
   removeUserFromGroupService,
   searchUsersByEmailService,
-} from "../../../src/features/users/services/users.service";
+} from "../../../src/presentation/users/services/users.service";
 
-jest.mock("../../../src/features/users/services/users.service", () => ({
+jest.mock("../../../src/presentation/users/services/users.service", () => ({
   getUsersService: jest.fn(),
   getGroupsService: jest.fn(),
   searchUsersByEmailService: jest.fn(),

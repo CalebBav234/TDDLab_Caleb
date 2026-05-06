@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import InfoCardsSection from "../../../src/features/landing/components/InfoCardsSection";
+import InfoCardsSection from "../../../src/presentation/landing/components/InfoCardsSection";
 
 describe("InfoCardsSection", () => {
   it("renders the three info card titles", () => {

@@ -1,1 +1,1 @@
-export { default } from "../../../features/assignments/components/AssignmentRow";
+export { default } from "../../../presentation/assignments/components/AssignmentRow";

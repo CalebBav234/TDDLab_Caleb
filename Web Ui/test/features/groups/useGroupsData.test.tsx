@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import { useGroupsData } from "../../../src/features/groups/hooks/useGroupsData";
+import { useGroupsData } from "../../../src/presentation/groups/hooks/useGroupsData";
 
 const setAuthDataMock = jest.fn();
 const registerMock = jest.fn();
@@ -24,7 +24,7 @@ jest.mock("../../../src/modules/User-Authentication/domain/authStates", () => ({
   ]),
 }));
 
-jest.mock("../../../src/features/groups/services", () => ({
+jest.mock("../../../src/presentation/groups/services", () => ({
   groupsService: {
     getByUser: (...args: unknown[]) => mockGetByUser(...args),
     getAll: (...args: unknown[]) => mockGetAll(...args),

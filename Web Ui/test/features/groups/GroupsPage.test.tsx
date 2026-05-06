@@ -3,10 +3,10 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 
-import GroupsPage from "../../../src/features/groups/pages/GroupsPage";
-import { useGroupsData } from "../../../src/features/groups/hooks/useGroupsData";
+import GroupsPage from "../../../src/presentation/groups/pages/GroupsPage";
+import { useGroupsData } from "../../../src/presentation/groups/hooks/useGroupsData";
 
-jest.mock("../../../src/features/groups/hooks/useGroupsData", () => ({
+jest.mock("../../../src/presentation/groups/hooks/useGroupsData", () => ({
   useGroupsData: jest.fn(),
 }));
 

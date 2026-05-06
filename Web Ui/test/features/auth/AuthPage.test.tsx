@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AuthPage from "../../../src/features/auth/pages/AuthPage";
-import { useAuth } from "../../../src/features/auth/hooks/useAuth";
+import AuthPage from "../../../src/presentation/auth/pages/AuthPage";
+import { useAuth } from "../../../src/presentation/auth/hooks/useAuth";
 
-jest.mock("../../../src/features/auth/hooks/useAuth", () => ({
+jest.mock("../../../src/presentation/auth/hooks/useAuth", () => ({
   useAuth: jest.fn(),
 }));
 

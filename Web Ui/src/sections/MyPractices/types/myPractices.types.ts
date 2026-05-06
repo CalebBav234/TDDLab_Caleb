@@ -1,1 +1,1 @@
-export * from "../../../features/my-practices/types/myPracticesScreen";
+export * from "../../../presentation/my-practices/types/myPracticesScreen";

@@ -1,1 +1,1 @@
-export { useGitHubLinkValidation } from "../../../features/my-practices/hooks/useGitHubLinkValidation";
+export { useGitHubLinkValidation } from "../../../presentation/my-practices/hooks/useGitHubLinkValidation";

@@ -1,1 +1,1 @@
-export { default } from "../../../features/assignments/components/AssignmentForm";
+export { default } from "../../../presentation/assignments/components/AssignmentForm";

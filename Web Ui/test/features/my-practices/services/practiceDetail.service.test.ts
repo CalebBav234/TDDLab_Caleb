@@ -2,7 +2,7 @@ import {
   getDisplayStatus,
   redirectStudentToGraph,
   toDisplayDate,
-} from "../../../../src/features/my-practices/services/practiceDetail.service";
+} from "../../../../src/presentation/my-practices/services/practiceDetail.service";
 
 jest.mock("../../../../src/utils/dateUtils", () => ({
   formatDate: jest.fn((value: string) => `formatted:${value}`),

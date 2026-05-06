@@ -3,7 +3,7 @@ import {
   orderPractices,
   resolveMyPracticesPermissions,
   toPracticeListItems,
-} from "../../../../src/features/my-practices/services/myPracticesScreenService";
+} from "../../../../src/presentation/my-practices/services/myPracticesScreenService";
 
 const practices: PracticeDataObject[] = [
   {

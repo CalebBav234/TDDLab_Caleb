@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { useLanding } from "../../../src/features/landing/hooks/useLanding";
+import { useLanding } from "../../../src/presentation/landing/hooks/useLanding";
 
 const mockNavigate = jest.fn();
 

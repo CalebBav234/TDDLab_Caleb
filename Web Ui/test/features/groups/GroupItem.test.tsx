@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import { GroupItem } from "../../../src/features/groups/components/GroupItem";
+import { GroupItem } from "../../../src/presentation/groups/components/GroupItem";
 
 describe("GroupItem", () => {
   const group = {

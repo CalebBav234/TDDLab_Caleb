@@ -1,1 +1,1 @@
-export { default } from "../../features/my-practices/components/MyPracticesForm";
+export { default } from "../../presentation/my-practices/components/MyPracticesForm";

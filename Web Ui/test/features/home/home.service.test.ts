@@ -1,4 +1,4 @@
-import { buildHomeViewModel } from "../../../src/features/home/services/home.service";
+import { buildHomeViewModel } from "../../../src/presentation/home/services/home.service";
 
 describe("buildHomeViewModel", () => {
   it("builds a personalized greeting from the authenticated email", () => {

@@ -1,1 +1,1 @@
-export { PracticeOverviewCard } from "../../../../features/my-practices/components/PracticeOverviewCard";
+export { PracticeOverviewCard } from "../../../../presentation/my-practices/components/PracticeOverviewCard";

@@ -4,4 +4,4 @@ export {
   resolveMyPracticesPermissions,
   toPracticeListItem,
   toPracticeListItems,
-} from "../../../features/my-practices/services/myPracticesScreenService";
+} from "../../../presentation/my-practices/services/myPracticesScreenService";

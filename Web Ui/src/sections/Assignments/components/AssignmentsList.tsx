@@ -8,8 +8,8 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import AssignmentsListContent from "../../../features/assignments/components/AssignmentsList";
-import { useAssignmentsScreen } from "../../../features/assignments/hooks/useAssignmentsScreen";
+import AssignmentsListContent from "../../../presentation/assignments/components/AssignmentsList";
+import { useAssignmentsScreen } from "../../../presentation/assignments/hooks/useAssignmentsScreen";
 
 interface LegacyAssignmentsListProps {
   ShowForm: () => void;

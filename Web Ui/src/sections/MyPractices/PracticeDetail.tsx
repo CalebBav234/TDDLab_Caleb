@@ -1,1 +1,1 @@
-export { default } from "../../features/my-practices/pages/PracticeDetail";
+export { default } from "../../presentation/my-practices/pages/PracticeDetail";

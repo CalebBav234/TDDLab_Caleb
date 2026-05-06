@@ -20,14 +20,14 @@ import "./App.css";
 import ProtectedRouteComponent from "./ProtectedRoute";
 import { CircularProgress } from "@mui/material";
 
-const HomePage = lazy(() => import("./features/home/pages/HomePage"));
-const LandingPage = lazy(() => import("./features/landing/pages/LandingPage"));
-const Groups = lazy(() => import("./features/groups/pages/GroupsPage"));
-const User = lazy(() => import("./features/users/pages/UserPage"));
+const HomePage = lazy(() => import("./presentation/home/pages/HomePage"));
+const LandingPage = lazy(() => import("./presentation/landing/pages/LandingPage"));
+const Groups = lazy(() => import("./presentation/groups/pages/GroupsPage"));
+const User = lazy(() => import("./presentation/users/pages/UserPage"));
 const UsersByGroupPage = lazy(
-  () => import("./features/users/pages/UserBygroupPage"),
+  () => import("./presentation/users/pages/UserBygroupPage"),
 );
-const SettingsPage = lazy(() => import("./features/settings/pages/SettingsPage"));
+const SettingsPage = lazy(() => import("./presentation/settings/pages/SettingsPage"));
 
 const GestionTareas = lazy(() => import("./sections/Assignments/AssignmentsPage"));
 const AssignmentDetail = lazy(
@@ -36,7 +36,7 @@ const AssignmentDetail = lazy(
 const TDDChartPage = lazy(
   () => import("./sections/TDDCycles-Visualization/TDDChartPage"),
 );
-const Login = lazy(() => import("./features/auth/pages/AuthPage"));
+const Login = lazy(() => import("./presentation/auth/pages/AuthPage"));
 const InvitationPage = lazy(
   () => import("./sections/GroupInvitation/InvitationPage"),
 );

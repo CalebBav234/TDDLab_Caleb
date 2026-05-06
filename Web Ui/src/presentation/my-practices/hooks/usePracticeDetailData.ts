@@ -1,1 +1,1 @@
-export { usePracticeDetail as usePracticeDetailData } from "../../../features/my-practices/hooks/usePracticeDetail";
+export { usePracticeDetail as usePracticeDetailData } from "../../../presentation/my-practices/hooks/usePracticeDetail";

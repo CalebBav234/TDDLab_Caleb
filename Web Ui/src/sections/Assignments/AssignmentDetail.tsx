@@ -1,1 +1,1 @@
-export { default } from "../../features/assignments/pages/AssignmentDetail";
+export { default } from "../../presentation/assignments/pages/AssignmentDetail";

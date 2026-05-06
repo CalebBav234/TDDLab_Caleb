@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 
-import HomePage from "../../../src/features/home/pages/HomePage";
+import HomePage from "../../../src/presentation/home/pages/HomePage";
 import { setGlobalState } from "../../../src/modules/User-Authentication/domain/authStates";
 
 describe("HomePage", () => {
