@@ -45,6 +45,7 @@ const MyPracticesPage = lazy(
 );
 const PracticeDetail = lazy(() => import("./presentation/my-practices/pages/PracticeDetail"));
 const AIAssistantPage = lazy(() => import("./presentation/ai-assistant/pages/AIAssistantPage"));
+const AUTH_SESSION_HINT_KEY = "tddlabAuthSession";
 
 const navArrayLinks = [
   {
@@ -89,13 +90,17 @@ function App() {
   const authData = useGlobalState("authData")[0];
   const isAuthResolved = authData.userid !== undefined;
   const isAuthenticated = Boolean(authData.userEmail);
+  const isRootPath = window.location.pathname === "/";
   const isPublicLandingPath = window.location.pathname === "/landing";
+  const hasSessionHint =
+    localStorage.getItem(AUTH_SESSION_HINT_KEY) === "active";
 
   useEffect(() => {
     getSessionCookie().then((storedSession) => {
       const savedImage = localStorage.getItem("userProfilePic") || "";
 
       if (storedSession) {
+        localStorage.setItem(AUTH_SESSION_HINT_KEY, "active");
         setGlobalState("authData", {
           userid: storedSession.id,
           userProfilePic: savedImage,
@@ -104,6 +109,7 @@ function App() {
           userRole: storedSession.role,
         });
       } else {
+        localStorage.removeItem(AUTH_SESSION_HINT_KEY);
         setGlobalState("authData", {
           userid: -1,
           userProfilePic: savedImage,
@@ -115,7 +121,7 @@ function App() {
     });
   }, []);
 
-  if (!isAuthResolved && !isPublicLandingPath) {
+  if (!isAuthResolved && !isPublicLandingPath && (!isRootPath || hasSessionHint)) {
     return (
       <div
         style={{
