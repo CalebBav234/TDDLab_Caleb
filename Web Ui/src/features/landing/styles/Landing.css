@@ -8,8 +8,9 @@
 
 .landing-page {
   position: relative;
-  max-width: 1440px;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   background: #ffffff;
   color: var(--landing-title);
   font-family: "Inter", "Segoe UI", sans-serif;
@@ -73,7 +74,6 @@
 .landing-intro-stack {
   position: relative;
   width: 100%;
-  max-width: 1440px;
   margin: 0 auto;
 }
 
