@@ -285,10 +285,10 @@ function TDDLineCharts({
   
   
   const onClick = (event: any) => {
-    if (getElementAtEvent(chartRef.current, event).length >= 0) {
-      const dataSetIndexNum = getElementAtEvent(chartRef.current, event)[0]
-        .datasetIndex;
-      const dataPoint = getElementAtEvent(chartRef.current, event)[0].index;
+    const elements = getElementAtEvent(chartRef.current, event);
+    if (elements.length > 0) {
+      const dataSetIndexNum = elements[0].datasetIndex;
+      const dataPoint = elements[0].index;
       window.open(
         dataChart.datasets[dataSetIndexNum].links[dataPoint],
         "_blank"
