@@ -58,7 +58,7 @@ const AIAssistantPage = () => {
 
   const handleApiCall = async (action: "analiza" | "refactoriza" | "califica") => {
   if (!repositoryLink || repositoryLink === "No hay enlace disponible") {
-    alert(`No hay un enlace de repositorio válido para ${action}`);
+    addBotMessage(`No hay un enlace de repositorio válido para ${action}`);
     return;
   }
 

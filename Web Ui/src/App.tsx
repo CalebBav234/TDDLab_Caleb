@@ -44,7 +44,7 @@ const MyPracticesPage = lazy(
   () => import("./presentation/my-practices/pages/MyPracticesPage"),
 );
 const PracticeDetail = lazy(() => import("./presentation/my-practices/pages/PracticeDetail"));
-const AIAssistantPage = lazy(() => import("./sections/AIAssistant/AIAssistantPage"));
+const AIAssistantPage = lazy(() => import("./presentation/ai-assistant/AIAssistantPage"));
 
 const navArrayLinks = [
   {
