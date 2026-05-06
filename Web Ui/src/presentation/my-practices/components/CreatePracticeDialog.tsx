@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { createPractice } from "../services/practicesService";
-import { ValidationDialog } from "../../../sections/Shared/Components/ValidationDialog";
+import ValidationDialog from "../../../shared/components/ValidationDialog";
 
 interface CreatePracticeDialogProps {
   open: boolean;

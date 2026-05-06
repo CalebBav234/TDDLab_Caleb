@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import EditPracticeDialog from "./EditPracticeDialog";
-import { getStatusIcon, getStatusTooltipPractice } from "../../../sections/Shared/statusHelpers";
+import { getStatusIcon, getStatusTooltipPractice } from "../../../shared/helpers/statusHelpers";
 
 interface PracticeListItemProps {
   practice: PracticeDataObject;

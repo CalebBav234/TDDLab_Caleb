@@ -13,8 +13,8 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import PracticeListItem from "./PracticeListItem";
 import CreatePracticeDialog from "./CreatePracticeDialog";
-import { ConfirmationDialog } from "../../../sections/Shared/Components/ConfirmationDialog";
-import { ValidationDialog } from "../../../sections/Shared/Components/ValidationDialog";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
+import ValidationDialog from "../../../shared/components/ValidationDialog";
 import { usePractices } from "../hooks/usePractices";
 import { useGlobalState } from "../../../modules/User-Authentication/domain/authStates";
 import { useState } from "react";

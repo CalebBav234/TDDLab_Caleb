@@ -6,7 +6,7 @@ import {
   dialogContentStyle,
   primaryButtonStyle,
   titleStyle2,
-} from "../../sections/Shared/Styles/DialogBoxStyles";
+} from "../styles/DialogBoxStyles";
 
 interface ValidationDialogProps {
   open: boolean;

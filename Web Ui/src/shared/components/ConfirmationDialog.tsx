@@ -8,7 +8,7 @@ import {
   primaryButtonStyle,
   secondaryButtonStyle,
   titleStyle,
-} from "../../sections/Shared/Styles/DialogBoxStyles";
+} from "../styles/DialogBoxStyles";
 
 interface ConfirmationDialogProps {
   open: boolean;
