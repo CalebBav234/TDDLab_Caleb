@@ -63,7 +63,7 @@
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
-  font-family: "Afacad";
+  font-family: "Afacad", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
@@ -110,7 +110,7 @@
   position: absolute;
   width: 339px;
   left: calc(50% - 339px / 2);
-  font-family: "Akatab";
+  font-family: "Akatab", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
