@@ -87,7 +87,10 @@ const navArrayLinks = [
 
 function App() {
   const authData = useGlobalState("authData")[0];
-  const isAuthenticated = authData.userEmail !== "";
+  const isAuthResolved = authData.userid !== undefined;
+  const isAuthenticated = Boolean(authData.userEmail);
+  const isPublicLandingPath =
+    window.location.pathname === "/" || window.location.pathname === "/landing";
 
   useEffect(() => {
     getSessionCookie().then((storedSession) => {
@@ -113,7 +116,7 @@ function App() {
     });
   }, []);
 
-  if (authData.userid === undefined) {
+  if (!isAuthResolved && !isPublicLandingPath) {
     return (
       <div
         style={{
