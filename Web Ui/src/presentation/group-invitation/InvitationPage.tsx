@@ -19,6 +19,7 @@ import { useLocation } from "react-router-dom";
 import PasswordComponent from "./components/PasswordPopUp";
 import CheckRegisterGroupPopUp from "./components/CheckRegisterGroupPopUp";
 import AdminAlertModal from "./components/AdminAlertModal";
+import FeedbackSnackbar from "../../shared/components/FeedbackSnackbar";
 
 function InvitationPage() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function InvitationPage() {
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
   const [_popupMessage, setPopupMessage] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [rotation, setRotation] = useState({ rotateX: 0, rotateY: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [authProvider, setAuthProvider] = useState<"github" | "google" | null>(null);
@@ -100,7 +102,7 @@ function InvitationPage() {
         await handleAcceptInvitation("teacher");
         return;
       }
-      alert("Contraseña inválida");
+      setFeedbackMessage("Contraseña inválida");
     } finally {
       setIsLoading(false);
     }
@@ -408,6 +410,12 @@ function InvitationPage() {
       )}
       <AdminAlertModal
         open={showAdminModal}
+      />
+      <FeedbackSnackbar
+        open={Boolean(feedbackMessage)}
+        message={feedbackMessage}
+        severity="warning"
+        onClose={() => setFeedbackMessage("")}
       />
     </div>
   );

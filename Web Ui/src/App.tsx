@@ -38,7 +38,7 @@ const TDDChartPage = lazy(
 );
 const Login = lazy(() => import("./presentation/auth/pages/AuthPage"));
 const InvitationPage = lazy(
-  () => import("./sections/GroupInvitation/InvitationPage"),
+  () => import("./presentation/group-invitation/InvitationPage"),
 );
 const MyPracticesPage = lazy(
   () => import("./presentation/my-practices/pages/MyPracticesPage"),
