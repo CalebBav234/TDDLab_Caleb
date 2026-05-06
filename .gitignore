@@ -63,6 +63,7 @@ node_modules/
 
 # Output of 'npm pack'
 *.tgz
+output.zip
 
 # Yarn Integrity file
 .yarn-integrity
