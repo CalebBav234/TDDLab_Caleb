@@ -22,7 +22,6 @@ const PracticeDetailPage: React.FC<PracticeDetailPageProps> = ({ userid }) => {
 
   const {
     practiceState,
-    submissionState,
     practice,
     submission,
     createdAt,
