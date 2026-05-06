@@ -34,7 +34,7 @@ const AssignmentDetail = lazy(
   () => import("./presentation/assignments/pages/AssignmentDetail"),
 );
 const TDDChartPage = lazy(
-  () => import("./sections/TDDCycles-Visualization/TDDChartPage"),
+  () => import("./presentation/tdd-visualization/TDDChartPage"),
 );
 const Login = lazy(() => import("./presentation/auth/pages/AuthPage"));
 const InvitationPage = lazy(
