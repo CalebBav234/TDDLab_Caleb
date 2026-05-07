@@ -10,11 +10,10 @@ const FooterSection = () => {
           <p>Politica de Cookies</p>
         </div>
 
-        <p className="landing-footer-copyright">© 2025 TDDLab. Todos los derechos reservados.</p>
+        <p className="landing-footer-copyright">© 2026 TDDLab. Todos los derechos reservados.</p>
       </div>
     </footer>
   );
 };
 
 export default FooterSection;
-
