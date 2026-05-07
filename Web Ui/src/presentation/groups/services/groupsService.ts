@@ -30,8 +30,8 @@ export const groupsService = {
     try {
       ids = uniqueGroupIds(await app.getGroupsByUserId(userId));
     } catch (error) {
-      console.warn("Ignoring unavailable user groups:", userId, error);
-      return [];
+      console.warn("Falling back to all groups:", userId, error);
+      return this.getAll();
     }
 
     const groups = await Promise.all(
@@ -49,8 +49,9 @@ export const groupsService = {
       (group): group is GroupDataObject => Boolean(group),
     );
 
-    return uniqueGroupsById(availableGroups)
-      .map(mapToGroup);
+    const mappedGroups = uniqueGroupsById(availableGroups).map(mapToGroup);
+
+    return mappedGroups.length > 0 ? mappedGroups : this.getAll();
   },
 
   async delete(id: number): Promise<void> {

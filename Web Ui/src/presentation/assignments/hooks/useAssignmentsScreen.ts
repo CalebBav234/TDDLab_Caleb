@@ -117,6 +117,15 @@ export function useAssignmentsScreen({
       );
     };
 
+    const loadAllGroups = async () => {
+      try {
+        return uniqueGroupsById(await getGroups.getGroups());
+      } catch (groupError) {
+        console.warn("Ignoring unavailable groups:", groupError);
+        return [];
+      }
+    };
+
     if (userRole === "student") {
       const resolvedGroupIds = resolveStudentGroupIds(userGroupid);
       let studentGroupIds = resolvedGroupIds;
@@ -126,11 +135,12 @@ export function useAssignmentsScreen({
           studentGroupIds = await getGroups.getGroupsByUserId(authData.userid ?? -1);
         } catch (groupError) {
           console.warn("Ignoring unavailable student groups:", groupError);
-          studentGroupIds = [];
+          return loadAllGroups();
         }
       }
 
-      return loadAvailableGroups(studentGroupIds);
+      const availableGroups = await loadAvailableGroups(studentGroupIds);
+      return availableGroups.length > 0 ? availableGroups : loadAllGroups();
     }
 
     if (userRole === "teacher") {
@@ -141,18 +151,15 @@ export function useAssignmentsScreen({
         );
       } catch (groupError) {
         console.warn("Ignoring unavailable teacher groups:", groupError);
+        return loadAllGroups();
       }
 
-      return loadAvailableGroups(teacherGroupIds);
+      const availableGroups = await loadAvailableGroups(teacherGroupIds);
+      return availableGroups.length > 0 ? availableGroups : loadAllGroups();
     }
 
     if (userRole === "admin") {
-      try {
-        return uniqueGroupsById(await getGroups.getGroups());
-      } catch (groupError) {
-        console.warn("Ignoring unavailable admin groups:", groupError);
-        return [];
-      }
+      return loadAllGroups();
     }
 
     return [];

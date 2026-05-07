@@ -45,6 +45,12 @@ export const useGroupsData = () => {
     }
   };
 
+  const clearSelection = () => {
+    setCurrentSelectedGroupId(0);
+    localStorage.removeItem("selectedGroup");
+    setAuthData({ ...authData, usergroupid: 0 });
+  };
+
   useEffect(() => {
     const fetchGroups = async () => {
       setLoading(true);
@@ -64,15 +70,19 @@ export const useGroupsData = () => {
 
         setGroups(data);
 
-        if (!currentSelectedGroupId && data.length > 0) {
+        const storedSelectedGroupId = asId(localStorage.getItem("selectedGroup"));
+        const activeGroupId = asId(currentSelectedGroupId) || storedSelectedGroupId;
+        const activeGroupExists = data.some((group) => asId(group.id) === activeGroupId);
+
+        if (data.length > 0 && (!activeGroupId || !activeGroupExists)) {
           selectAndSync(data[0].id);
+        } else if (data.length === 0) {
+          clearSelection();
         }
       } catch (e) {
         console.error(e);
         setGroups([]);
-        setCurrentSelectedGroupId(0);
-        localStorage.removeItem("selectedGroup");
-        setAuthData({ ...authData, usergroupid: 0 });
+        clearSelection();
         setError(false);
       } finally {
         setLoading(false);
@@ -121,15 +131,16 @@ export const useGroupsData = () => {
     copy.splice(groupIndex, 1);
     setGroups(copy);
 
-    if (asId(currentSelectedGroupId) === asId(item.id)) {
+    const deletedGroupWasActive =
+      asId(currentSelectedGroupId) === asId(item.id) ||
+      asId(localStorage.getItem("selectedGroup")) === asId(item.id) ||
+      asId(authData?.usergroupid) === asId(item.id);
+
+    if (deletedGroupWasActive) {
       const next = asId(copy[0]?.id);
 
       if (next) selectAndSync(next);
-      else {
-        setCurrentSelectedGroupId(0);
-        localStorage.removeItem("selectedGroup");
-        setAuthData({ ...authData, usergroupid: 0 });
-      }
+      else clearSelection();
     }
   };
 
