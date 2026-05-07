@@ -135,12 +135,11 @@ export function useAssignmentsScreen({
           studentGroupIds = await getGroups.getGroupsByUserId(authData.userid ?? -1);
         } catch (groupError) {
           console.warn("Ignoring unavailable student groups:", groupError);
-          return loadAllGroups();
+          studentGroupIds = [];
         }
       }
 
-      const availableGroups = await loadAvailableGroups(studentGroupIds);
-      return availableGroups.length > 0 ? availableGroups : loadAllGroups();
+      return loadAvailableGroups(studentGroupIds);
     }
 
     if (userRole === "teacher") {
@@ -151,11 +150,9 @@ export function useAssignmentsScreen({
         );
       } catch (groupError) {
         console.warn("Ignoring unavailable teacher groups:", groupError);
-        return loadAllGroups();
       }
 
-      const availableGroups = await loadAvailableGroups(teacherGroupIds);
-      return availableGroups.length > 0 ? availableGroups : loadAllGroups();
+      return loadAvailableGroups(teacherGroupIds);
     }
 
     if (userRole === "admin") {
