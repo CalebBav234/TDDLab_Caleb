@@ -9,6 +9,7 @@ import FeatureListSection from "../../../shared/components/FeatureListSection";
 import ContentState from "../../../shared/components/ContentState";
 import SortingComponent from "../../../shared/components/SortingComponent";
 import ActionButton from "../../../shared/components/ActionButton";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
 
 import { GroupsList } from "../components/GroupsList";
 import { useGroupsData } from "../hooks/useGroupsData";
@@ -43,6 +44,23 @@ function GroupsPage() {
 
   const [editOpen, setEditOpen] = useState(false);
   const [groupToEdit, setGroupToEdit] = useState<Group | null>(null);
+  const [groupToDelete, setGroupToDelete] = useState<{
+    group: Group;
+    index: number;
+  } | null>(null);
+
+  const handleCloseDeleteDialog = () => {
+    setGroupToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!groupToDelete) {
+      return;
+    }
+
+    await deleteGroupItem(groupToDelete.index);
+    setGroupToDelete(null);
+  };
 
   const renderContent = () => {
     if (loading) {
@@ -76,7 +94,12 @@ function GroupsPage() {
           goToParticipants(id, navigate);
         }}
         onTasks={(id) => handleRedirectToTasks(id, navigate)}
-        onDelete={deleteGroupItem}
+        onDelete={(index) => {
+          const group = groups[index];
+          if (group) {
+            setGroupToDelete({ group, index });
+          }
+        }}
         onEdit={(group) => {
           selectAndSync(group.id);
           setGroupToEdit(group);
@@ -143,6 +166,20 @@ function GroupsPage() {
         onUpdate={async (data) => {
           await updateGroup(data);
         }}
+      />
+
+      <ConfirmationDialog
+        open={Boolean(groupToDelete)}
+        title="Eliminar grupo"
+        content={
+          groupToDelete
+            ? `Estas seguro de eliminar el grupo "${groupToDelete.group.name}"? Esta accion tambien quitara sus tareas asociadas.`
+            : ""
+        }
+        cancelText="Cancelar"
+        deleteText="Eliminar"
+        onCancel={handleCloseDeleteDialog}
+        onDelete={handleConfirmDelete}
       />
     </FeatureScreenLayout>
   );

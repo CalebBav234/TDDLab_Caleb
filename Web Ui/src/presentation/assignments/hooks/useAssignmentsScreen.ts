@@ -8,6 +8,10 @@ import GetGroups from "../../../modules/Groups/application/GetGroups";
 import { GroupDataObject } from "../../../modules/Groups/domain/GroupInterface";
 import GroupsRepository from "../../../modules/Groups/repository/GroupsRepository";
 import { useGlobalState } from "../../../modules/User-Authentication/domain/authStates";
+import {
+  uniqueGroupIds,
+  uniqueGroupsById,
+} from "../../../shared/helpers/groupHelpers";
 import { addAssignmentUpdatedListener } from "../services/assignmentEvents";
 import {
   buildAssignmentListItems,
@@ -91,6 +95,24 @@ export function useAssignmentsScreen({
   );
 
   const loadUserGroups = useCallback(async () => {
+    const loadAvailableGroups = async (groupIds: number[]) => {
+      const uniqueIds = uniqueGroupIds(groupIds);
+      const groups = await Promise.all(
+        uniqueIds.map(async (groupId) => {
+          try {
+            return await getGroups.getGroupById(groupId);
+          } catch (groupError) {
+            console.warn("Ignoring unavailable group:", groupId, groupError);
+            return null;
+          }
+        }),
+      );
+
+      return uniqueGroupsById(
+        groups.filter((group): group is GroupDataObject => Boolean(group)),
+      );
+    };
+
     if (userRole === "student") {
       const resolvedGroupIds = resolveStudentGroupIds(userGroupid);
       const studentGroupIds =
@@ -98,9 +120,7 @@ export function useAssignmentsScreen({
           ? resolvedGroupIds
           : await getGroups.getGroupsByUserId(authData.userid ?? -1);
 
-      return Promise.all(
-        studentGroupIds.map((groupId) => getGroups.getGroupById(groupId)),
-      );
+      return loadAvailableGroups(studentGroupIds);
     }
 
     if (userRole === "teacher") {
@@ -108,9 +128,7 @@ export function useAssignmentsScreen({
         authData.userid ?? -1,
       );
 
-      return Promise.all(
-        teacherGroupIds.map((groupId) => getGroups.getGroupById(groupId)),
-      );
+      return loadAvailableGroups(teacherGroupIds);
     }
 
     if (userRole === "admin") {
@@ -127,13 +145,14 @@ export function useAssignmentsScreen({
       const allGroups = (await loadUserGroups()).filter(
         (group): group is GroupDataObject => Boolean(group),
       );
-      setGroupList(allGroups);
+      const uniqueGroups = uniqueGroupsById(allGroups);
+      setGroupList(uniqueGroups);
 
       const initialGroupId = resolveInitialGroupId({
         locationSearch: location.search,
         storedSelectedGroup: localStorage.getItem("selectedGroup"),
         authGroupId: Array.isArray(userGroupid) ? userGroupid[0] : userGroupid,
-        fallbackGroups: allGroups,
+        fallbackGroups: uniqueGroups,
       });
 
       if (initialGroupId) {
@@ -146,6 +165,8 @@ export function useAssignmentsScreen({
         await loadAssignmentsForGroup(initialGroupId, false);
       } else {
         setSelectedGroup(0);
+        onGroupChange(0);
+        localStorage.removeItem("selectedGroup");
         setAssignments([]);
         setError(null);
       }

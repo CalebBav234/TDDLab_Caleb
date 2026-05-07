@@ -4,9 +4,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import {
+  destructiveButtonStyle,
   dialogContentStyle,
-  primaryButtonStyle,
-  secondaryButtonStyle,
+  neutralButtonStyle,
   titleStyle,
 } from "../styles/DialogBoxStyles";
 
@@ -36,23 +36,13 @@ function ConfirmationDialog({
       <DialogActions>
         <Button
           onClick={onCancel}
-          color="primary"
-          style={{
-            ...dialogContentStyle,
-            ...secondaryButtonStyle,
-            color: "#d32f2f",
-            borderColor: "#d32f2f",
-            borderWidth: "2px",
-            borderStyle: "solid",
-            padding: "5px 20px",
-          }}
+          style={{ ...dialogContentStyle, ...neutralButtonStyle }}
         >
           {cancelText}
         </Button>
         <Button
           onClick={onDelete}
-          color="primary"
-          style={{ ...dialogContentStyle, ...primaryButtonStyle }}
+          style={{ ...dialogContentStyle, ...destructiveButtonStyle }}
         >
           {deleteText}
         </Button>

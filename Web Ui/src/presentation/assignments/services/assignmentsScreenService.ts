@@ -1,18 +1,10 @@
 import { AssignmentDataObject } from "../../../modules/Assignments/domain/assignmentInterfaces";
 import { GroupDataObject } from "../../../modules/Groups/domain/GroupInterface";
+import { normalizeGroupId } from "../../../shared/helpers/groupHelpers";
 import {
   AssignmentListItemViewModel,
   AssignmentSorting,
 } from "../types/assignmentScreen";
-
-export function normalizeGroupId(value: unknown): number | null {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed <= 0) {
-    return null;
-  }
-
-  return parsed;
-}
 
 export function resolveInitialGroupId(params: {
   locationSearch: string;
@@ -20,25 +12,48 @@ export function resolveInitialGroupId(params: {
   authGroupId: number | null | undefined;
   fallbackGroups: GroupDataObject[];
 }): number | null {
+  const availableGroupIds = new Set(
+    params.fallbackGroups
+      .map((group) => normalizeGroupId(group.id))
+      .filter((groupId): groupId is number => groupId !== null),
+  );
+
+  const firstAvailableGroupId = normalizeGroupId(params.fallbackGroups[0]?.id);
+
+  const resolveAvailableGroupId = (groupId: number | null) => {
+    if (!groupId) {
+      return null;
+    }
+
+    if (availableGroupIds.size === 0) {
+      return null;
+    }
+
+    return availableGroupIds.has(groupId) ? groupId : null;
+  };
+
   const groupIdFromUrl = normalizeGroupId(
     new URLSearchParams(params.locationSearch).get("groupId"),
   );
 
-  if (groupIdFromUrl) {
-    return groupIdFromUrl;
+  const availableGroupIdFromUrl = resolveAvailableGroupId(groupIdFromUrl);
+  if (availableGroupIdFromUrl) {
+    return availableGroupIdFromUrl;
   }
 
   const storedSelectedGroup = normalizeGroupId(params.storedSelectedGroup);
-  if (storedSelectedGroup) {
-    return storedSelectedGroup;
+  const availableStoredSelectedGroup = resolveAvailableGroupId(storedSelectedGroup);
+  if (availableStoredSelectedGroup) {
+    return availableStoredSelectedGroup;
   }
 
   const authGroupId = normalizeGroupId(params.authGroupId);
-  if (authGroupId) {
-    return authGroupId;
+  const availableAuthGroupId = resolveAvailableGroupId(authGroupId);
+  if (availableAuthGroupId) {
+    return availableAuthGroupId;
   }
 
-  return normalizeGroupId(params.fallbackGroups[0]?.id);
+  return firstAvailableGroupId;
 }
 
 export function resolveStudentGroupIds(
