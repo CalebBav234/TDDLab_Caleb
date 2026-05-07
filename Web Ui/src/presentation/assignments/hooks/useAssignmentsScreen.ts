@@ -80,15 +80,24 @@ export function useAssignmentsScreen({
         setFeedbackMessage("");
         return nextAssignments;
       } catch (fetchError) {
-        const nextError =
-          fetchError instanceof Error
-            ? fetchError
-            : new Error("Error fetching assignments by group ID");
+        try {
+          const fallbackAssignments = await assignmentsRepository.getAssignments();
+          setAssignments(fallbackAssignments);
+          setError(null);
+          setFeedbackMessage("");
+          console.warn("Falling back to all assignments:", fetchError);
+          return fallbackAssignments;
+        } catch (fallbackError) {
+          const nextError =
+            fallbackError instanceof Error
+              ? fallbackError
+              : new Error("Error fetching assignments");
 
-        setAssignments([]);
-        setError(nextError);
-        console.error("Error fetching assignments by group ID:", fetchError);
-        return [];
+          setAssignments([]);
+          setError(nextError);
+          console.error("Error fetching assignments:", fallbackError);
+          return [];
+        }
       }
     },
     [assignmentsRepository, onGroupChange],
