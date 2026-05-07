@@ -13,7 +13,7 @@ const HeaderContainer = styled(Box)({
 export const AuthHeader = () => (
   <HeaderContainer>
     <img 
-      src="/Logo.png" 
+      src="/landing/logo.svg" 
       alt="TDD Lab Logo" 
       style={{ height: "70px", objectFit: "contain" }} 
     />

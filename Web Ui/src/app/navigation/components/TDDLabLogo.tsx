@@ -10,7 +10,7 @@ export default function TDDLabLogo({ compact = false }: Readonly<TDDLabLogoProps
   return (
     <Box
       component="img"
-      src="/Logo.png"
+      src="/landing/logo.svg"
       alt="TDD Lab"
       sx={{
         width: `${logoWidth}px`,
