@@ -14,13 +14,25 @@ const repo = new GroupsRepository();
 export const groupsService = {
   async getAll(): Promise<Group[]> {
     const app = new GetGroups(repo);
-    const data = await app.getGroups();
-    return uniqueGroupsById(data).map(mapToGroup);
+    try {
+      const data = await app.getGroups();
+      return uniqueGroupsById(data).map(mapToGroup);
+    } catch (error) {
+      console.warn("Ignoring unavailable groups list:", error);
+      return [];
+    }
   },
 
   async getByUser(userId: number): Promise<Group[]> {
     const app = new GetGroups(repo);
-    const ids = uniqueGroupIds(await app.getGroupsByUserId(userId));
+    let ids: number[] = [];
+
+    try {
+      ids = uniqueGroupIds(await app.getGroupsByUserId(userId));
+    } catch (error) {
+      console.warn("Ignoring unavailable user groups:", userId, error);
+      return [];
+    }
 
     const groups = await Promise.all(
       ids.map(async (id: number) => {

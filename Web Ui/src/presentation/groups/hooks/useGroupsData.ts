@@ -69,7 +69,11 @@ export const useGroupsData = () => {
         }
       } catch (e) {
         console.error(e);
-        setError(true);
+        setGroups([]);
+        setCurrentSelectedGroupId(0);
+        localStorage.removeItem("selectedGroup");
+        setAuthData({ ...authData, usergroupid: 0 });
+        setError(false);
       } finally {
         setLoading(false);
       }

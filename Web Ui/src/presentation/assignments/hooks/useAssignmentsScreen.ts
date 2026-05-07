@@ -88,13 +88,8 @@ export function useAssignmentsScreen({
           console.warn("Falling back to all assignments:", fetchError);
           return fallbackAssignments;
         } catch (fallbackError) {
-          const nextError =
-            fallbackError instanceof Error
-              ? fallbackError
-              : new Error("Error fetching assignments");
-
           setAssignments([]);
-          setError(nextError);
+          setError(null);
           console.error("Error fetching assignments:", fallbackError);
           return [];
         }
@@ -124,24 +119,40 @@ export function useAssignmentsScreen({
 
     if (userRole === "student") {
       const resolvedGroupIds = resolveStudentGroupIds(userGroupid);
-      const studentGroupIds =
-        resolvedGroupIds.length > 0
-          ? resolvedGroupIds
-          : await getGroups.getGroupsByUserId(authData.userid ?? -1);
+      let studentGroupIds = resolvedGroupIds;
+
+      if (studentGroupIds.length === 0) {
+        try {
+          studentGroupIds = await getGroups.getGroupsByUserId(authData.userid ?? -1);
+        } catch (groupError) {
+          console.warn("Ignoring unavailable student groups:", groupError);
+          studentGroupIds = [];
+        }
+      }
 
       return loadAvailableGroups(studentGroupIds);
     }
 
     if (userRole === "teacher") {
-      const teacherGroupIds = await getGroups.getGroupsByUserId(
-        authData.userid ?? -1,
-      );
+      let teacherGroupIds: number[] = [];
+      try {
+        teacherGroupIds = await getGroups.getGroupsByUserId(
+          authData.userid ?? -1,
+        );
+      } catch (groupError) {
+        console.warn("Ignoring unavailable teacher groups:", groupError);
+      }
 
       return loadAvailableGroups(teacherGroupIds);
     }
 
     if (userRole === "admin") {
-      return getGroups.getGroups();
+      try {
+        return uniqueGroupsById(await getGroups.getGroups());
+      } catch (groupError) {
+        console.warn("Ignoring unavailable admin groups:", groupError);
+        return [];
+      }
     }
 
     return [];
@@ -180,14 +191,12 @@ export function useAssignmentsScreen({
         setError(null);
       }
     } catch (fetchError) {
-      const nextError =
-        fetchError instanceof Error
-          ? fetchError
-          : new Error("Error en fetchData");
-
       setAssignments([]);
       setGroupList([]);
-      setError(nextError);
+      setSelectedGroup(0);
+      onGroupChange(0);
+      localStorage.removeItem("selectedGroup");
+      setError(null);
       setFeedbackMessage("");
       console.error("Error en fetchData:", fetchError);
     } finally {
