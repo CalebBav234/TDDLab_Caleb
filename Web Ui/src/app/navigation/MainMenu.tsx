@@ -125,12 +125,12 @@ export default function MainMenu({
   const settingsLink = navArrayLinks.find(
     (navLink) => navLink.path === "/configuraciones",
   );
-  const isSettingsActive = settingsLink ? activePath === settingsLink.path : false;
+  const isSettingsActive = activePath === settingsLink?.path;
   const primaryLinks = navArrayLinks.filter(
     (navLink) => navLink.path !== "/configuraciones",
   );
   const canAccessSettings =
-    settingsLink !== undefined && settingsLink.access.includes(userRole);
+    settingsLink?.access.includes(userRole) ?? false;
 
   return (
     <>
@@ -218,7 +218,7 @@ export default function MainMenu({
             {canAccessSettings ? (
               <IconButton
                 component={NavLink}
-                to={settingsLink.path}
+                to={settingsLink?.path ?? "/configuraciones"}
                 aria-label="Configuraciones"
                 sx={{
                   color: "#FFFFFF",

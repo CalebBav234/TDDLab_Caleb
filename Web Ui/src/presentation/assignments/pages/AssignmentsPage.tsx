@@ -20,7 +20,7 @@ function AssignmentsPage({
   const [createAssignmentPopupOpen, setCreateAssignmentPopupOpen] =
     useState(false);
   const [selectedGroupId, setSelectedGroupId] = useState<number>(
-    userGroupid > 0 ? userGroupid : 0,
+    Math.max(userGroupid, 0),
   );
   const [filtersAnchorEl, setFiltersAnchorEl] = useState<HTMLElement | null>(
     null,
@@ -57,40 +57,44 @@ function AssignmentsPage({
     </>
   );
 
-  const listSection = (
-    <FeatureListSection>
-      {assignmentsScreen.isLoading ? (
-        <ContentState variant="loading" title="Cargando..." />
-      ) : assignmentsScreen.error ? (
-        <ContentState
-          variant="error"
-          title="Error al cargar..."
-          description={assignmentsScreen.error.message}
-        />
-      ) : assignmentsScreen.assignments.length === 0 ? (
-        <ContentState
-          variant="empty"
-          title="Sin resultados"
-          description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
-        />
-      ) : (
-        <AssignmentsList
-          assignments={assignmentsScreen.assignments}
-          confirmationOpen={assignmentsScreen.confirmationOpen}
-          feedbackMessage={assignmentsScreen.feedbackMessage}
-          feedbackSeverity={assignmentsScreen.feedbackSeverity}
-          handleClickDelete={assignmentsScreen.handleClickDelete}
-          handleClickDetail={assignmentsScreen.handleClickDetail}
-          handleConfirmDelete={assignmentsScreen.handleConfirmDelete}
-          setConfirmationOpen={assignmentsScreen.setConfirmationOpen}
-          setFeedbackMessage={assignmentsScreen.setFeedbackMessage}
-          setValidationDialogOpen={assignmentsScreen.setValidationDialogOpen}
-          userRole={userRole}
-          validationDialogOpen={assignmentsScreen.validationDialogOpen}
-        />
-      )}
-    </FeatureListSection>
-  );
+  let listContent = <ContentState variant="loading" title="Cargando..." />;
+
+  if (assignmentsScreen.error) {
+    listContent = (
+      <ContentState
+        variant="error"
+        title="Error al cargar..."
+        description={assignmentsScreen.error.message}
+      />
+    );
+  } else if (assignmentsScreen.isLoading === false && assignmentsScreen.assignments.length === 0) {
+    listContent = (
+      <ContentState
+        variant="empty"
+        title="Sin resultados"
+        description="Cuando existan tareas para el grupo seleccionado, apareceran en este listado."
+      />
+    );
+  } else if (assignmentsScreen.isLoading === false) {
+    listContent = (
+      <AssignmentsList
+        assignments={assignmentsScreen.assignments}
+        confirmationOpen={assignmentsScreen.confirmationOpen}
+        feedbackMessage={assignmentsScreen.feedbackMessage}
+        feedbackSeverity={assignmentsScreen.feedbackSeverity}
+        handleClickDelete={assignmentsScreen.handleClickDelete}
+        handleClickDetail={assignmentsScreen.handleClickDetail}
+        handleConfirmDelete={assignmentsScreen.handleConfirmDelete}
+        setConfirmationOpen={assignmentsScreen.setConfirmationOpen}
+        setFeedbackMessage={assignmentsScreen.setFeedbackMessage}
+        setValidationDialogOpen={assignmentsScreen.setValidationDialogOpen}
+        userRole={userRole}
+        validationDialogOpen={assignmentsScreen.validationDialogOpen}
+      />
+    );
+  }
+
+  const listSection = <FeatureListSection>{listContent}</FeatureListSection>;
 
   return (
     <FeatureScreenLayout

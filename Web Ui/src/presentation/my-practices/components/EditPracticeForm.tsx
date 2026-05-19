@@ -30,9 +30,9 @@ function EditPracticeDialog({
       setIsSaving(true);
 
       const updatedPracticeData: PracticeDataObject = {
-        title: title !== "" ? title : currentPractice.title,
+        title: title || currentPractice.title,
         description:
-          description !== "" ? description : currentPractice.description,
+          description || currentPractice.description,
         id: currentPractice.id,
         state: currentPractice.state,
         creation_date: currentPractice.creation_date,

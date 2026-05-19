@@ -17,7 +17,6 @@ import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
 import ValidationDialog from "../../../shared/components/ValidationDialog";
 import { usePractices } from "../hooks/usePractices";
 import { useGlobalState } from "../../../modules/User-Authentication/domain/authStates";
-import { useState } from "react";
 
 interface PracticesListProps {
   userRole: string;
@@ -26,7 +25,7 @@ interface PracticesListProps {
 
 function PracticesList({ userRole, userid }: Readonly<PracticesListProps>) {
   const [authData] = useGlobalState("authData");
-  const [_hoveredRow, setHoveredRow] = useState<number | null>(null);
+  const handleRowHover = (_index: number | null) => undefined;
 
   const {
     practices,
@@ -224,7 +223,7 @@ function PracticesList({ userRole, userid }: Readonly<PracticesListProps>) {
                 index={index}
                 handleClickDetail={handleClickDetail}
                 handleClickDelete={handleClickDelete}
-                handleRowHover={setHoveredRow}
+                handleRowHover={handleRowHover}
               />
             ))}
           </Stack>

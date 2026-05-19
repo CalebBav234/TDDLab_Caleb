@@ -22,7 +22,7 @@ const StyledTable = styled(Table)({
   border: `0.5px solid ${TABLE_BORDER}`,
 });
 
-function UsersByGroupTable({ users }: UsersByGroupTableProps) {
+function UsersByGroupTable({ users }: Readonly<UsersByGroupTableProps>) {
   return (
     <TableWrapper component="section" className="UsersByGroup">
       <StyledTable>

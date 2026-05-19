@@ -54,7 +54,7 @@ const sharedBodyCellStyles = {
   padding: "18px 20px",
 };
 
-function UsersTable({ users, groupMap, onRemove }: UsersTableProps) {
+function UsersTable({ users, groupMap, onRemove }: Readonly<UsersTableProps>) {
   return (
     <TableWrapper component="section" className="users-page">
       <StyledTable>

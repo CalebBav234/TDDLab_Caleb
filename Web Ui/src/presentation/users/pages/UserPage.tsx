@@ -31,6 +31,34 @@ function UserPage() {
     closeFeedbackDialog,
   } = useUsersPage();
 
+  let usersContent = <ContentState variant="loading" title="Cargando..." />;
+
+  if (error) {
+    usersContent = (
+      <ContentState
+        variant="error"
+        title="Error al cargar..."
+        description="Hubo un problema al cargar los usuarios."
+      />
+    );
+  } else if (loading === false && filteredUsers.length === 0) {
+    usersContent = (
+      <ContentState
+        variant="empty"
+        title="No se encontraron resultados"
+        description="No hay usuarios que coincidan con los filtros actuales."
+      />
+    );
+  } else if (loading === false) {
+    usersContent = (
+      <UsersTable
+        users={filteredUsers}
+        groupMap={groupMap}
+        onRemove={openRemoveDialog}
+      />
+    );
+  }
+
   return (
     <FeatureScreenLayout className="users-page" sectionGap={0}>
       <FeaturePageHeader
@@ -47,29 +75,7 @@ function UserPage() {
       />
       <FeatureSectionDivider />
 
-      <FeatureListSection>
-        {loading ? (
-          <ContentState variant="loading" title="Cargando..." />
-        ) : error ? (
-          <ContentState
-            variant="error"
-            title="Error al cargar..."
-            description="Hubo un problema al cargar los usuarios."
-          />
-        ) : filteredUsers.length === 0 ? (
-          <ContentState
-            variant="empty"
-            title="No se encontraron resultados"
-            description="No hay usuarios que coincidan con los filtros actuales."
-          />
-        ) : (
-          <UsersTable
-            users={filteredUsers}
-            groupMap={groupMap}
-            onRemove={openRemoveDialog}
-          />
-        )}
-      </FeatureListSection>
+      <FeatureListSection>{usersContent}</FeatureListSection>
 
       <ConfirmationDialog
         open={isRemoveDialogOpen}

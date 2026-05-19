@@ -14,7 +14,7 @@ export const useAuth = () => {
   const authData = useGlobalState("authData");
 
   useEffect(() => {
-    if (authData && authData[0] && authData[0].userEmail) {
+    if (authData?.[0]?.userEmail) {
       navigate({ pathname: "/" });
     }
   }, [authData, navigate]);

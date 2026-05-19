@@ -10,7 +10,7 @@ function RemoveUserDialog({
   open,
   onCancel,
   onConfirm,
-}: RemoveUserDialogProps) {
+}: Readonly<RemoveUserDialogProps>) {
   return (
     <ConfirmationDialog
       open={open}

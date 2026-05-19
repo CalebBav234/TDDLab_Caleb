@@ -53,5 +53,5 @@ export const handleRedirectToTasks = (groupId: number, navigate: NavigateFunctio
 
 export const setSelectedMetric = (metric: string) => {
   localStorage.setItem("selectedMetric", metric);
-  window.dispatchEvent(new Event("storage"));
+  globalThis.dispatchEvent(new Event("storage"));
 };

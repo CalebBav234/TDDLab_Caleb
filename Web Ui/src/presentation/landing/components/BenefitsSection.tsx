@@ -23,14 +23,14 @@ const BenefitsSection = ({ title, benefits }: BenefitsSectionProps) => {
 
         <h2 className="landing-section-title">{title}</h2>
 
-        <div className="landing-benefit-cards" role="list">
+        <ul className="landing-benefit-cards">
           {benefits.map((benefit) => (
-            <article key={benefit.title} className="landing-benefit-card" role="listitem">
+            <li key={benefit.title} className="landing-benefit-card">
               <img src={benefit.imagePath} alt={benefit.imageAlt} />
               <h3>{benefit.title}</h3>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

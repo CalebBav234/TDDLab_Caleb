@@ -90,8 +90,8 @@ function App() {
   const authData = useGlobalState("authData")[0];
   const isAuthResolved = authData.userid !== undefined;
   const isAuthenticated = Boolean(authData.userEmail);
-  const isRootPath = window.location.pathname === "/";
-  const isPublicLandingPath = window.location.pathname === "/landing";
+  const isRootPath = globalThis.location.pathname === "/";
+  const isPublicLandingPath = globalThis.location.pathname === "/landing";
   const hasSessionHint =
     localStorage.getItem(AUTH_SESSION_HINT_KEY) === "active";
 

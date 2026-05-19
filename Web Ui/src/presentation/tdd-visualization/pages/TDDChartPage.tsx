@@ -106,8 +106,8 @@ function TDDChartPage(props: Readonly<CycleReportViewProps>) {
         <div className="comments-section">
           <h2 className="comments-title">Comentarios</h2>
           <div className="comments-list">
-            {tddPage.comments.map((comment, index) => (
-              <div key={index} className="comment-card">
+            {tddPage.comments.map((comment) => (
+              <div key={`${comment.teacher_id}-${comment.created_at}`} className="comment-card">
                 <div className="comment-header">
                   <strong className="comment-author">
                     {tddPage.emails[comment.teacher_id] || "Cargando..."}

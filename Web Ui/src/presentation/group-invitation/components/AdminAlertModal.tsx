@@ -6,7 +6,7 @@ interface AdminAlertModalProps {
   open: boolean;
 }
 
-export default function AdminAlertModal({ open }: AdminAlertModalProps) {
+export default function AdminAlertModal({ open }: Readonly<AdminAlertModalProps>) {
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -30,10 +30,12 @@ export default function AdminAlertModal({ open }: AdminAlertModalProps) {
           mx: "auto",
         },
       }}
-      BackdropProps={{
-        sx: {
-          backdropFilter: "blur(6px)",
-          backgroundColor: "rgba(0,0,0,0.25)",
+      slotProps={{
+        backdrop: {
+          sx: {
+            backdropFilter: "blur(6px)",
+            backgroundColor: "rgba(0,0,0,0.25)",
+          },
         },
       }}
     >

@@ -69,22 +69,20 @@ function MyPracticesForm({
   };
 
   useEffect(() => {
-    if (!open) {
-      return;
+    if (open) {
+      setSaveAttempted(false);
+      setValidationDialogOpen(false);
+      setPracticeData({
+        title: "",
+        description: "",
+        userid,
+      });
     }
-
-    setSaveAttempted(false);
-    setValidationDialogOpen(false);
-    setPracticeData({
-      title: "",
-      description: "",
-      userid,
-    });
   }, [open, userid]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      {!validationDialogOpen ? (
+      {validationDialogOpen ? null : (
         <>
           <DialogTitle style={{ fontSize: "0.8 rem" }}>
             Crear una Practica
@@ -134,7 +132,7 @@ function MyPracticesForm({
             </Button>
           </DialogActions>
         </>
-      ) : null}
+      )}
       {validationDialogOpen ? (
         <ValidationDialog
           open={validationDialogOpen}

@@ -204,7 +204,7 @@ function Form({ open, handleClose, groupid }: Readonly<CreateAssignmentPopupProp
     state: "pending",
     link: "",
     comment: "",
-    groupid: groupid > 0 ? groupid : 0,
+    groupid: Math.max(groupid, 0),
   });
 }, [open, groupid]);
 
@@ -216,14 +216,13 @@ function Form({ open, handleClose, groupid }: Readonly<CreateAssignmentPopupProp
       const getGroups = new GetGroups(groupRepository);
       let list: GroupDataObject[] = [];
 
-      if (auth?.userRole === "teacher") {
+      if (auth?.userRole === "teacher" || auth?.userRole === "student") {
         const ids = await getGroups.getGroupsByUserId(auth.userid ?? -1);
-        list = (await Promise.all(ids.map((id: number) => getGroups.getGroupById(id)))).filter(Boolean) as GroupDataObject[];
+        list = (await Promise.all(ids.map((id: number) => getGroups.getGroupById(id)))).filter(
+          (group): group is GroupDataObject => Boolean(group),
+        );
       } else if (auth?.userRole === "admin") {
         list = await getGroups.getGroups();
-      } else if (auth?.userRole === "student") {
-        const ids = await getGroups.getGroupsByUserId(auth.userid ?? -1);
-        list = (await Promise.all(ids.map((id: number) => getGroups.getGroupById(id)))).filter(Boolean) as GroupDataObject[];
       } else {
         list = [];
       }

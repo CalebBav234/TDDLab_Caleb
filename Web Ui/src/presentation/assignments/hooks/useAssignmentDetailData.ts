@@ -216,7 +216,7 @@ export function useAssignmentDetailData({
           fetchedSubmissions.map(async (submissionItem) => {
             try {
               const student = await usersRepository.getUserById(submissionItem.userid);
-              return {
+              const row: SubmissionRowView = {
                 id: submissionItem.id,
                 email: student.email,
                 status: getDisplayStatus(submissionItem.status),
@@ -224,10 +224,11 @@ export function useAssignmentDetailData({
                 startDate: toDisplayDate(submissionItem.start_date),
                 endDate: toDisplayDate(submissionItem.end_date),
                 comment: submissionItem.comment || "N/A",
-              } as SubmissionRowView;
+              };
+              return row;
             } catch (error) {
               console.error("Error fetching student email:", error);
-              return {
+              const row: SubmissionRowView = {
                 id: submissionItem.id,
                 email: "Desconocido",
                 status: getDisplayStatus(submissionItem.status),
@@ -235,7 +236,8 @@ export function useAssignmentDetailData({
                 startDate: toDisplayDate(submissionItem.start_date),
                 endDate: toDisplayDate(submissionItem.end_date),
                 comment: submissionItem.comment || "N/A",
-              } as SubmissionRowView;
+              };
+              return row;
             }
           })
         );

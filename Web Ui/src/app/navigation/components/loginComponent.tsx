@@ -53,25 +53,11 @@ export default function LoginComponent({
     navigate("/login");
   };
 
+  const isLoggedIn = Boolean(authData[0].userEmail);
+
   return (
     <React.Fragment>
-      {!authData[0].userEmail ? (
-        <Button
-          onClick={handleLogin}
-          variant="contained"
-          sx={{
-            marginLeft: compact ? 0 : "18px",
-            textTransform: "none",
-            borderRadius: 999,
-            bgcolor: "#1370D2",
-            boxShadow: "none",
-            px: compact ? 2 : 2.5,
-            minWidth: compact ? "auto" : undefined,
-          }}
-        >
-          Iniciar sesi{"\u00f3"}n
-        </Button>
-      ) : (
+      {isLoggedIn ? (
         <React.Fragment>
             <IconButton
               onClick={(event) => setAnchorEl(event.currentTarget)}
@@ -96,6 +82,22 @@ export default function LoginComponent({
             <MenuItem onClick={handleLogout}>Salir</MenuItem>
           </Menu>
         </React.Fragment>
+      ) : (
+        <Button
+          onClick={handleLogin}
+          variant="contained"
+          sx={{
+            marginLeft: compact ? 0 : "18px",
+            textTransform: "none",
+            borderRadius: 999,
+            bgcolor: "#1370D2",
+            boxShadow: "none",
+            px: compact ? 2 : 2.5,
+            minWidth: compact ? "auto" : undefined,
+          }}
+        >
+          Iniciar sesi{"\u00f3"}n
+        </Button>
       )}
     </React.Fragment>
   );

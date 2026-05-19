@@ -18,6 +18,20 @@ interface DeliveriesTableProps {
   onOpenAdditionalGraphs: (row: SubmissionRowView) => void;
 }
 
+function getStatusClass(status: string): string {
+  const normalizedStatus = status.toLowerCase();
+
+  if (normalizedStatus === "enviado") {
+    return "is-sent";
+  }
+
+  if (normalizedStatus === "en progreso") {
+    return "is-progress";
+  }
+
+  return "is-pending";
+}
+
 export function DeliveriesTable({
   state: _state,
   rows,
@@ -50,13 +64,7 @@ export function DeliveriesTable({
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
                   <span
-                    className={`assignment-status-chip ${
-                      row.status.toLowerCase() === "enviado"
-                        ? "is-sent"
-                        : row.status.toLowerCase() === "en progreso"
-                          ? "is-progress"
-                          : "is-pending"
-                    }`}
+                    className={`assignment-status-chip ${getStatusClass(row.status)}`}
                   >
                     {row.status}
                   </span>
