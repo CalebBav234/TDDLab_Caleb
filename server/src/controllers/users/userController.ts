@@ -12,18 +12,8 @@ import { decodeUserTokenFromCookie } from "../../modules/Users/Application/decod
 import { updateUserById } from "../../modules/Users/Application/updateUser";
 import { removeUser } from "../../modules/Users/Application/removeUserFromGroup";
 import { User } from "../../modules/Users/Domain/User";
-import admin from "firebase-admin";
-import * as dotenv from "dotenv";
-dotenv.config();
+import admin from "../../config/firebaseAdmin";
 
-admin.initializeApp({
-  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-});
-
-const getErrorDebugCode = (error: unknown): string => {
-  const err = error as { code?: string; message?: string };
-  return err?.code || "UNKNOWN_AUTH_ERROR";
-};
 class UserController {
   private readonly userRepository: UserRepository;
 
@@ -80,8 +70,7 @@ class UserController {
       } else if (error.message === "Token inválido o expirado" || 
                  error.message === "Token expirado" || 
                  error.message === "Token inválido") {
-        const debugCode = getErrorDebugCode(error);
-        res.status(401).json({ error: error.message, debugCode });
+        res.status(401).json({ error: error.message });
       } else if (error.message === "No se pudo obtener email de Firebase") {
         res.status(400).json({ error: error.message });
       } else {
@@ -335,7 +324,6 @@ async  logoutController (res: Response): Promise<void> {
       return;
     }
     try {
-      console.log(userId);
       await removeUser(userId);
       res
         .status(200)
