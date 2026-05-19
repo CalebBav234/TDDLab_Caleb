@@ -1,6 +1,5 @@
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-//import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { PracticeDataObject } from "../../../modules/Practices/domain/PracticeInterface";
 import ActionButton from "../../../shared/components/ActionButton";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
@@ -67,11 +66,11 @@ export default function MyPracticesList({
 
   const handleConfirmDelete = async () => {
     try {
-      if (selectedPracticeId !== null) {
+      if (selectedPracticeId === null) {
+        setValidationTitle("Error al eliminar la practica");
+      } else {
         await onDeletePractice(selectedPracticeId);
         setValidationTitle("Practica eliminada exitosamente");
-      } else {
-        setValidationTitle("Error al eliminar la practica");
       }
     } catch (deleteError) {
       console.error(deleteError);
@@ -81,6 +80,47 @@ export default function MyPracticesList({
     setValidationDialogOpen(true);
     setConfirmationOpen(false);
   };
+
+  let practicesContent = (
+    <ContentState
+      variant="loading"
+      title="Cargando practicas"
+      description="Se estan cargando las practicas disponibles."
+    />
+  );
+
+  if (viewState === "error") {
+    practicesContent = (
+      <ContentState
+        variant="error"
+        title="No se pudieron cargar las practicas"
+        description={error ?? "Intenta nuevamente en unos segundos."}
+      />
+    );
+  } else if (viewState === "empty") {
+    practicesContent = (
+      <ContentState
+        variant="empty"
+        title="No hay practicas disponibles"
+        description="Cuando existan practicas creadas, apareceran en este listado."
+      />
+    );
+  } else if (viewState !== "loading") {
+    practicesContent = (
+      <FeatureItemsLayout>
+        {practices.map((practice) => (
+          <PracticeRow
+            key={practice.id}
+            practice={practice}
+            canManagePractices={canManagePractices}
+            onOpenDetail={onOpenDetail}
+            onDeletePractice={handleClickDelete}
+            onPracticeUpdated={onPracticeUpdated}
+          />
+        ))}
+      </FeatureItemsLayout>
+    );
+  }
 
   return (
     <>
@@ -108,38 +148,7 @@ export default function MyPracticesList({
       />
       <FeatureSectionDivider />
       <FeatureListSection>
-        {viewState === "loading" ? (
-          <ContentState
-            variant="loading"
-            title="Cargando practicas"
-            description="Se estan cargando las practicas disponibles."
-          />
-        ) : viewState === "error" ? (
-          <ContentState
-            variant="error"
-            title="No se pudieron cargar las practicas"
-            description={error ?? "Intenta nuevamente en unos segundos."}
-          />
-        ) : viewState === "empty" ? (
-          <ContentState
-            variant="empty"
-            title="No hay practicas disponibles"
-            description="Cuando existan practicas creadas, apareceran en este listado."
-          />
-        ) : (
-          <FeatureItemsLayout>
-            {practices.map((practice) => (
-              <PracticeRow
-                key={practice.id}
-                practice={practice}
-                canManagePractices={canManagePractices}
-                onOpenDetail={onOpenDetail}
-                onDeletePractice={handleClickDelete}
-                onPracticeUpdated={onPracticeUpdated}
-              />
-            ))}
-          </FeatureItemsLayout>
-        )}
+        {practicesContent}
       </FeatureListSection>
       {confirmationOpen ? (
         <ConfirmationDialog

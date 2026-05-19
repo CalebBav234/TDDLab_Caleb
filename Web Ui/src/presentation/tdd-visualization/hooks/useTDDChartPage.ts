@@ -36,16 +36,18 @@ export function useTDDChartPage({
 }: Readonly<CycleReportViewProps>) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const studentRole = isStudent(role);
+  const isTeacherView = role !== "student";
   const repoOwner = String(searchParams.get("repoOwner")) || "defaultOwner";
   const repoName = String(searchParams.get("repoName")) || "defaultRepo";
   const submissionIdcomments = Number.parseInt(searchParams.get("submissionId") || "0");
-  const fetchedSubmissions: Submission[] = !isStudent(role)
+  const fetchedSubmissions: Submission[] = isTeacherView
     ? JSON.parse(searchParams.get("fetchedSubmissions") || "[]")
     : [];
-  const submissionId = !isStudent(role) ? Number(searchParams.get("submissionId")) : 0;
+  const submissionId = isTeacherView ? Number(searchParams.get("submissionId")) : 0;
 
   const [currentIndex, setCurrentIndex] = useState(
-    !isStudent(role)
+    isTeacherView
       ? fetchedSubmissions.findIndex((submission) => submission.id === submissionId)
       : 0,
   );
@@ -170,7 +172,7 @@ export function useTDDChartPage({
     goToPreviousStudent,
     handleSubmitFeedback,
     isSubmitting,
-    isStudent: isStudent(role),
+    isStudent: studentRole,
     loading,
     ownerName,
     repoName,

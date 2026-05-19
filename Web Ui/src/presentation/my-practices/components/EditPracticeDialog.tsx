@@ -30,9 +30,9 @@ function EditPracticeDialog({
 
       if (currentPractice) {
         const updatedPracticeData: PracticeDataObject = {
-          title: title !== "" ? title : currentPractice.title,
+          title: title || currentPractice.title,
           description:
-            description !== "" ? description : currentPractice.description,
+            description || currentPractice.description,
           id: currentPractice.id,
           state: currentPractice.state,
           creation_date: currentPractice.creation_date,
@@ -40,7 +40,7 @@ function EditPracticeDialog({
         };
 
         await updatePractice(practiceId, updatedPracticeData);
-        window.dispatchEvent(new Event("practice-updated"));
+        globalThis.dispatchEvent(new Event("practice-updated"));
         onClose();
       } else {
         console.error("La practica actual no se encontró.");

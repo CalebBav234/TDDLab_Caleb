@@ -4,7 +4,7 @@ import "../styles/InfoCardsSection.css";
 const HIGHLIGHTED_TERMS = ["Rojo", "Verde", "Refactorizar", "antes"];
 
 function renderDescription(description: string) {
-  const pattern = new RegExp(`\\b(${HIGHLIGHTED_TERMS.join("|")})\\b`, "g");
+  const pattern = new RegExp(String.raw`\b(${HIGHLIGHTED_TERMS.join("|")})\b`, "g");
 
   return description.split(pattern).map((part) =>
     HIGHLIGHTED_TERMS.includes(part) ? (

@@ -8,6 +8,19 @@ import ContentState from "../../../shared/components/ContentState";
 
 export default function AuthPage() {
   const { loginWithGitHub, loginWithGoogle, loading, error, setError } = useAuth();
+  let authStateContent = null;
+
+  if (loading) {
+    authStateContent = <ContentState variant="loading" title="Accediendo..." />;
+  } else if (error) {
+    authStateContent = (
+      <ContentState
+        variant="error"
+        title="No se pudo iniciar sesión"
+        description={error}
+      />
+    );
+  }
 
   return (
     <>
@@ -34,15 +47,7 @@ export default function AuthPage() {
             Ingresá tu cuenta para acceder
           </Typography>
 
-          {loading ? (
-            <ContentState variant="loading" title="Accediendo..." />
-          ) : error ? (
-            <ContentState
-              variant="error"
-              title="No se pudo iniciar sesión"
-              description={error}
-            />
-          ) : null}
+          {authStateContent}
 
           <StatefulButton
             variantStyle="secondary"
@@ -82,4 +87,4 @@ export default function AuthPage() {
       />
     </>
   );
-};
+}

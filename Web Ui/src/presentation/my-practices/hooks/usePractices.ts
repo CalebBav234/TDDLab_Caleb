@@ -76,9 +76,9 @@ export function usePractices(): UsePracticesReturn {
 
   useEffect(() => {
     const handlePracticeUpdated = () => setRefreshToken((prev) => prev + 1);
-    window.addEventListener("practice-updated", handlePracticeUpdated as EventListener);
+    globalThis.addEventListener("practice-updated", handlePracticeUpdated);
     return () => {
-      window.removeEventListener("practice-updated", handlePracticeUpdated as EventListener);
+      globalThis.removeEventListener("practice-updated", handlePracticeUpdated);
     };
   }, []);
 

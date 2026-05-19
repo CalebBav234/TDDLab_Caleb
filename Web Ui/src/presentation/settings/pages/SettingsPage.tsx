@@ -42,40 +42,48 @@ const SettingsPage: React.FC = () => {
     
     try {
       await savePrompt(tdd, refac, evalPrompt);
-    } catch (e) {
-      // Error handled by useSettings hook (UI feedback)
+    } catch (error) {
+      console.error("Error saving prompt settings:", error);
     }
   };
 
   const handleToggleFlag = async (id: number, newValue: boolean) => {
     try {
       await toggleFeatureFlag(id, newValue);
-    } catch (e) {
-      // Error handled by useSettings hook (UI feedback)
+    } catch (error) {
+      console.error("Error toggling feature flag:", error);
     }
   };
+
+  let settingsStateContent = null;
+
+  if (loading && prompts === null) {
+    settingsStateContent = (
+      <FeatureListSection>
+        <ContentState
+          variant="loading"
+          title="Cargando..."
+          description="Se están cargando los ajustes del sistema."
+        />
+      </FeatureListSection>
+    );
+  } else if (error) {
+    settingsStateContent = (
+      <FeatureListSection>
+        <ContentState
+          variant="error"
+          title="Error al cargar..."
+          description={error}
+        />
+      </FeatureListSection>
+    );
+  }
 
   return (
     <FeatureScreenLayout className="settings-page">
       <FeaturePageHeader title="Configuración de Prompt" />
 
-      {loading && !prompts ? (
-        <FeatureListSection>
-          <ContentState
-            variant="loading"
-            title="Cargando..."
-            description="Se están cargando los ajustes del sistema."
-          />
-        </FeatureListSection>
-      ) : error ? (
-        <FeatureListSection>
-          <ContentState
-            variant="error"
-            title="Error al cargar..."
-            description={error}
-          />
-        </FeatureListSection>
-      ) : null}
+      {settingsStateContent}
 
       {prompts && (
         <FeatureListSection>

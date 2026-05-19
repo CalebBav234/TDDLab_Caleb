@@ -28,7 +28,7 @@ export default function AnimatedIcon({
   actionType = "default",
   customColor,
   ...iconButtonProps
-}: AnimatedIconProps) {
+}: Readonly<AnimatedIconProps>) {
   const hoverColor = customColor || ACTION_COLORS[actionType];
 
   return (

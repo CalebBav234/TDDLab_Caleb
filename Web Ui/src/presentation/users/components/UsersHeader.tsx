@@ -44,7 +44,7 @@ function UsersHeader({
   searchQuery,
   onGroupChange,
   onSearchChange,
-}: UsersHeaderProps) {
+}: Readonly<UsersHeaderProps>) {
   const [filtersAnchorEl, setFiltersAnchorEl] = useState<HTMLElement | null>(
     null,
   );

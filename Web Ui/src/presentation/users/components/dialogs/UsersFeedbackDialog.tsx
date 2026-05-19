@@ -10,7 +10,7 @@ function UsersFeedbackDialog({
   open,
   title,
   onClose,
-}: UsersFeedbackDialogProps) {
+}: Readonly<UsersFeedbackDialogProps>) {
   return (
     <ValidationDialog
       open={open}

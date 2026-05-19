@@ -233,7 +233,7 @@ const TDDBoard: React.FC<CycleReportViewProps> = ({
       const commit = commits.slice().reverse()[dataSetIndexNum];
       if (commit?.html_url) {
         const regex = /https:\/\/github\.com\/([^/]+)\/([^/]+)\/commit\/([^/]+)/;
-        const match = commit.html_url.match(regex);
+        const match = regex.exec(commit.html_url);
   
         if (match) {
           const repoOwner = match[1];
